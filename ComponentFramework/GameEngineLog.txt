@@ -1,8 +1,8 @@
-Wed May  4 09:25:13 2022
+Fri Sep 23 10:51:46 2022
 [INFO]: Starting the SceneManager
-[INFO]: OpenGL version: 4.6.0 NVIDIA 456.71
+[INFO]: OpenGL version: 4.6.0 NVIDIA 517.40
 [INFO]: Graphics card vendor NVIDIA Corporation
-[INFO]: Graphics card name GeForce GTX 1650/PCIe/SSE2
+[INFO]: Graphics card name NVIDIA GeForce RTX 3090 Ti/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
 [INFO]: Created Scene0: 
 [INFO]: Loading assets Scene0: 
