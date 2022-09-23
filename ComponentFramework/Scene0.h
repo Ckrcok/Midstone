@@ -7,13 +7,11 @@ using namespace MATH;
 
 /// Forward declarations 
 union SDL_Event;
-class Actor;
-class CameraActor;
+
 
 class Scene0 : public Scene {
 private:
-	Actor* waluigi;
-	CameraActor* camera;
+	
 public:
 	explicit Scene0();
 	virtual ~Scene0();
