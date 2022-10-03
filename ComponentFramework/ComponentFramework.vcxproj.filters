@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{e8c82a08-d757-47ee-b6fe-eee59a99570f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Puzzle">
+      <UniqueIdentifier>{0ef16c13-2aad-47e6-8837-cfba7b568a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Puzzle">
+      <UniqueIdentifier>{e8d9b05b-98a4-47d3-a582-f1e9b31ff342}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
