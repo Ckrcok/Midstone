@@ -148,7 +148,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DoorPuzzle.cpp" />
     <ClCompile Include="EMath.cpp" />
+    <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -160,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AxisAngle.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="DoorPuzzle.h" />
+    <ClInclude Include="PuzzleButton.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EMath.h" />
     <ClInclude Include="Euler.h" />

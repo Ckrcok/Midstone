@@ -1,11 +1,7 @@
-Mon Oct  3 15:07:21 2022
+Mon Oct  3 16:06:53 2022
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 NVIDIA 517.48
 [INFO]: Graphics card vendor NVIDIA Corporation
 [INFO]: Graphics card name NVIDIA GeForce RTX 2060/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
 [INFO]: Created Scene0: 
-[INFO]: Loading assets Scene0: 
-[INFO]: Deleting assets Scene0: 
-[INFO]: Deleted Scene0: 
-[INFO]: Deleting the SceneManager

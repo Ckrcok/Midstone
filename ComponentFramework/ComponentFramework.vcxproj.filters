@@ -63,6 +63,15 @@
     <ClCompile Include="EMath.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
+    <ClCompile Include="PuzzleButton.cpp">
+      <Filter>Source Files\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorPuzzle.cpp">
+      <Filter>Source Files\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files\Puzzle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -115,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Euler.h">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PuzzleButton.h">
+      <Filter>Header Files\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorPuzzle.h">
+      <Filter>Header Files\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Header Files\Puzzle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
