@@ -6,7 +6,8 @@
 #include <fstream>
 #include <ctime>
 
-enum class MessageType : unsigned short {
+enum class MessageType : unsigned short
+{
 	TYPE_NONE = 0,
 	TYPE_FATAL_ERROR,
 	TYPE_ERROR,
@@ -15,7 +16,8 @@ enum class MessageType : unsigned short {
 	TYPE_INFO
 };
 
-class Debug {
+class Debug
+{
 public:
 	Debug(const Debug&) = delete;
 	Debug(Debug&&) = delete;
@@ -23,7 +25,7 @@ public:
 	Debug& operator=(Debug&&) = delete;
 
 	Debug() = delete;
-	
+
 	static void DebugInit(const std::string& fileName_);
 
 	static void Info(const std::string& message_,

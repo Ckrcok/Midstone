@@ -8,7 +8,8 @@
 #include <iostream>
 #include "Debug.h"
 
-class Window {
+class Window
+{
 private:
 	int width, height;
 	SDL_Window* window;
@@ -24,13 +25,14 @@ public:
 	~Window();
 	bool OnCreate(std::string name_, int width_, int height_);
 	void OnDestroy();
-	
+
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }
 	SDL_Window* getWindow() const { return window; }
 
 private: /// internal tools OpenGl versions. 
 	void setAttributes(int major_, int minor_);
-	void getInstalledOpenGLInfo(int *major, int *minor);
+	void getInstalledOpenGLInfo(int* major, int* minor);
 };
+
 #endif /// !WINDOW_H

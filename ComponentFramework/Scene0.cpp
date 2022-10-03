@@ -6,53 +6,54 @@
 #include "MMath.h"
 #include "Debug.h"
 
-Scene0::Scene0() {
+Scene0::Scene0()
+{
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 }
 
-Scene0::~Scene0() {
+Scene0::~Scene0()
+{
 	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
-
 }
 
-bool Scene0::OnCreate() {
+bool Scene0::OnCreate()
+{
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 	return true;
 }
 
-void Scene0::OnDestroy() {
+void Scene0::OnDestroy()
+{
 	Debug::Info("Deleting assets Scene0: ", __FILE__, __LINE__);
 }
-void Scene0::HandleEvents(const SDL_Event &sdlEvent) {
-	switch( sdlEvent.type ) {
-    case SDL_KEYDOWN:
+
+void Scene0::HandleEvents(const SDL_Event& sdlEvent)
+{
+	switch (sdlEvent.type)
+	{
+	case SDL_KEYDOWN:
 		break;
 
-	case SDL_MOUSEMOTION:          
+	case SDL_MOUSEMOTION:
 		break;
 
-	case SDL_MOUSEBUTTONDOWN:              
-		break; 
+	case SDL_MOUSEBUTTONDOWN:
+		break;
 
-	case SDL_MOUSEBUTTONUP:            
-	break;
+	case SDL_MOUSEBUTTONUP:
+		break;
 
 	default:
 		break;
-    }
+	}
 }
 
-void Scene0::Update(const float deltaTime) {
-	
-}
+void Scene0::Update(const float deltaTime) {}
 
-void Scene0::Render() const {
+void Scene0::Render() const
+{
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(0);
 }
-
-
-
-	
