@@ -14,7 +14,7 @@ private:
 	bool isOpen;
 
 public:
-	PuzzleButton(Vec3 spawnPosition_, float spawnRotation_);
+	PuzzleButton(Vec3 spawnPosition_, float spawnRotation_, bool isOpen_);
 	~PuzzleButton();
 
 	bool GetIsOpen();

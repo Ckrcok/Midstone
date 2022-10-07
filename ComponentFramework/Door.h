@@ -15,7 +15,7 @@ private:
 	bool isOpen;
 
 public:
-	Door(Vec3 spawnPosition_, float spawnRotation_);
+	Door(Vec3 spawnPosition_, float spawnRotation_, bool isOpen_);
 	~Door();
 
 	void OpenDoor();

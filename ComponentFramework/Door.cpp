@@ -1,9 +1,16 @@
 #include "Door.h"
 
-Door::Door(Vec3 spawnPosition_, float spawnRotation_)
+Door::Door(Vec3 spawnPosition_, float spawnRotation_, bool isOpen_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
+
+	isOpen = isOpen_;
+
+	if (isOpen)
+		OpenDoor();
+	else
+		CloseDoor();
 }
 
 Door::~Door() {}
@@ -11,7 +18,6 @@ Door::~Door() {}
 void Door::OpenDoor()
 {
 	isOpen = true;
-
 	cout << "Door is opening" << endl;
 
 	// Open door
@@ -20,7 +26,6 @@ void Door::OpenDoor()
 void Door::CloseDoor()
 {
 	isOpen = false;
-
 	cout << "Door is closing" << endl;
 
 	// Close door

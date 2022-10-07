@@ -1,11 +1,16 @@
 #include "PuzzleButton.h"
 
-PuzzleButton::PuzzleButton(Vec3 spawnPosition_, float spawnRotation_)
+PuzzleButton::PuzzleButton(Vec3 spawnPosition_, float spawnRotation_, bool isOpen_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 
-	isOpen = false;
+	isOpen = isOpen_;
+
+	if (isOpen)
+		Open();
+	else
+		Close();
 }
 
 PuzzleButton::~PuzzleButton() {}
