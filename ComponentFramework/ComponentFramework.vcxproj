@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EMath.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="AxisAngle.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EMath.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Euler.h" />
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />
