@@ -3,6 +3,8 @@
 
 #include "Vector.h"
 
+using namespace MATH;
+
 class Enemy {
 private:
 	Vec3 position;

@@ -10,7 +10,7 @@ Enemy::~Enemy() {}
 
 bool Enemy::OnCreate()
 {
-
+	return true;
 }
 
 void Enemy::Render()
