@@ -165,5 +165,11 @@
     <None Include="shaders\textureVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\multiLightFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\multiLightVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

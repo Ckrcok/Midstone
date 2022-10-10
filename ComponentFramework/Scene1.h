@@ -22,7 +22,9 @@ private:
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
 	Matrix4 modelMatrix;
-	//add lights...
+	Vec3 lightPos[10];
+	Vec4 diffuse[10];
+	Vec4 specular[10];
 	
 public:
 	explicit Scene1();
