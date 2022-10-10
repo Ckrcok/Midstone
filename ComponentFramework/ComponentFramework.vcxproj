@@ -152,10 +152,12 @@
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="QMath.cpp" />
+    <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MMath.cpp" />
     <ClCompile Include="Scene0.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="VMath.cpp" />
@@ -171,12 +173,14 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Scene1.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MMath.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene0.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
@@ -187,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="GameEngineLog.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\defaultFrag.glsl" />
+    <None Include="shaders\defaultVert.glsl" />
+    <None Include="shaders\textureFrag.glsl" />
+    <None Include="shaders\textureVert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
