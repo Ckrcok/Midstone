@@ -35,22 +35,22 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 		}
 
 		// LOOK AROUND --- solve the issue with tilting
 		float rotateConstant = 10.0f;
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP)
 		{
-			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(1.0f, 0.0f, 0.0f)));
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(-1.0f, 0.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN)
 		{
-			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(-1.0f, 0.0f, 0.0f)));
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(1.0f, 0.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT)
 		{
