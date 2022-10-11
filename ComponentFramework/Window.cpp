@@ -1,4 +1,4 @@
-#include <glew.h>
+
 #include "Window.h"
 #include "Debug.h"
 Window::Window(): window(nullptr), context(nullptr),  width(0), height(0) {}

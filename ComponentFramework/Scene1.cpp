@@ -24,24 +24,16 @@ bool Scene1::OnCreate() {
 	Debug::Info("Loading assets Scene1: ", __FILE__, __LINE__);
 
 	sphere = new Actor(nullptr);
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	sphere->GetMesh()->OnCreate();
+	sphere->SetTexture(new Texture());
+	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
-
-	mesh = new Mesh(nullptr, "meshes/Sphere.obj");
-	if (mesh->OnCreate() == false)
-	{
-		Debug::Error("Can't load Mesh", __FILE__, __LINE__);
-	}
-
+	
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
-	}
-
-	texture = new Texture();
-	if (texture->LoadImage("textures/white_sphere.png") == false)
-	{
-		Debug::Error("Can't load white_sphere texture", __FILE__, __LINE__);
 	}
 
 	// this work is prior to camera actor --- it will be obselete with camera actor
@@ -123,14 +115,15 @@ void Scene1::Render() const {
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
+	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
+	sphere->Render();
+
 	/*glBindTexture(GL_TEXTURE_2D, camera->GetSkyBox()->GetSkyboxTextureID());
 	glBindTexture(GL_TEXTURE_CUBE_MAP, camera->GetSkyBox()->GetSkyboxTextureID());
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);*/
 
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, modelMatrix);
-	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
-	mesh->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
