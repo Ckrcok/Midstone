@@ -10,7 +10,7 @@ CameraActor::CameraActor(Component* parent_) :Actor(parent_)
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
 	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, -10.0f)));
-	viewMatrix = rotationMatrix * translationMatrix;
+	//viewMatrix = rotationMatrix * translationMatrix;
 	translationMatrix.print("Translation");
 	rotationMatrix.print("Rotation");
 }
@@ -44,6 +44,7 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 
 		// LOOK AROUND --- solve the issue with tilting
 		float rotateConstant = 10.0f;
+		
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(-1.0f, 0.0f, 0.0f)));
@@ -59,6 +60,12 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, 1.0f, 0.0f)));
+		}
+
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E)
+		{
+			SetRotationMatrix(GetTranslationMatrix());
+			std::cout << "Reset Rotation!" << std::endl;
 		}
 
 		break;
