@@ -47,8 +47,8 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 
 bool CameraActor::OnCreate()
 {
-	skybox = new Skybox("textures/CN_Tower/posx.jpg", "textures/CN_Tower/posy.jpg", "textures/CN_Tower/posz.jpg",
-		"textures/CN_Tower/negx.jpg", "textures/CN_Tower/negy.jpg", "textures/CN_Tower/negz.jpg");
+	skybox = new Skybox("textures/skybox/tron_rt_px.png", "textures/skybox/tron_up_py.png", "textures/skybox/tron_ft_pz.png",
+		"textures/skybox/tron_lf_nx.png", "textures/skybox/tron_dn_ny.png", "textures/skybox/tron_bk_nz.png");
 	return skybox->OnCreate();
 }
 

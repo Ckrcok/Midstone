@@ -1,11 +1,16 @@
-Mon Oct 10 23:50:57 2022
+Tue Oct 11 00:44:24 2022
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 NVIDIA 512.59
 [INFO]: Graphics card vendor NVIDIA Corporation
 [INFO]: Graphics card name NVIDIA GeForce RTX 3060 Laptop GPU/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
-[INFO]: Created Scene1: 
-[INFO]: Loading assets Scene1: 
+[INFO]: Created Scene2: 
+[INFO]: Loading assets Scene2: 
+[INFO]: Uniforms:
+"projectionMatrix" loc:1
+"skyboxTexture" loc:2
+"viewMatrix" loc:0
+
 [INFO]: Uniforms:
 "diffuse[0]" loc:0
 "lightPos[0]" loc:4
