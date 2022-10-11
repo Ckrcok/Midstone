@@ -18,15 +18,16 @@ CameraActor::CameraActor(Component* parent_) :Actor(parent_)
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 {
 	trackball->HandleEvents(sdlEvent);
-	rotationMatrix = trackball->getMatrix4();
+	//rotationMatrix = trackball->getMatrix4();
 	viewMatrix = rotationMatrix * translationMatrix;
 
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
+
+		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
-			std::cout << "S key pressed" << std::endl;
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
@@ -39,6 +40,25 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+		}
+
+		// LOOK AROUND --- solve the issue with tilting
+		float rotateConstant = 10.0f;
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP)
+		{
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(1.0f, 0.0f, 0.0f)));
+		}
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN)
+		{
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(-1.0f, 0.0f, 0.0f)));
+		}
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT)
+		{
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, -1.0f, 0.0f)));
+		}
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+		{
+			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 
 		break;

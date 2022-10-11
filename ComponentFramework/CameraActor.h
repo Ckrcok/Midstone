@@ -22,6 +22,8 @@ public:
 
 	inline Matrix4 GetTranslationMatrix() { return translationMatrix; }
 	inline void SetTranslationMatrix(const Matrix4& translationMatrix_) { translationMatrix = translationMatrix_; }
+	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
+	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
 
 
