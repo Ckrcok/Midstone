@@ -26,6 +26,7 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			std::cout << "S key pressed" << std::endl;
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
@@ -67,7 +68,7 @@ void CameraActor::Render() const
 {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
-	glUseProgram(skybox->GetShader()->GetProgram()); // build a getshader
+	glUseProgram(skybox->GetShader()->GetProgram()); 
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("viewMatrix"), 1, GL_FALSE, rotationMatrix);
 	skybox->Render();

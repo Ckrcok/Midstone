@@ -53,10 +53,10 @@ bool Scene2::OnCreate() {
 	lightPos[2] = Vec3(0.0f, 3.0f, -6.5f);
 	lightPos[3] = Vec3(0.0f, -3.0f, -6.5f);
 
-	diffuse[0] = Vec4(0.6, 0.0, 0.0, 0.0);
-	diffuse[1] = Vec4(0.0, 0.6, 0.0, 0.0);
-	diffuse[2] = Vec4(0.0, 0.0, 0.6, 0.0);
-	diffuse[3] = Vec4(0.6, 0.6, 0.6, 0.0);
+	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
+	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
+	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
+	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
@@ -87,6 +87,9 @@ void Scene2::OnDestroy() {
 
 }
 void Scene2::HandleEvents(const SDL_Event &sdlEvent) {
+
+	camera->HandleEvents(sdlEvent);
+
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
 		break;
@@ -106,7 +109,9 @@ void Scene2::HandleEvents(const SDL_Event &sdlEvent) {
 }
 
 void Scene2::Update(const float deltaTime) {
-	
+	static float totalTime = 0.0f;
+	totalTime += deltaTime;
+	sphere->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
 }
 
 void Scene2::Render() const {

@@ -79,6 +79,16 @@ void SceneManager::HandleEvents() {
 				isRunning = false;
 				return;
 				[[fallthrough]]; /// C17 Prevents switch/case fallthrough warnings
+				break;
+
+			case SDL_SCANCODE_F1:
+				BuildNewScene(SCENE_NUMBER::SCENE1);
+				break;
+
+			case SDL_SCANCODE_F2:
+				BuildNewScene(SCENE_NUMBER::SCENE2);
+				break;
+
 			default:
 				break;
 			}
