@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -158,14 +159,17 @@
     <ClCompile Include="MMath.cpp" />
     <ClCompile Include="Scene0.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Trackball.cpp" />
     <ClCompile Include="VMath.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AxisAngle.h" />
+    <ClInclude Include="CameraActor.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EMath.h" />
@@ -181,10 +185,12 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene0.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="tiny_obj_loader.h" />
+    <ClInclude Include="Trackball.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VMath.h" />
     <ClInclude Include="Window.h" />
@@ -197,6 +203,8 @@
     <None Include="shaders\defaultVert.glsl" />
     <None Include="shaders\multiLightFrag.glsl" />
     <None Include="shaders\multiLightVert.glsl" />
+    <None Include="shaders\skyboxFrag.glsl" />
+    <None Include="shaders\skyboxVert.glsl" />
     <None Include="shaders\textureFrag.glsl" />
     <None Include="shaders\textureVert.glsl" />
   </ItemGroup>

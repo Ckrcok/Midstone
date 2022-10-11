@@ -72,6 +72,15 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CameraActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trackball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -146,6 +155,15 @@
     <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trackball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="GameEngineLog.txt">
@@ -169,6 +187,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\multiLightVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\skyboxFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\skyboxVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
