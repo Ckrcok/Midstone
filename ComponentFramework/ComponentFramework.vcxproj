@@ -151,10 +151,12 @@
     <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EMath.cpp" />
+    <ClCompile Include="EnemyActor.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MMath.cpp" />
@@ -174,12 +176,14 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EMath.h" />
+    <ClInclude Include="EnemyActor.h" />
     <ClInclude Include="Euler.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
+    <ClInclude Include="Scene3.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MMath.h" />
