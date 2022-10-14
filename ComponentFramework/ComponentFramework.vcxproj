@@ -28,7 +28,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CameraActor.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -170,7 +171,9 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AxisAngle.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="CameraActor.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EMath.h" />
@@ -201,6 +204,8 @@
     <Text Include="GameEngineLog.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\defaultBlueFrag.glsl" />
+    <None Include="shaders\defaultBlueVert.glsl" />
     <None Include="shaders\defaultFrag.glsl" />
     <None Include="shaders\defaultVert.glsl" />
     <None Include="shaders\multiLightFrag.glsl" />
