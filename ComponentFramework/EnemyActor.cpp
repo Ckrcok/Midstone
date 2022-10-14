@@ -1,15 +1,16 @@
 #include "EnemyActor.h"
 
-EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Component* parent_) : Actor(parent_)
+EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
+	rotationAxis = spawnRotationAxis_;
 
-	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, -10.0f)));
-	translationMatrix.print("Translation");
+	Vec3 target = Vec3(10.0f, 0.0f, 0.0f);
+	targets.push_back(target);
 
 	if (targets.size() > 0)
-		currentTarget = 1;
+		currentTarget = 0;
 }
 
 EnemyActor::~EnemyActor() {}
@@ -20,6 +21,9 @@ bool EnemyActor::OnCreate()
 	model_3D = new Actor(nullptr);
 	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
 	model_3D->GetMesh()->OnCreate();
+
+	model_3D->SetModelMatrix(MMath::translate(position));				// Spawn position
+	model_3D->SetModelMatrix(MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -63,6 +67,8 @@ void EnemyActor::Update(float deltaTime)
 	// Calculate distance between enemy and target
 	float distanceToTarget = GetDistance(position, targets[currentTarget]);
 
+	//cout << "DistanceToTarget: " << distanceToTarget << endl;
+
 	// Check if target position is reached
 	if (distanceToTarget < 0.5f && currentTarget + 1 < targets.size())
 		currentTarget++;
@@ -85,13 +91,13 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 	{
 		// Move
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_K)
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_I)
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_J)
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_L)
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 	}
 	}
 }
@@ -100,6 +106,28 @@ void EnemyActor::MoveToTarget(float deltaTime)
 {
 	// [TODO] Implement move to target code
 	// [TODO] Implement face to target code
+
+	Vec3 targetPos = targets[currentTarget];
+	Vec3 direction = targetPos - position;
+
+	cout << "TargetPos: " << targetPos.x << " || " << targetPos.y << " || " << targetPos.z << "   |||   "
+		<< "Direction: " << direction.x << " || " << direction.y << " || " << direction.z << endl;
+
+	float stepAmount = 0.1f;
+
+	// Move to the right
+	if (direction.x > 0 && position.x < targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
+	// Move to the left
+	else if (direction.x < 0 && position.x > targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-stepAmount, 0.0f, 0.0f)));
+
+	// Move to the front
+	if (direction.z < 0 && position.z > targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
+	// Move to the back
+	if (direction.z > 0 && position.z < targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
 }
 
 float EnemyActor::GetDistance(Vec3 p, Vec3 q)

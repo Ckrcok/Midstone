@@ -8,7 +8,7 @@ Scene3::Scene3() : shader(nullptr)
 	Debug::Info("Created Scene2: ", __FILE__, __LINE__);
 	trackball = new Trackball();
 
-	enemy = new EnemyActor(Vec3(5.0f, 5.0f, 5.0f), 10.0f, NULL);
+	enemy = new EnemyActor(Vec3(0.0f, -3.0f, 5.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), NULL);
 }
 
 Scene3::~Scene3()
@@ -77,11 +77,11 @@ void Scene3::Render() const
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	camera->Render();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
 
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
@@ -104,6 +104,9 @@ void Scene3::Update(const float deltaTime)
 	totalTime += deltaTime;
 	model_3D->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
 	/**/
+
+	enemy->Update(deltaTime);
+
 }
 
 void Scene3::HandleEvents(const SDL_Event& sdlEvent)

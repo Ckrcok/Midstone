@@ -19,7 +19,7 @@ private:
 	// Position & Rotation
 	Vec3 position;
 	float rotation;
-	Matrix4 translationMatrix;
+	Vec3 rotationAxis;
 
 	// Model
 	Actor* model_3D;
@@ -38,7 +38,7 @@ private:
 	void Attack();
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Component* parent_);
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_);
 	~EnemyActor();
 
 	bool OnCreate();
@@ -46,9 +46,6 @@ public:
 	void Render();
 	void Update(float deltaTime);
 	void HandleEvents(const SDL_Event& sdlEvent);
-
-	inline Matrix4 GetTranslationMatrix() { return translationMatrix; }
-	inline void SetTranslationMatrix(const Matrix4& translationMatrix_) { translationMatrix = translationMatrix_; }
 };
 
 #endif
