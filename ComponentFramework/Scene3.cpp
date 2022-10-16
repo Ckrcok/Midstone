@@ -2,13 +2,19 @@
 
 #include "Debug.h"
 
-//Scene3::Scene3() : model_3D(nullptr), shader(nullptr)
 Scene3::Scene3() : shader(nullptr)
 {
 	Debug::Info("Created Scene2: ", __FILE__, __LINE__);
 	trackball = new Trackball();
 
-	enemy = new EnemyActor(Vec3(0.0f, -3.0f, 5.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), NULL);
+	int spawnPos = -2.0f;
+	for (int i = 0; i < 3; i++)
+	{
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), NULL);
+		spawnPos += 2;
+
+		enemies.push_back(enemy);
+	}
 }
 
 Scene3::~Scene3()
@@ -25,7 +31,8 @@ bool Scene3::OnCreate()
 	camera = new CameraActor(nullptr);
 	camera->OnCreate();
 
-	enemy->OnCreate();
+	for (EnemyActor* enemy : enemies)
+		enemy->OnCreate();
 
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
@@ -59,11 +66,15 @@ void Scene3::OnDestroy()
 		delete camera;
 	}
 
-	if (enemy)
+	for (EnemyActor* enemy : enemies)
 	{
-		enemy->OnDestroy();
-		delete enemy;
+		if (enemy)
+		{
+			enemy->OnDestroy();
+			delete enemy;
+		}
 	}
+	enemies.clear();
 
 	shader->OnDestroy();
 	delete shader;
@@ -91,26 +102,22 @@ void Scene3::Render() const
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
-	enemy->Render();
+	for (EnemyActor* enemy : enemies)
+		enemy->Render();
 
 	glUseProgram(0);
 }
 
 void Scene3::Update(const float deltaTime)
 {
-	// Rotate object
-	/**
-	static float totalTime = 0.0f;
-	totalTime += deltaTime;
-	model_3D->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
-	/**/
-
-	enemy->Update(deltaTime);
-
+	for (EnemyActor* enemy : enemies)
+		enemy->Update(deltaTime);
 }
 
 void Scene3::HandleEvents(const SDL_Event& sdlEvent)
 {
 	camera->HandleEvents(sdlEvent);
-	enemy->HandleEvents(sdlEvent);
+
+	for (EnemyActor* enemy : enemies)
+		enemy->HandleEvents(sdlEvent);
 }

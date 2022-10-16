@@ -28,14 +28,25 @@ private:
 	// Movement target
 	vector<Vec3> targets;
 	int currentTarget;
+	float timeBetweenTargets = 2.0f;
+	float currentTimeBetweenTargets;
 
 	// Player
 	Vec3 playerPos;
 
+	// Stun variables
+	bool isStunned = false;
+	float currentStunTimer;
+
 	void MoveToTarget(float deltaTime);
+	void FaceTarget(float deltaTime);
+
 	float GetDistance(Vec3 p, Vec3 q);
 
-	void Attack();
+	Actor* attackTarget = nullptr;
+	void Attack(float deltaTime);
+	float attackInterval;
+	float currentAttackValue;
 
 public:
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_);
@@ -46,6 +57,18 @@ public:
 	void Render();
 	void Update(float deltaTime);
 	void HandleEvents(const SDL_Event& sdlEvent);
+
+	void AttackTarget(Actor* target_, float attackInterval_)
+	{
+		attackTarget = target_;
+		attackInterval = attackInterval_;
+	};
+
+	void StunEnemy(float stunTime_)
+	{
+		currentStunTimer = stunTime_;
+		isStunned = true;
+	};
 };
 
 #endif

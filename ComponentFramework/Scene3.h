@@ -20,7 +20,7 @@ class Shader;
 class Scene3 : public Scene
 {
 private:
-	EnemyActor* enemy;
+	vector<EnemyActor*> enemies;
 
 	Shader* shader;
 

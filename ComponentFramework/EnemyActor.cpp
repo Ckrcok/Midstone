@@ -11,6 +11,8 @@ EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRota
 
 	if (targets.size() > 0)
 		currentTarget = 0;
+
+	isStunned = false;
 }
 
 EnemyActor::~EnemyActor() {}
@@ -22,8 +24,8 @@ bool EnemyActor::OnCreate()
 	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));				// Spawn position
-	model_3D->SetModelMatrix(MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
+	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -64,23 +66,59 @@ void EnemyActor::Render()
 
 void EnemyActor::Update(float deltaTime)
 {
+	// Handle stun
+	if (isStunned)
+	{
+		// Handle timer
+		if (currentStunTimer > 0)
+			currentStunTimer -= deltaTime;
+		else
+			isStunned = false;
+
+		// Debug
+		cout << "CurrentStunTimer: " << currentStunTimer << endl;
+
+		return;
+	}
+
+
+	// Handle attack
+	if (attackTarget != nullptr)
+		Attack(deltaTime);
+
+
 	// Calculate distance between enemy and target
 	float distanceToTarget = GetDistance(position, targets[currentTarget]);
-
 	//cout << "DistanceToTarget: " << distanceToTarget << endl;
 
 	// Check if target position is reached
 	if (distanceToTarget < 0.5f && currentTarget + 1 < targets.size())
-		currentTarget++;
-	else
+	{
+		// Set a new target in given seconds
+		if (currentTimeBetweenTargets > 0)
+			currentTimeBetweenTargets -= deltaTime;
+		else
+		{
+			currentTarget++;
+			currentTimeBetweenTargets = timeBetweenTargets;
+		}
+	}
+	else if (attackTarget == nullptr)
+	{
 		MoveToTarget(deltaTime);
+		FaceTarget(deltaTime);
+	}
+
 
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, playerPos);
 
-	// If player is in range, attack
+	/** // If player is in range, attack
 	if (distanceToPlayer < 0.2)
-		Attack();
+		AttackTarget(model_3D, 1.0f);
+	else
+		attackTarget = nullptr;
+	/**/
 }
 
 void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -98,20 +136,33 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_L)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+
+		// Toggle stun state between true and false
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_M)
+		{
+			//isStunned = true;
+			StunEnemy(5.0f);
+			cout << "IsStunned: " << isStunned << endl;
+		}
+
+		// Toggle attack states
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_N)
+			AttackTarget(model_3D, 2.0f);
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_B)
+			attackTarget = nullptr;
 	}
 	}
 }
 
 void EnemyActor::MoveToTarget(float deltaTime)
 {
-	// [TODO] Implement move to target code
-	// [TODO] Implement face to target code
-
 	Vec3 targetPos = targets[currentTarget];
 	Vec3 direction = targetPos - position;
 
+	/**
 	cout << "TargetPos: " << targetPos.x << " || " << targetPos.y << " || " << targetPos.z << "   |||   "
 		<< "Direction: " << direction.x << " || " << direction.y << " || " << direction.z << endl;
+	/**/
 
 	float stepAmount = 0.1f;
 
@@ -130,6 +181,35 @@ void EnemyActor::MoveToTarget(float deltaTime)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
 }
 
+void EnemyActor::FaceTarget(float deltaTime)
+{
+	/**	// Code from AI course
+	orientation = atan2(pos.y - mousPosY, mousePosX - pos.x);
+
+	lookDirection = Vec3(mousePosX, mousePosX, 0.0f);
+	if (mousePosX > pos.x) {
+		angle = -atan((mousPosY - pos.y) / (mousePosX - pos.x)) * 180 / M_PI;
+	}
+	else {
+		angle = 180 - atan((mousPosY - pos.y) / (mousePosX - pos.x)) * 180 / M_PI;
+	}
+	/**/
+
+
+	// [TODO] Implement face to target code
+
+
+	Vec3 targetPos = targets[currentTarget];
+	Vec3 direction = targetPos - position;
+
+	float orientation;
+	orientation = atan2(targets[currentTarget].y - position.y, position.x - targets[currentTarget].x);
+
+	//cout << "Orientation: " << orientation << endl;
+
+	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(10 * orientation, Vec3(0.0f, 1.0f, 0.0f)));
+}
+
 float EnemyActor::GetDistance(Vec3 p, Vec3 q)
 {
 	// Distance = sqrt((pX-qX)^2 + (pY-qY)^2)
@@ -137,7 +217,23 @@ float EnemyActor::GetDistance(Vec3 p, Vec3 q)
 		(p.y - q.y) * (p.y - q.y));
 }
 
-void EnemyActor::Attack()
+void EnemyActor::Attack(float deltaTime)
 {
-	// [TODO] Implement attack code
+	// Handle attack interval
+	if (currentAttackValue > 0)
+		currentAttackValue -= deltaTime;
+	else
+	{
+		// [TODO] Implement attack code
+
+		/**	// Pseudo code
+		float damageAmount = 1.0f;
+		currentTarget->Damage(damageAmount);
+		/**/
+
+		cout << "Attack!" << endl;
+
+		// Set current value to original value
+		currentAttackValue = attackInterval;
+	}
 }
