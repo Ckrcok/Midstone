@@ -1,16 +1,15 @@
-Mon Oct 17 15:00:51 2022
+Mon Oct 17 16:00:17 2022
 [INFO]: Starting the SceneManager
-[INFO]: OpenGL version: 4.6.0 NVIDIA 512.59
+[INFO]: OpenGL version: 4.6.0 NVIDIA 517.40
 [INFO]: Graphics card vendor NVIDIA Corporation
-[INFO]: Graphics card name NVIDIA GeForce RTX 3060 Laptop GPU/PCIe/SSE2
+[INFO]: Graphics card name NVIDIA GeForce RTX 3090 Ti/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
-[INFO]: Created Scene2: 
-[INFO]: Loading assets Scene2: 
-[INFO]: Uniforms:
-"projectionMatrix" loc:1
-"skyboxTexture" loc:2
-"viewMatrix" loc:0
-
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene1: 
+[INFO]: Loading assets Scene1: 
 [INFO]: Uniforms:
 "diffuse[0]" loc:0
 "lightPos[0]" loc:4
@@ -20,3 +19,4 @@ Mon Oct 17 15:00:51 2022
 "specular[0]" loc:11
 "viewMatrix" loc:15
 
+[INFO]: Deleting assets Scene1: 

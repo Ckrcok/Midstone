@@ -53,7 +53,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_)
 	}
 
 	/********************************   Default first scene   ***********************/
-	BuildNewScene(SCENE_NUMBER::SCENE2);
+	BuildNewScene(SCENE_NUMBER::SCENE0);
 
 	return true;
 }
@@ -147,7 +147,6 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		currentScene = new Scene2();
 		status = currentScene->OnCreate();
 		break;
-		>>>>>> > main
 
 	default:
 		Debug::Error("Incorrect scene number assigned in the manager", __FILE__, __LINE__);

@@ -29,7 +29,7 @@ bool Scene1::OnCreate() {
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
-	
+
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
@@ -76,13 +76,13 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
     case SDL_KEYDOWN:
 		break;
 
-	case SDL_MOUSEMOTION:          
+	case SDL_MOUSEMOTION:
 		break;
 
-	case SDL_MOUSEBUTTONDOWN:              
-		break; 
+	case SDL_MOUSEBUTTONDOWN:
+		break;
 
-	case SDL_MOUSEBUTTONUP:            
+	case SDL_MOUSEBUTTONUP:
 	break;
 
 	default:
@@ -91,7 +91,7 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 }
 
 void Scene1::Update(const float deltaTime) {
-	
+
 }
 
 void Scene1::Render() const {
@@ -103,7 +103,7 @@ void Scene1::Render() const {
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	//glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
 
@@ -132,4 +132,4 @@ void Scene1::Render() const {
 
 
 
-	
+
