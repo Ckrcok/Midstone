@@ -84,6 +84,7 @@ public:
 	inline void SetTexture(Texture* texture_) { texture = texture_; }
 	inline Matrix4 GetModelMatrix() { return modelMatrix; }
 	inline void SetModelMatrix(const Matrix4& modelMatrix_) { modelMatrix = modelMatrix_; }
-
-
+	
+	
+	
 };

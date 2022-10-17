@@ -32,6 +32,7 @@ bool Scene2::OnCreate() {
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	sphere->GetMesh()->OnCreate();
+	sphere->SetModelMatrix(MMath::translate(Vec3(1.0f, 2.0f, -3.0f)));
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
@@ -111,7 +112,10 @@ void Scene2::HandleEvents(const SDL_Event &sdlEvent) {
 void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-	sphere->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
+	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
+	//sphere->GetModelMatrix().print();
+	Vec3 pos = Vec3(sphere->GetModelMatrix()[12], sphere->GetModelMatrix()[13], sphere->GetModelMatrix()[14]);
+	std::cout << "pos x = " << pos.x << " " << "pos y = " << pos.y << " " << "pos z = " << pos.z << " " << std::endl;
 }
 
 void Scene2::Render() const {

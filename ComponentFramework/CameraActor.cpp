@@ -62,11 +62,11 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E)
+		/*else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E)
 		{
 			SetRotationMatrix(GetTranslationMatrix());
 			std::cout << "Reset Rotation!" << std::endl;
-		}
+		}*/
 
 		break;
 
