@@ -113,9 +113,9 @@ void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
 	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
-	//sphere->GetModelMatrix().print();
-	Vec3 pos = Vec3(sphere->GetModelMatrix()[12], sphere->GetModelMatrix()[13], sphere->GetModelMatrix()[14]);
-	std::cout << "pos x = " << pos.x << " " << "pos y = " << pos.y << " " << "pos z = " << pos.z << " " << std::endl;
+	sphere->GetPosition().print();
+	
+
 }
 
 void Scene2::Render() const {
