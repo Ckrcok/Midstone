@@ -5,8 +5,8 @@
 #include "Matrix.h"
 #include "Euler.h"
 
-namespace MATH{
-	
+namespace MATH {
+
 	class QMath {
 	public:
 
@@ -22,6 +22,13 @@ namespace MATH{
 		static  Euler fromQuaternion(const Quaternion& q);
 		static  Matrix3 toMatrix3(const Quaternion& q);
 		static  Matrix4 toMatrix4(const Quaternion& q);
+
+		/// 2022-04-04 A quaternion dot product
+		inline static float dot(const Quaternion& a, const Quaternion& b) {
+			return((a.w * b.w) + (a.ijk.x * b.ijk.x) + (a.ijk.y * b.ijk.y) + (a.ijk.z * b.ijk.z));
+		}
+
+		static Quaternion slerp(const Quaternion& q1, const Quaternion& q2, float t);
 
 		/// Not needed after C17
 		//static float clamp(float x, float minVal, float maxVal) { return std::min(std::max(x, minVal), maxVal); }

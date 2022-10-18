@@ -8,7 +8,9 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
+#include "QMath.h"
 #include "CameraActor.h"
+#include "Quaternion.h"
 
 using namespace MATH;
 using namespace std;
@@ -20,6 +22,7 @@ private:
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
+	Quaternion orientation;
 
 	// Model
 	Actor* model_3D;
@@ -32,7 +35,12 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
+	CameraActor* player;
 	Vec3 playerPos;
+
+	// Rotation
+	float t = 0.0f;
+	Quaternion initialOrientation;
 
 	// Stun variables
 	bool isStunned = false;
@@ -49,7 +57,7 @@ private:
 	float currentAttackValue;
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_);
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
 	~EnemyActor();
 
 	bool OnCreate();

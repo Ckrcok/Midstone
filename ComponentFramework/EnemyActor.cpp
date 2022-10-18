@@ -1,10 +1,12 @@
 #include "EnemyActor.h"
 
-EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_) : Actor(parent_)
+EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
+
+	player = player_;
 
 	Vec3 target = Vec3(10.0f, 0.0f, 0.0f);
 	targets.push_back(target);
@@ -25,7 +27,7 @@ bool EnemyActor::OnCreate()
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
-	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -86,7 +88,6 @@ void EnemyActor::Update(float deltaTime)
 	if (attackTarget != nullptr)
 		Attack(deltaTime);
 
-
 	// Calculate distance between enemy and target
 	float distanceToTarget = GetDistance(position, targets[currentTarget]);
 	//cout << "DistanceToTarget: " << distanceToTarget << endl;
@@ -105,7 +106,7 @@ void EnemyActor::Update(float deltaTime)
 	}
 	else if (attackTarget == nullptr)
 	{
-		MoveToTarget(deltaTime);
+		//MoveToTarget(deltaTime);
 		FaceTarget(deltaTime);
 	}
 
@@ -150,6 +151,16 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 			AttackTarget(model_3D, 2.0f);
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_B)
 			attackTarget = nullptr;
+
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Z) {
+			orientation = QMath::angleAxisRotation(45, Vec3(0.0f, 1.0f, 0.0f));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * QMath::toMatrix4(orientation));
+		}
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X)
+		{
+			orientation = QMath::angleAxisRotation(-45, Vec3(0.0f, 1.0f, 0.0f));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * QMath::toMatrix4(orientation));
+		}
 	}
 	}
 }
@@ -183,31 +194,45 @@ void EnemyActor::MoveToTarget(float deltaTime)
 
 void EnemyActor::FaceTarget(float deltaTime)
 {
-	/**	// Code from AI course
-	orientation = atan2(pos.y - mousPosY, mousePosX - pos.x);
-
-	lookDirection = Vec3(mousePosX, mousePosX, 0.0f);
-	if (mousePosX > pos.x) {
-		angle = -atan((mousPosY - pos.y) / (mousePosX - pos.x)) * 180 / M_PI;
-	}
-	else {
-		angle = 180 - atan((mousPosY - pos.y) / (mousePosX - pos.x)) * 180 / M_PI;
-	}
-	/**/
-
-
 	// [TODO] Implement face to target code
 
-
-	Vec3 targetPos = targets[currentTarget];
+	/**
+		Vec3 targetPos = targets[currentTarget];
 	Vec3 direction = targetPos - position;
 
 	float orientation;
 	orientation = atan2(targets[currentTarget].y - position.y, position.x - targets[currentTarget].x);
+	/**/
 
-	//cout << "Orientation: " << orientation << endl;
+	Vec3 direction = playerPos - position;
 
-	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(10 * orientation, Vec3(0.0f, 1.0f, 0.0f)));
+	cout << "Direction: " << endl;
+	direction.print();
+
+	float angleRadians = (VMath::dot(direction, Vec3(0, 0, 1) / (VMath::normalize(direction).x * VMath::normalize(Vec3(0, 0, 1)).z)));
+	float angleDegrees = angleRadians * (180 / M_PI);
+	cout << "AngleRadians: " << angleRadians << endl;
+
+	//Vec3 multiplication = Vec3((direction.x * 0), (direction.y * 0), (direction.z * 1));
+
+	//float angleRadians = (direction * Vec3(0, 0, 1)) / VMath::normalize(direction);
+
+	//float dot = VMath::dot(direction, );
+
+	if (t < 1.1f)
+	{
+		Quaternion finalOrientation = QMath::angleAxisRotation(angleDegrees, Vec3(0, 1, 0));
+		orientation = QMath::slerp(initialOrientation, finalOrientation, t);
+		orientation = orientation * (1.0f / QMath::magnitude(orientation));
+
+		Matrix4 identityMatrix;
+		model_3D->SetModelMatrix(identityMatrix * QMath::toMatrix4(orientation));
+
+		cout << "Orientation: " << endl;
+		orientation.print();
+
+		t += 0.1f;
+	}
 }
 
 float EnemyActor::GetDistance(Vec3 p, Vec3 q)

@@ -6,15 +6,6 @@ Scene3::Scene3() : shader(nullptr)
 {
 	Debug::Info("Created Scene2: ", __FILE__, __LINE__);
 	trackball = new Trackball();
-
-	int spawnPos = -2.0f;
-	for (int i = 0; i < 3; i++)
-	{
-		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), NULL);
-		spawnPos += 2;
-
-		enemies.push_back(enemy);
-	}
 }
 
 Scene3::~Scene3()
@@ -30,6 +21,15 @@ bool Scene3::OnCreate()
 
 	camera = new CameraActor(nullptr);
 	camera->OnCreate();
+
+	int spawnPos = -2.0f;
+	for (int i = 0; i < 1; i++)
+	{
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		spawnPos += 2;
+
+		enemies.push_back(enemy);
+	}
 
 	for (EnemyActor* enemy : enemies)
 		enemy->OnCreate();

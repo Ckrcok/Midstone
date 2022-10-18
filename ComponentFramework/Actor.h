@@ -7,15 +7,15 @@ using namespace MATH;
 #include "Mesh.h"
 #include "Texture.h"
 
-class Actor : public Component {
+class Actor : public Component
+{
 private:
 	std::vector<Component*> components;
 	class Mesh* mesh;
 	class Texture* texture;
 	Matrix4 modelMatrix;
+
 public:
-
-
 	// C11 safeguards
 	Actor(const Actor&) = delete;
 	Actor(Actor&&) = delete;
