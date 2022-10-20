@@ -150,9 +150,12 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DoorPuzzle.cpp" />
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="EnemyActor.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
@@ -175,10 +178,13 @@
     <ClInclude Include="CameraActor.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="DoorPuzzle.h" />
     <ClInclude Include="EMath.h" />
     <ClInclude Include="EnemyActor.h" />
     <ClInclude Include="Euler.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="PuzzleButton.h" />
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene1.h" />

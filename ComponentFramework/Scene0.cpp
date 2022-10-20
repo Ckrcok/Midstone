@@ -18,8 +18,11 @@ Scene0::~Scene0()
 
 bool Scene0::OnCreate()
 {
+	doorPuzzle = new DoorPuzzle();
+
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 	return true;
+
 }
 
 void Scene0::OnDestroy()
@@ -29,6 +32,8 @@ void Scene0::OnDestroy()
 
 void Scene0::HandleEvents(const SDL_Event& sdlEvent)
 {
+	doorPuzzle->HandleEvents(sdlEvent);
+
 	switch (sdlEvent.type)
 	{
 	case SDL_KEYDOWN:

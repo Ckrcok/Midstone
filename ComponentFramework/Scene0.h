@@ -5,6 +5,8 @@
 #include "Vector.h"
 #include "Matrix.h"
 
+#include "DoorPuzzle.h"
+
 using namespace MATH;
 
 /// Forward declarations 
@@ -13,6 +15,7 @@ union SDL_Event;
 class Scene0 : public Scene
 {
 private:
+	DoorPuzzle* doorPuzzle;
 
 public:
 	explicit Scene0();

@@ -84,10 +84,13 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scene3.cpp">
-      <Filter>Source Files\Scenes</Filter>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyActor.cpp">
+    <ClCompile Include="DoorPuzzle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PuzzleButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,10 +179,13 @@
     <ClInclude Include="Scene2.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scene3.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="Door.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyActor.h">
+    <ClInclude Include="DoorPuzzle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PuzzleButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

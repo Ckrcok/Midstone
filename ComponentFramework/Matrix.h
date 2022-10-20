@@ -165,12 +165,12 @@ namespace  MATH {
 		/// These functions set and return the columns of a Matrix4
 		/// Since the library is right-handed, the colunms are refered to 
 		/// as basis vectors.  
-		enum Colunm { zero = 0, one, two, three };
-		inline Vec4 getColumn(Colunm index) {
+		enum Column { zero = 0, one, two, three };
+		inline Vec4 getColumn(Column index) {
 			return Vec4(m[4 * index + 0], m[4 * index + 1], m[4 * index + 2], m[4 * index + 3]);
 		}
 
-		inline void setColunm(Colunm index, const Vec4 v) {
+		inline void setColumn(Column index, const Vec4 v) {
 			m[4 * index + 0] = v[0];
 			m[4 * index + 1] = v[1];
 			m[4 * index + 2] = v[2];
@@ -296,12 +296,12 @@ namespace  MATH {
 		/// These functions set and return the columns of a Matrix3
 		/// Since the library is right-handed, the colunms are refered to 
 		/// as basis vectors.  
-		enum class Colunm : int { zero = 0, one, two };
-		inline Vec3 getColumn(Colunm index) {
+		enum class Column : int { zero = 0, one, two };
+		inline Vec3 getColumn(Column index) {
 			return Vec3(m[3 * (int)index + 0], m[3 * (int)index + 1], m[3 * (int)index + 2]);
 		}
 
-		inline void setColunm(Colunm index, const Vec3 v) {
+		inline void setColumn(Column index, const Vec3 v) {
 			m[3 * (int)index + 0] = v[0];
 			m[3 * (int)index + 1] = v[1];
 			m[3 * (int)index + 2] = v[2];
