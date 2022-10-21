@@ -1,13 +1,16 @@
 #include "EnemyActor.h"
 
-EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_) : Actor(parent_)
+EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Actor* player_, Component* parent_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
+	player = player_;
 
-	Vec3 target = Vec3(10.0f, 0.0f, 0.0f);
+	Vec3 target = Vec3(10.0f, 0.0f, 10.0f);
+	Vec3 target2 = Vec3(0, 0, 0);
 	targets.push_back(target);
+	targets.push_back(target2);
 
 	if (targets.size() > 0)
 		currentTarget = 0;
@@ -66,6 +69,11 @@ void EnemyActor::Render()
 
 void EnemyActor::Update(float deltaTime)
 {
+	position = model_3D->GetPosition();;
+
+	//cout << "Postion: ";
+	//position.print();
+
 	// Handle stun
 	if (isStunned)
 	{
@@ -106,15 +114,19 @@ void EnemyActor::Update(float deltaTime)
 	else if (attackTarget == nullptr)
 	{
 		MoveToTarget(deltaTime);
-		FaceTarget(deltaTime);
+		//FaceTarget(deltaTime);
 	}
 
 
 	// Calculate distance between enemy and player
-	float distanceToPlayer = GetDistance(position, playerPos);
+	float distanceToPlayer = GetDistance(position, player->GetPosition());
 
-	/** // If player is in range, attack
-	if (distanceToPlayer < 0.2)
+	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
+	cout << "PlayerPos: ";
+	player->GetPosition().print();
+
+	/**/ // If player is in range, attack
+	if (distanceToPlayer < 0.1f)
 		AttackTarget(model_3D, 1.0f);
 	else
 		attackTarget = nullptr;
@@ -157,27 +169,22 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 void EnemyActor::MoveToTarget(float deltaTime)
 {
 	Vec3 targetPos = targets[currentTarget];
-	Vec3 direction = targetPos - position;
-
-	/**
-	cout << "TargetPos: " << targetPos.x << " || " << targetPos.y << " || " << targetPos.z << "   |||   "
-		<< "Direction: " << direction.x << " || " << direction.y << " || " << direction.z << endl;
-	/**/
-
 	float stepAmount = 0.1f;
 
 	// Move to the right
-	if (direction.x > 0 && position.x < targetPos.x)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
-	// Move to the left
-	else if (direction.x < 0 && position.x > targetPos.x)
+	if (position.x < targetPos.x)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-stepAmount, 0.0f, 0.0f)));
+	// Move to the left
+	else if (position.x > targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
 
-	// Move to the front
-	if (direction.z < 0 && position.z > targetPos.z)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
 	// Move to the back
-	if (direction.z > 0 && position.z < targetPos.z)
+	if (position.z < targetPos.z) {
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
+		cout << "Position.z is bigger than targetPos.z" << endl;
+	}
+	// Move to the front
+	else if (position.z > targetPos.z)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
 }
 

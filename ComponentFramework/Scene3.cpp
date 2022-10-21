@@ -10,7 +10,7 @@ Scene3::Scene3() : shader(nullptr)
 	int spawnPos = -2.0f;
 	for (int i = 0; i < 3; i++)
 	{
-		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), NULL);
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		spawnPos += 2;
 
 		enemies.push_back(enemy);
@@ -31,8 +31,10 @@ bool Scene3::OnCreate()
 	camera = new CameraActor(nullptr);
 	camera->OnCreate();
 
-	for (EnemyActor* enemy : enemies)
+	for (EnemyActor* enemy : enemies) {
+		enemy->SetPlayer(camera);
 		enemy->OnCreate();
+	}
 
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)

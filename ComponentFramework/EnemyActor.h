@@ -32,7 +32,7 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	Vec3 playerPos;
+	Actor* player;
 
 	// Stun variables
 	bool isStunned = false;
@@ -49,7 +49,7 @@ private:
 	float currentAttackValue;
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Component* parent_);
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Actor* player_, Component* parent_);
 	~EnemyActor();
 
 	bool OnCreate();
@@ -69,6 +69,11 @@ public:
 		currentStunTimer = stunTime_;
 		isStunned = true;
 	};
+
+	void SetPlayer(Actor* player_)
+	{
+		player = player_;
+	}
 };
 
 #endif

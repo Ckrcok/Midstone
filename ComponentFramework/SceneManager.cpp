@@ -8,6 +8,7 @@
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
+#include "Scene4.h"
 
 SceneManager::SceneManager() :
 	currentScene(nullptr), window(nullptr), timer(nullptr),
@@ -164,6 +165,10 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		status = currentScene->OnCreate();
 		break;
 
+	case SCENE_NUMBER::SCENE4:
+		currentScene = new Scene4(window->getWindow());
+		status = currentScene->OnCreate();
+		break;
 
 	default:
 		Debug::Error("Incorrect scene number assigned in the manager", __FILE__, __LINE__);
