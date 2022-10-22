@@ -6,7 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-GameEngineLog.txt
+ComponentFramework/GameEngineLog.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -28,6 +28,7 @@ bool Scene2::OnCreate() {
 
 	camera = new CameraActor(nullptr);
 	camera->OnCreate();
+	
 
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
@@ -112,8 +113,10 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f))); // test if update is working
-	sphere->GetPosition().print();
+	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(1.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	//sphere->GetPosition().print();
+	//camera->GetTranslationMatrix().print();
+	camera->GetPlayerPosition().print();
 	
 
 }
