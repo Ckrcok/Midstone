@@ -1,4 +1,3 @@
-
 #include "Window.h"
 #include "Debug.h"
 
@@ -38,6 +37,7 @@ bool Window::OnCreate(std::string name_, int width_, int height_)
 		Debug::FatalError("Glew initialization failed", __FILE__, __LINE__);
 		return false;
 	}
+
 	glViewport(0, 0, width, height);
 	return true;
 }
@@ -46,7 +46,11 @@ void Window::OnDestroy()
 {
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer);
 	window = nullptr;
+
+	///Exit the SDL subsystems
+	//SDL_Quit();
 }
 
 void Window::getInstalledOpenGLInfo(int* major, int* minor)

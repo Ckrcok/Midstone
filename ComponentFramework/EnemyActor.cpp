@@ -1,11 +1,11 @@
 #include "EnemyActor.h"
 
-EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Actor* player_, Component* parent_) : Actor(parent_)
+EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Actor* camera_, Component* parent_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	player = player_;
+	camera = camera_;
 
 	Vec3 target = Vec3(10.0f, 0.0f, 10.0f);
 	Vec3 target2 = Vec3(0, 0, 0);
@@ -69,7 +69,16 @@ void EnemyActor::Render()
 
 void EnemyActor::Update(float deltaTime)
 {
-	position = model_3D->GetPosition();;
+	position = model_3D->GetPosition();
+
+	cout << "Enemy pos: ";
+	model_3D->GetPosition().print();
+
+	cout << "Cam pos: ";
+	camera->GetPosition().print();
+
+	// Calculate distance between enemy and player
+	float distanceToPlayer = GetDistance(position, camera->GetPosition());
 
 	//cout << "Postion: ";
 	//position.print();
@@ -118,15 +127,11 @@ void EnemyActor::Update(float deltaTime)
 	}
 
 
-	// Calculate distance between enemy and player
-	float distanceToPlayer = GetDistance(position, player->GetPosition());
-
 	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
-	cout << "PlayerPos: ";
-	player->GetPosition().print();
+	cout << "\n";
 
 	/**/ // If player is in range, attack
-	if (distanceToPlayer < 0.1f)
+	if (distanceToPlayer < 0.05f)
 		AttackTarget(model_3D, 1.0f);
 	else
 		attackTarget = nullptr;
@@ -179,10 +184,8 @@ void EnemyActor::MoveToTarget(float deltaTime)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
 
 	// Move to the back
-	if (position.z < targetPos.z) {
+	if (position.z < targetPos.z)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
-		cout << "Position.z is bigger than targetPos.z" << endl;
-	}
 	// Move to the front
 	else if (position.z > targetPos.z)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
@@ -219,9 +222,17 @@ void EnemyActor::FaceTarget(float deltaTime)
 
 float EnemyActor::GetDistance(Vec3 p, Vec3 q)
 {
+	/**
+	cout << "Enemy Pos: ";
+	p.print();
+
+	cout << "Camera Pos: ";
+	q.print();
+	/**/
+
 	// Distance = sqrt((pX-qX)^2 + (pY-qY)^2)
 	return sqrt((p.x - q.x) * (p.x - q.x) +
-		(p.y - q.y) * (p.y - q.y));
+		(p.z - q.z) * (p.z - q.z));
 }
 
 void EnemyActor::Attack(float deltaTime)

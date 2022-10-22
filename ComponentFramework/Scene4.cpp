@@ -9,7 +9,16 @@ Scene4::Scene4(SDL_Window* sdlWindow_)
 	xAxis = 25.0f;
 	yAxis = 15.0f;
 
-	renderer = SDL_GetRenderer(window);
+	//renderer = SDL_GetRenderer(window);
+
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (renderer == nullptr)
+	{
+		std::cout << "Can't create the renderer\n";
+	}
+
+	cout << "WindowScene: " << window << endl;
+	cout << "RendererScene: " << renderer << endl;
 }
 
 Scene4::~Scene4()
@@ -44,10 +53,7 @@ bool Scene4::OnCreate()
 	return true;
 }
 
-void Scene4::OnDestroy()
-{
-
-}
+void Scene4::OnDestroy() {}
 
 void Scene4::Render() const
 {
@@ -70,6 +76,8 @@ void Scene4::Render() const
 	square.y = static_cast<int>(screenCoords.y - 0.5f * h);
 	square.w = w;
 	square.h = h;
+
+	cout << "Render in RenderFunction: " << renderer << endl;
 
 	// Clear screen
 	SDL_RenderClear(renderer);

@@ -8,7 +8,7 @@ Scene3::Scene3() : shader(nullptr)
 	trackball = new Trackball();
 
 	int spawnPos = -2.0f;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		spawnPos += 2;
@@ -32,7 +32,7 @@ bool Scene3::OnCreate()
 	camera->OnCreate();
 
 	for (EnemyActor* enemy : enemies) {
-		enemy->SetPlayer(camera);
+		enemy->SetCamera(camera);
 		enemy->OnCreate();
 	}
 
@@ -114,6 +114,9 @@ void Scene3::Update(const float deltaTime)
 {
 	for (EnemyActor* enemy : enemies)
 		enemy->Update(deltaTime);
+
+	//cout << "CameraPos Scene: ";
+	//camera->GetPosition().print();
 }
 
 void Scene3::HandleEvents(const SDL_Event& sdlEvent)

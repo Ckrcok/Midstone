@@ -32,7 +32,7 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	Actor* player;
+	Actor* camera;
 
 	// Stun variables
 	bool isStunned = false;
@@ -70,9 +70,12 @@ public:
 		isStunned = true;
 	};
 
-	void SetPlayer(Actor* player_)
+	void SetCamera(Actor* camera_)
 	{
-		player = player_;
+		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
+
+		camera = nullptr;
+		camera = camera_;
 	}
 };
 

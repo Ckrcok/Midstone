@@ -14,6 +14,7 @@ private:
 	int width, height;
 	SDL_Window* window;
 	SDL_GLContext context;
+	struct SDL_Renderer* renderer;
 
 public:
 	Window(const Window&) = delete;

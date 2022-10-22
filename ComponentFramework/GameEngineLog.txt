@@ -1,52 +1,7 @@
-Fri Oct 21 00:43:52 2022
+Sat Oct 22 15:21:08 2022
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 NVIDIA 522.25
 [INFO]: Graphics card vendor NVIDIA Corporation
 [INFO]: Graphics card name NVIDIA GeForce RTX 2060/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
-[INFO]: Created Scene2: 
-[INFO]: Loading assets Scene3: 
-[INFO]: Uniforms:
-"projectionMatrix" loc:1
-"skyboxTexture" loc:2
-"viewMatrix" loc:0
-
-[INFO]: Uniforms:
-"diffuse[0]" loc:0
-"lightPos[0]" loc:4
-"modelMatrix" loc:8
-"myTexture" loc:9
-"projectionMatrix" loc:10
-"specular[0]" loc:11
-"viewMatrix" loc:15
-
-[INFO]: Uniforms:
-"diffuse[0]" loc:0
-"lightPos[0]" loc:4
-"modelMatrix" loc:8
-"myTexture" loc:9
-"projectionMatrix" loc:10
-"specular[0]" loc:11
-"viewMatrix" loc:15
-
-[INFO]: Uniforms:
-"diffuse[0]" loc:0
-"lightPos[0]" loc:4
-"modelMatrix" loc:8
-"myTexture" loc:9
-"projectionMatrix" loc:10
-"specular[0]" loc:11
-"viewMatrix" loc:15
-
-[INFO]: Uniforms:
-"diffuse[0]" loc:0
-"lightPos[0]" loc:4
-"modelMatrix" loc:8
-"myTexture" loc:9
-"projectionMatrix" loc:10
-"specular[0]" loc:11
-"viewMatrix" loc:15
-
-[INFO]: Deleting assets Scene3: 
-[INFO]: Deleted Scene3: 
 [INFO]: Deleting the SceneManager
