@@ -26,9 +26,9 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
-	
+
 
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
@@ -117,7 +117,7 @@ void Scene2::Update(const float deltaTime) {
 	//sphere->GetPosition().print();
 	//camera->GetTranslationMatrix().print();
 	camera->GetPlayerPosition().print();
-	
+
 
 }
 

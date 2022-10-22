@@ -32,7 +32,7 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	Actor* camera;
+	CameraActor* camera;
 
 	// Stun variables
 	bool isStunned = false;
@@ -49,7 +49,7 @@ private:
 	float currentAttackValue;
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, Actor* player_, Component* parent_);
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
 	~EnemyActor();
 
 	bool OnCreate();
@@ -70,7 +70,7 @@ public:
 		isStunned = true;
 	};
 
-	void SetCamera(Actor* camera_)
+	void SetCamera(CameraActor* camera_)
 	{
 		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
 

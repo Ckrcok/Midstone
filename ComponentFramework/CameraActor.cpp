@@ -4,15 +4,15 @@
 
 using namespace MATH;
 
-CameraActor::CameraActor(Component* parent_) :Actor(parent_)
+CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 {
 	trackball = new Trackball();
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
 	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 
-	SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -10.0f)));
-	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -10.0f)));
+	//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -10.0f)));
+	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(spawnPos_));
 
 	//viewMatrix = rotationMatrix * translationMatrix;
 	translationMatrix.print("Translation");
@@ -31,22 +31,22 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
-			SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
-			SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
-			SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
-			SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 		}
 

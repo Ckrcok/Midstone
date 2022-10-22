@@ -11,7 +11,7 @@ using namespace MATH;
 class CameraActor : public Actor
 {
 public:
-	CameraActor(Component* parent_);
+	CameraActor(Vec3 spawnPos_, Component* parent_);
 	~CameraActor();
 	void HandleEvents(const SDL_Event& sdlEvent);
 	bool OnCreate() override;
