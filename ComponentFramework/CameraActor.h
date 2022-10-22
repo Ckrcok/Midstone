@@ -25,6 +25,7 @@ public:
 	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
 	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
+	inline Vec3 GetPlayerPosition() { return Vec3(GetTranslationMatrix()[12], GetTranslationMatrix()[13], GetTranslationMatrix()[14]); }
 
 
 
