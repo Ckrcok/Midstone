@@ -26,9 +26,9 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
-	
+
 
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
@@ -37,7 +37,7 @@ bool Scene2::OnCreate() {
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
-	
+
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
@@ -83,31 +83,31 @@ void Scene2::OnDestroy() {
 		delete sphere;
 	}
 
-	
+
 	shader->OnDestroy();
 	delete shader;
 
 }
-void Scene2::HandleEvents(const SDL_Event &sdlEvent) {
+void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 
 	camera->HandleEvents(sdlEvent);
 
-	switch( sdlEvent.type ) {
-    case SDL_KEYDOWN:
+	switch (sdlEvent.type) {
+	case SDL_KEYDOWN:
 		break;
 
-	case SDL_MOUSEMOTION:          
+	case SDL_MOUSEMOTION:
 		break;
 
-	case SDL_MOUSEBUTTONDOWN:              
-		break; 
+	case SDL_MOUSEBUTTONDOWN:
+		break;
 
-	case SDL_MOUSEBUTTONUP:            
-	break;
+	case SDL_MOUSEBUTTONUP:
+		break;
 
 	default:
 		break;
-    }
+	}
 }
 
 void Scene2::Update(const float deltaTime) {
@@ -117,7 +117,7 @@ void Scene2::Update(const float deltaTime) {
 	//sphere->GetPosition().print();
 	//camera->GetTranslationMatrix().print();
 	camera->GetPlayerPosition().print();
-	
+
 
 }
 
@@ -130,7 +130,7 @@ void Scene2::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	camera->Render();
-	
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
@@ -154,4 +154,4 @@ void Scene2::Render() const {
 
 
 
-	
+

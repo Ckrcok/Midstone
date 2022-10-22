@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -153,11 +153,14 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorPuzzle.cpp" />
     <ClCompile Include="EMath.cpp" />
+    <ClCompile Include="EnemyActor.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Scene3.cpp" />
+    <ClCompile Include="Scene4.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MMath.cpp" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorPuzzle.h" />
     <ClInclude Include="EMath.h" />
+    <ClInclude Include="EnemyActor.h" />
     <ClInclude Include="Euler.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PuzzleButton.h" />
@@ -186,6 +190,8 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
+    <ClInclude Include="Scene3.h" />
+    <ClInclude Include="Scene4.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MMath.h" />

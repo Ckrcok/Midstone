@@ -6,13 +6,12 @@
 class SceneManager
 {
 public:
-
 	SceneManager();
 	~SceneManager();
+
 	void Run();
 	bool Initialize(std::string name_, int width_, int height_);
 	void HandleEvents();
-
 
 private:
 	enum class SCENE_NUMBER
@@ -35,6 +34,5 @@ private:
 	bool fullScreen;
 	void BuildNewScene(SCENE_NUMBER scene_);
 };
-
 
 #endif // SCENEMANAGER_H
