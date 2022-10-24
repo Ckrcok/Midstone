@@ -8,6 +8,6 @@ using namespace MATH;
 
 struct Collision
 {
-    static int boxBoxCollision(Box& a, Box& b);
-    static float distancePointBox(Vec3 point_, Box theBox_);
+    static int boxBoxCollision( Box& a,  Box& b);
+    static float distancePointBox(Vec3 point_, const Box theBox_);
 };

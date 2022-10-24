@@ -1,25 +1,26 @@
-Tue Oct 11 11:02:20 2022
+Mon Oct 24 10:54:04 2022
 [INFO]: Starting the SceneManager
-[INFO]: OpenGL version: 4.6.0 NVIDIA 512.59
-[INFO]: Graphics card vendor NVIDIA Corporation
-[INFO]: Graphics card name NVIDIA GeForce RTX 3060 Laptop GPU/PCIe/SSE2
-[INFO]: GLSL Version 4.60 NVIDIA
-[INFO]: Created Scene2: 
-[INFO]: Loading assets Scene2: 
+[INFO]: OpenGL version: 4.6.0 - Build 27.20.100.8729
+[INFO]: Graphics card vendor Intel
+[INFO]: Graphics card name Intel(R) UHD Graphics 630
+[INFO]: GLSL Version 4.60 - Build 27.20.100.8729
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
 [INFO]: Uniforms:
 "projectionMatrix" loc:1
-"skyboxTexture" loc:2
 "viewMatrix" loc:0
+"skyboxTexture" loc:2
 
 [INFO]: Uniforms:
-"diffuse[0]" loc:0
-"lightPos[0]" loc:4
-"modelMatrix" loc:8
-"myTexture" loc:9
-"projectionMatrix" loc:10
-"specular[0]" loc:11
-"viewMatrix" loc:15
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+
+[INFO]: Uniforms:
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
 
 [INFO]: Deleting assets Scene2: 
-[INFO]: Deleted Scene2: 
+[INFO]: Deleted Scene0: 
 [INFO]: Deleting the SceneManager

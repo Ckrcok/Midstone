@@ -48,8 +48,8 @@ private:
 	Vec3 minCornerB = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 maxCornerB = Vec3(0.0f, 0.0f, 0.0f);
 
-	Box redBox = Box(minCornerA, maxCornerA);
-	Box blueBox = Box(minCornerB, maxCornerB);
+	Box* redBox; //= Box(minCornerA, maxCornerA);
+	Box* blueBox;//= Box(minCornerB, maxCornerB);
 
 
 public:

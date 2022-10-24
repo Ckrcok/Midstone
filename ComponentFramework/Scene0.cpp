@@ -30,12 +30,12 @@ bool Scene0::OnCreate() {
 	camera->OnCreate();
 
 	sphere = new Actor(nullptr);
-	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	sphere->SetMesh(new Mesh(nullptr, "meshes/wallBasicCornerPivot.obj"));
 	sphere->GetMesh()->OnCreate();
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
-
+	blueBox = new Box(minCornerA, maxCornerA);
 
 
 	
@@ -46,6 +46,7 @@ bool Scene0::OnCreate() {
 	cube->SetTexture(new Texture());
 	cube->GetTexture()->LoadImage("textures/white_sphere.png");
 	cube->OnCreate();
+	redBox = new Box(minCornerB, maxCornerB);
 
 
 
@@ -136,7 +137,7 @@ void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 			sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 
 		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {//FRONT
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {//FRONT
 			sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 
 		}
@@ -154,15 +155,17 @@ void Scene0::Update(const float deltaTime) {
 	maxCornerA = resultA + Vec3(1.0f, 1.0f, 1.0f);
 
 	resultB = cube->GetModelMatrix() * test;
+	//resultA.print("Pos");
 	minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 	maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
-	redBox.updateVertPos(minCornerA, maxCornerA);
-	blueBox.updateVertPos(minCornerB, maxCornerB);
+	redBox->updateVertPos(minCornerA, maxCornerA);
+	blueBox->updateVertPos(minCornerB, maxCornerB);
 
 
-	int a = Collision::boxBoxCollision(blueBox, redBox);
+	int a = Collision::boxBoxCollision(*blueBox, *redBox);
 	printf("%i", a);
 	//cube->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 0.0f, 1.0f))); // test if update is working
+	//sphere->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 0.0f, 1.0f))); // test if update is working
 
 
 }
