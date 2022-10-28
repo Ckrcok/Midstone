@@ -30,7 +30,7 @@ bool Scene0::OnCreate() {
 	camera->OnCreate();
 
 	sphere = new Actor(nullptr);
-	sphere->SetMesh(new Mesh(nullptr, "meshes/wallBasicCornerPivot.obj"));
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	sphere->GetMesh()->OnCreate();
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
