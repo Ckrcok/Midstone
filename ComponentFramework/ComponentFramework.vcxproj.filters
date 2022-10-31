@@ -237,5 +237,11 @@
     <None Include="shaders\skyboxVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\defaultBlueFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\defaultBlueVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

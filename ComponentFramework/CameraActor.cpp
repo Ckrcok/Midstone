@@ -17,6 +17,7 @@ CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 	//viewMatrix = rotationMatrix * translationMatrix;
 	translationMatrix.print("Translation");
 	rotationMatrix.print("Rotation");
+	//modelMatrix.print("Rotation");
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -27,8 +28,28 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
+<<<<<<< Updated upstream
+		translationMatrix.print("Translation");
+		//// MOVE - STRAFE
+		//if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
+		//{
+		//	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
+		//{
+		//	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
+		//{
+		//	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
+		//{
+		//	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+		//}
+=======
 
-		// MOVE - STRAFE
+		//// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
 			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
@@ -49,6 +70,7 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 			//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 		}
+>>>>>>> Stashed changes
 
 		// LOOK AROUND --- solve the issue with tilting
 		float rotateConstant = 10.0f;
