@@ -15,11 +15,13 @@ public:
 	Vec3 minCoords;
 
 	//Constructors
-	Box() { minCoords = Vec3(0.0f,0.0f,0.0f); maxCoords = Vec3(0.0f, 0.0f, 0.0f);}
+	Box(){ 
+		minCoords = Vec3(0.0f,0.0f,0.0f); 
+		maxCoords = Vec3(0.0f, 0.0f, 0.0f);}
 
-	Box(Vec3 minCoords_, Vec3 maxCoords_) { minCoords = minCoords_; maxCoords = maxCoords_;}
-
-
+	Box(Vec3 minCoords_, Vec3 maxCoords_) 
+	{ minCoords = minCoords_; 
+	maxCoords = maxCoords_;}
 	void updateVertPos(Vec3 minCoords_, Vec3 maxCoords_) { minCoords = minCoords_; maxCoords = maxCoords_; }
 
 };
