@@ -35,11 +35,11 @@ Scene0::~Scene0()
 
 bool Scene0::OnCreate()
 {
-	doorPuzzle = new DoorPuzzle();
+	//doorPuzzle = new DoorPuzzle();
 
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
 
 	//ignore this ugly code made for testing
