@@ -11,7 +11,7 @@ using namespace MATH;
 class CameraActor : public Actor
 {
 public:
-	CameraActor(Component* parent_);
+	CameraActor(Vec3 spawnPos_, Component* parent_);
 	~CameraActor();
 	void HandleEvents(const SDL_Event& sdlEvent);
 	bool OnCreate() override;
@@ -25,6 +25,7 @@ public:
 	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
 	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
+	inline Vec3 GetPlayerPosition() { return Vec3(GetTranslationMatrix()[12], GetTranslationMatrix()[13], GetTranslationMatrix()[14]); }
 
 
 

@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+ComponentFramework/GameEngineLog.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -43,6 +44,9 @@ dlldata.c
 *_i.h
 *.ilk
 *.meta
+
+*.obj
+
 *.pch
 *.pdb
 *.pgc

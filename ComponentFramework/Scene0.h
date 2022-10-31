@@ -18,8 +18,8 @@ class Actor;
 class Shader;
 // class Texture; --> CameraActor handles this now
 
-
-class Scene0 : public Scene {
+class Scene0 : public Scene
+{
 private:
 	vector<Wall*> theWalls;
 

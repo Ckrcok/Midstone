@@ -84,14 +84,23 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
+    <ClCompile Include="Door.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
+    <ClCompile Include="DoorPuzzle.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PuzzleButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene4.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,14 +188,23 @@
     <ClInclude Include="Scene2.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
+    <ClInclude Include="Door.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
+    <ClInclude Include="DoorPuzzle.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PuzzleButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene4.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -219,16 +237,11 @@
     <None Include="shaders\skyboxVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
-<<<<<<< Updated upstream
-    <None Include="shaders\defaultBlueFrag.glsl" />
-    <None Include="shaders\defaultBlueVert.glsl" />
-=======
     <None Include="shaders\defaultBlueFrag.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\defaultBlueVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
->>>>>>> Stashed changes
   </ItemGroup>
 </Project>

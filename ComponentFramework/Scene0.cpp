@@ -27,19 +27,19 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	}
 }
 
-Scene0::~Scene0() {
+Scene0::~Scene0()
+{
 	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
 	if (trackball) delete trackball;
 }
 
-bool Scene0::OnCreate() {
+bool Scene0::OnCreate()
+{
+	doorPuzzle = new DoorPuzzle();
+
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
-<<<<<<< Updated upstream
 	camera = new CameraActor(nullptr);
-=======
-	camera = new CameraActor(Vec3(0.0f, -5.5f, 0.0f), nullptr);
->>>>>>> Stashed changes
 	camera->OnCreate();
 
 	//ignore this ugly code made for testing
@@ -51,13 +51,10 @@ bool Scene0::OnCreate() {
 	sphere->OnCreate();
 	sphere->SetModelMatrix(MMath::translate(Vec3(10.0f, 0.0f, 0.0f)));
 	blueBox = new Box(minCornerA, maxCornerA);
-<<<<<<< Updated upstream
 
 
 	
 
-=======
->>>>>>> Stashed changes
 	cube = new Actor(nullptr);
 	cube->SetMesh(new Mesh(nullptr, "meshes/wallCenter.obj"));
 	cube->GetMesh()->OnCreate();
@@ -115,6 +112,7 @@ bool Scene0::OnCreate() {
 	specular[3] = 0.5 * diffuse[3];
 
 	return true;
+
 }
 
 void Scene0::OnDestroy() {
