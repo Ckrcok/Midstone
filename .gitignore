@@ -7,6 +7,8 @@
 *.userosscache
 *.sln.docstates
 ComponentFramework/GameEngineLog.txt
+ComponentFramework/ComponentFramework.vcxproj
+ComponentFramework/ComponentFramework.vcxproj.filters
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
