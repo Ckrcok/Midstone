@@ -11,13 +11,7 @@ CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
 	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 
-	//SetModelMatrix(GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -10.0f)));
-	SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(spawnPos_));
-
-	//viewMatrix = rotationMatrix * translationMatrix;
-	translationMatrix.print("Translation");
-	rotationMatrix.print("Rotation");
-	//modelMatrix.print("Rotation");
+	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_)); // we should be careful with this!!!
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -29,11 +23,13 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
 
-		translationMatrix.print("Translation");
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			// elapsed time 
+			// hookes law
+			// spring movement
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
@@ -47,6 +43,18 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 		}
+
+		// Elevate
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_R)
+		{
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));			
+		}
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_F)
+		{
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+		}
+
+
 
 		// LOOK AROUND --- solve the issue with tilting
 		float rotateConstant = 10.0f;
