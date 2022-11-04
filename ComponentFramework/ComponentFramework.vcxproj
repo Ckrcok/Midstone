@@ -154,9 +154,6 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="GameEngineLog.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shaders\defaultBlueFrag.glsl" />
     <None Include="shaders\defaultBlueVert.glsl" />
     <None Include="shaders\defaultFrag.glsl" />

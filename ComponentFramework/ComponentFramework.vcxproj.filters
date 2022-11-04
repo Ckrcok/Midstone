@@ -226,11 +226,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="GameEngineLog.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shaders\defaultFrag.glsl">
       <Filter>Resource Files</Filter>
     </None>
