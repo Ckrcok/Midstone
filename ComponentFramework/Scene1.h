@@ -5,7 +5,7 @@
 #include "Matrix.h"
 using namespace MATH;
 
-/// Forward declarations 
+/// Forward declarations
 union SDL_Event;
 class Actor;
 class Mesh;
@@ -25,7 +25,7 @@ private:
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
-	
+
 public:
 	explicit Scene1();
 	virtual ~Scene1();
