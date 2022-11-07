@@ -42,6 +42,10 @@ private:
 	float t = 0.0f;
 	Quaternion initialOrientation;
 
+	// Rotation
+	float t = 0.0f;
+	Quaternion initialOrientation;
+
 	// Stun variables
 	bool isStunned = false;
 	float currentStunTimer;

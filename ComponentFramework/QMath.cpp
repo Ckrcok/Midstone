@@ -102,10 +102,48 @@ Vec3 QMath::rotate(const Vec3& v, const Quaternion& q) {
 	Vec3 uuv = VMath::cross(q.v, uv);
 	return v + ((uv * q.w) + uuv) * 2.0f;***/
 }
+<<<<<<< Updated upstream
 
 /// 2022-04-04 A quaternion dot product
 inline static float dot(const Quaternion& a, const Quaternion& b) {
 	return((a.w * b.w) + (a.ijk.x * b.ijk.x) + (a.ijk.y * b.ijk.y) + (a.ijk.z * b.ijk.z));
+=======
+
+/// 2022-04-04 A quaternion dot product
+inline static float dot(const Quaternion& a, const Quaternion& b) {
+	return((a.w * b.w) + (a.ijk.x * b.ijk.x) + (a.ijk.y * b.ijk.y) + (a.ijk.z * b.ijk.z));
+}
+
+Quaternion QMath::slerp(const Quaternion& qa, const Quaternion& qb, float t) {
+	Quaternion q1 = qa;
+	Quaternion q2 = qb;
+	float cosTheta = dot(q1, q2); /// if cosTheta is nearly 1.0 will cause divide by zero error
+
+	if (cosTheta < 0.0f) {		/// if cosTheta is negative, the angle is oblique. The shortest path 
+		q2 = -q2;				/// would be the other representation of the same angle -q2 
+		cosTheta = cosTheta;
+	}
+	float c1, c2;
+	///If cosTheta is very close to 1.0 just lerp it to prevent divide by zero
+	if (cosTheta > VERY_CLOSE_TO_ONE) {
+		c1 = 1.0f - t;
+		c2 = t;
+	}
+	else {
+		float theta = acos(cosTheta);
+		float sinTheta = sin(theta);
+		////or float sinTheta = sqrt(1.0f - (cosTheta * cosTheta));
+		///float theta = atan2(sinTheta, cosTheta);
+
+		c1 = sin((1.0f - t) * theta) / sinTheta;
+		c2 = sin(t * theta) / sinTheta;
+	}
+	Vec3 ijk(c1 * q1.ijk.x + c2 * q2.ijk.x,
+		c1 * q1.ijk.y + c2 * q2.ijk.y,
+		c1 * q1.ijk.z + c2 * q2.ijk.z);
+	return Quaternion(c1 * q1.w + c2 * q2.w, ijk);
+
+>>>>>>> Stashed changes
 }
 
 Quaternion QMath::slerp(const Quaternion& qa, const Quaternion& qb, float t) {

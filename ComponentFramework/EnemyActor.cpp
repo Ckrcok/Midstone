@@ -110,9 +110,14 @@ void EnemyActor::Update(float deltaTime)
 		FaceTarget(deltaTime);
 	}
 
+<<<<<<< Updated upstream
 
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, playerPos);
+=======
+	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
+	cout << "\n";
+>>>>>>> Stashed changes
 
 	/** // If player is in range, attack
 	if (distanceToPlayer < 0.2)
@@ -152,11 +157,21 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_B)
 			attackTarget = nullptr;
 
+<<<<<<< Updated upstream
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Z) {
 			orientation = QMath::angleAxisRotation(45, Vec3(0.0f, 1.0f, 0.0f));
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * QMath::toMatrix4(orientation));
 		}
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X)
+=======
+		// Custom rotation
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Z)
+		{
+			orientation = QMath::angleAxisRotation(45, Vec3(0.0f, 1.0f, 0.0f));
+			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * QMath::toMatrix4(orientation));
+		}
+		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X)
+>>>>>>> Stashed changes
 		{
 			orientation = QMath::angleAxisRotation(-45, Vec3(0.0f, 1.0f, 0.0f));
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * QMath::toMatrix4(orientation));
@@ -195,6 +210,7 @@ void EnemyActor::MoveToTarget(float deltaTime)
 void EnemyActor::FaceTarget(float deltaTime)
 {
 	// [TODO] Implement face to target code
+<<<<<<< Updated upstream
 
 	/**
 		Vec3 targetPos = targets[currentTarget];
@@ -205,6 +221,10 @@ void EnemyActor::FaceTarget(float deltaTime)
 	/**/
 
 	Vec3 direction = playerPos - position;
+=======
+
+	Vec3 direction = camera->GetPlayerPosition() - position;
+>>>>>>> Stashed changes
 
 	cout << "Direction: " << endl;
 	direction.print();
@@ -213,6 +233,7 @@ void EnemyActor::FaceTarget(float deltaTime)
 	float angleDegrees = angleRadians * (180 / M_PI);
 	cout << "AngleRadians: " << angleRadians << endl;
 
+<<<<<<< Updated upstream
 	//Vec3 multiplication = Vec3((direction.x * 0), (direction.y * 0), (direction.z * 1));
 
 	//float angleRadians = (direction * Vec3(0, 0, 1)) / VMath::normalize(direction);
@@ -231,6 +252,20 @@ void EnemyActor::FaceTarget(float deltaTime)
 		cout << "Orientation: " << endl;
 		orientation.print();
 
+=======
+	if (t < 1.1f)
+	{
+		Quaternion finalOrientation = QMath::angleAxisRotation(angleDegrees, Vec3(0, 1, 0));
+		orientation = QMath::slerp(initialOrientation, finalOrientation, t);
+		orientation = orientation * (1.0f / QMath::magnitude(orientation));
+
+		Matrix4 identityMatrix;
+		model_3D->SetModelMatrix(identityMatrix * QMath::toMatrix4(orientation));
+
+		cout << "Orientation: " << endl;
+		orientation.print();
+
+>>>>>>> Stashed changes
 		t += 0.1f;
 	}
 }
