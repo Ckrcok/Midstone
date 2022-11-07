@@ -112,6 +112,8 @@ void Scene3::Render() const
 
 void Scene3::Update(const float deltaTime)
 {
+	camera->Update(deltaTime);
+
 	for (EnemyActor* enemy : enemies)
 		enemy->Update(deltaTime);
 

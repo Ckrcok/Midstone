@@ -126,7 +126,6 @@ void EnemyActor::Update(float deltaTime)
 		//FaceTarget(deltaTime);
 	}
 
-
 	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
 	cout << "\n";
 

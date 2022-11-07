@@ -5,18 +5,25 @@
 #include "MMath.h"
 #include "Matrix.h"
 #include "Skybox.h"
+#include "PlayerGun.h"
 
 using namespace MATH;
 
 class CameraActor : public Actor
 {
+private:
+	PlayerGun* playerGun;
+
 public:
 	CameraActor(Vec3 spawnPos_, Component* parent_);
 	~CameraActor();
+
 	void HandleEvents(const SDL_Event& sdlEvent);
+	void Update(float deltaTime);
 	bool OnCreate() override;
 	void OnDestroy() override;
 	void Render() const override;
+
 	inline Matrix4 GetProjectionMatrix() { return projectionMatrix; }
 	inline Matrix4 GetViewMatrix() { return viewMatrix; }
 
@@ -25,7 +32,7 @@ public:
 	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
 	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
-	
+
 	inline Vec3 GetCameraActorPosition()
 	{
 		float cameraActorPosX = GetViewMatrix()[12];
@@ -84,7 +91,7 @@ public:
 	}
 
 	inline Vec3 GetPlayerPosition() { return GetCameraActorPosition(); }
-	
+
 
 
 
@@ -96,7 +103,7 @@ private:
 	Trackball* trackball;
 	Skybox* skybox;
 	Vec3 CameraActorPosition;
-	
-	
+
+
 };
 
