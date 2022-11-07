@@ -221,7 +221,8 @@ bool Scene0::OnCreate()
 
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(Vec3(0.0f, 10.0f, 0.0f), nullptr);
+
+	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
 
 

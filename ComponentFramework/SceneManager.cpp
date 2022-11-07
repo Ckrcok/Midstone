@@ -114,6 +114,14 @@ void SceneManager::HandleEvents()
 				BuildNewScene(SCENE_NUMBER::SCENE2);
 				break;
 
+			case SDL_SCANCODE_F3:
+				BuildNewScene(SCENE_NUMBER::SCENE3);
+				break;
+
+			case SDL_SCANCODE_F4:
+				BuildNewScene(SCENE_NUMBER::SCENE4);
+				break;
+
 			default:
 				break;
 			}
