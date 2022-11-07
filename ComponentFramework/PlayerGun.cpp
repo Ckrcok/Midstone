@@ -61,7 +61,7 @@ void PlayerGun::Render()
 void PlayerGun::Update(float deltaTime)
 {
 	position = camera->GetPlayerPosition() + offset;
-	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
+	model_3D->SetModelMatrix(MMath::translate(position));
 }
 
 void PlayerGun::HandleEvents(const SDL_Event& sdlEvent) {}

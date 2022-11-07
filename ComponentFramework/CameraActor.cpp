@@ -13,7 +13,7 @@ CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 
 	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_)); // we should be careful with this!!!
 
-	playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, this);
+	playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, NULL);
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)

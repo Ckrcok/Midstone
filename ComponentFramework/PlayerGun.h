@@ -25,7 +25,7 @@ private:
 	// Model
 	Actor* model_3D;
 	Shader* shader;
-
+	
 	// Player
 	CameraActor* camera;
 
