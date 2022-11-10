@@ -26,14 +26,14 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	sphere->GetMesh()->OnCreate();
-	sphere->SetModelMatrix(MMath::translate(Vec3(1.0f, 2.0f, -3.0f)));
+	sphere->SetModelMatrix(MMath::translate(Vec3(2.0f, 5.0f, -20.0f)));
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
@@ -113,10 +113,17 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(1.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
-	//sphere->GetPosition().print();
-	//camera->GetTranslationMatrix().print();
-	camera->GetPlayerPosition().print();
+	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	printf("Sphere: \t");	
+	sphere->GetPosition().print();
+	printf("\n\n");
+	printf("\n\n");
+	printf("Camera1: \t");
+	camera->GetCameraActorPosition().print();
+	printf("\n\n");
+	//printf("P: \t");
+	//camera->GetPlayerPosition().print();
+	camera->GetViewMatrix().print();
 
 
 }
