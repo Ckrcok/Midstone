@@ -28,6 +28,7 @@ private:
 
 	Actor* sphere;
 	Actor* cube;
+	Actor* skull;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
 	Shader* shaderCube;
@@ -41,6 +42,7 @@ private:
 	Vec4 specular[10];
 	
 
+	 float totalTime = 0.0f;
 
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 resultA = Vec3(1.0f, 1.0f, 1.0f);

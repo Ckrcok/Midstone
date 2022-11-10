@@ -16,6 +16,7 @@ using namespace std;
 class  Wall : public Actor
 {
 public:
+
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;

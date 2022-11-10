@@ -14,12 +14,11 @@ Wall::~Wall() {}
 bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
-	objFile->SetMesh(new Mesh(nullptr, "meshes/wallFinal.obj"));
+	objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	objFile->GetMesh()->OnCreate();
-
-	objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
-	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
-
+	objFile->SetModelMatrix(MMath::translate(position) * MMath::rotate(rotation, rotationAxis));
+	//objFile->SetModelMatrix(
+		//MMath::rotate(rotation, rotationAxis) * MMath::translate(position));
 	objFile->SetTexture(new Texture());
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
@@ -51,6 +50,7 @@ void Wall::Render()
 {
 	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
-	objFile->Render();
+	objFile->GetMesh()->Render(GL_TRIANGLES);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

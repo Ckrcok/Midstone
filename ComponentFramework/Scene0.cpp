@@ -48,31 +48,31 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	Wall* wall_o26 = new Wall(Vec3(-24.0f, 0.0f, 20.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
 	//left limit
-	Wall* wall_o27 = new Wall(Vec3(-18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o28 = new Wall(Vec3(-14.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o29 = new Wall(Vec3(-10.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o30 = new Wall(Vec3(-6.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o31 = new Wall(Vec3(-2.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o32 = new Wall(Vec3(2.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o33 = new Wall(Vec3(6.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o34 = new Wall(Vec3(10.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o35 = new Wall(Vec3(14.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o36 = new Wall(Vec3(18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o37 = new Wall(Vec3(22.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o27 = new Wall(Vec3(-18.0f, 0.0f, -30.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o28 = new Wall(Vec3(-14.0f, 0.0f, -30.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o29 = new Wall(Vec3(-10.0f, 0.0f, -30.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o30 = new Wall(Vec3(-6.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o31 = new Wall(Vec3(-2.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o32 = new Wall(Vec3(2.0f, 0.0f, -30.0f),   -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o33 = new Wall(Vec3(6.0f, 0.0f, -30.0f),   -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o34 = new Wall(Vec3(10.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o35 = new Wall(Vec3(14.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o36 = new Wall(Vec3(18.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o37 = new Wall(Vec3(22.0f, 0.0f, -30.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
 	//right limit
 
-	Wall* wall_38 = new Wall(Vec3(-18.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_39 = new Wall(Vec3(-14.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_40 = new Wall(Vec3(-10.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_41 = new Wall(Vec3(-6.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_42 = new Wall(Vec3(-2.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_43 = new Wall(Vec3(2.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_44 = new Wall(Vec3(6.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_45 = new Wall(Vec3(10.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_46 = new Wall(Vec3(14.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_47 = new Wall(Vec3(18.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_48 = new Wall(Vec3(22.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_38 = new Wall(Vec3(-18.0f, 0.0f, 22.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_39 = new Wall(Vec3(-14.0f, 0.0f, 22.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_40 = new Wall(Vec3(-10.0f, 0.0f, 22.0f), -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_41 = new Wall(Vec3(-6.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_42 = new Wall(Vec3(-2.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_43 = new Wall(Vec3(2.0f, 0.0f, 22.0f),   -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_44 = new Wall(Vec3(6.0f, 0.0f, 22.0f),   -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_45 = new Wall(Vec3(10.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_46 = new Wall(Vec3(14.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_47 = new Wall(Vec3(18.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_48 = new Wall(Vec3(22.0f, 0.0f, 22.0f),  -90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
 	//a room
 	Wall* wall_a1 = new Wall(Vec3(4.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
@@ -204,8 +204,76 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	theWalls.push_back(wall_46);
 	theWalls.push_back(wall_47);
 	theWalls.push_back(wall_48);
-
-
+		theWalls.push_back(wall_a1);
+		theWalls.push_back(wall_a2);
+		theWalls.push_back(wall_a3);
+		theWalls.push_back(wall_a4);
+		theWalls.push_back(wall_a5);
+		theWalls.push_back(wall_a6);
+		theWalls.push_back(wall_a7);
+		theWalls.push_back(wall_a8);
+		theWalls.push_back(wall_a9);
+		theWalls.push_back(wall_b0);
+		theWalls.push_back(wall_b1);
+		theWalls.push_back(wall_b2);
+		theWalls.push_back(wall_b3);
+		theWalls.push_back(wall_b4);
+		theWalls.push_back(wall_b5);
+		theWalls.push_back(wall_b6);
+		theWalls.push_back(wall_b7);
+		theWalls.push_back(wall_b8);
+		theWalls.push_back(wall_b9);
+		theWalls.push_back(wall_b10);
+		theWalls.push_back(wall_b11);
+		theWalls.push_back(wall_b12);
+		theWalls.push_back(wall_b13);
+		theWalls.push_back(wall_b14);
+		theWalls.push_back(wall_b15);
+		theWalls.push_back(wall_b16);
+		theWalls.push_back(wall_b17);
+		theWalls.push_back(wall_b18);
+		theWalls.push_back(wall_b19);
+		theWalls.push_back(wall_b20);
+		theWalls.push_back(wall_b21);
+		theWalls.push_back(wall_b22);
+		theWalls.push_back(wall_c1 );
+		theWalls.push_back(wall_c2 );
+		theWalls.push_back(wall_c3 );
+		theWalls.push_back(wall_c4 );
+		theWalls.push_back(wall_c5 );
+		theWalls.push_back(wall_c6);
+		theWalls.push_back(wall_c7); 
+		theWalls.push_back(wall_c8); 
+		theWalls.push_back(wall_c9); 
+		theWalls.push_back(wall_c10 );
+		theWalls.push_back(wall_c11);
+		theWalls.push_back(wall_d1);
+		theWalls.push_back(wall_d2);
+		theWalls.push_back(wall_d3);
+				theWalls.push_back(wall_d4);
+		theWalls.push_back(wall_d5);
+		theWalls.push_back(wall_d6);
+		theWalls.push_back(wall_d7);
+		theWalls.push_back(wall_d8);
+		theWalls.push_back(wall_d9);
+		theWalls.push_back(wall_d10);
+		theWalls.push_back(wall_d11);
+		theWalls.push_back(wall_d12);
+		theWalls.push_back(wall_d13);
+		theWalls.push_back(wall_d14);
+		theWalls.push_back(wall_d15);
+		theWalls.push_back(wall_d16);
+		theWalls.push_back(wall_d17);
+		theWalls.push_back(wall_d18);
+		theWalls.push_back(wall_f1);
+		theWalls.push_back(wall_f2);
+		theWalls.push_back(wall_f3);
+		theWalls.push_back(wall_f4);
+		theWalls.push_back(wall_f5);
+		theWalls.push_back(wall_f6);
+		theWalls.push_back(wall_f7);
+		theWalls.push_back(wall_f8);
+		
 
 
 }
@@ -221,49 +289,39 @@ bool Scene0::OnCreate()
 
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(Vec3(0.0f, 10.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, -90.0f, 0.0f), nullptr);
 	camera->OnCreate();
-
+	skull = new Actor(nullptr);
+	skull->SetMesh(new Mesh(nullptr, "meshes/wallTest3.obj"));
+	skull->GetMesh()->OnCreate();
+	skull->SetTexture(new Texture());
+	skull->GetTexture()->LoadImage("textures/white_sphere.png");
+	skull->OnCreate();
 
 	for (Wall* wall : theWalls) {
 		wall->OnCreate();
 	}
 
-
-
-	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
 
 
-
-
-
-	// this work is prior to camera actor --- it will be obselete with camera actor
-	/*projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 15.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-	viewMatrix.print();
-	modelMatrix.loadIdentity();*/
-
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
 	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
 	lightPos[2] = Vec3(0.0f, 3.0f, -6.5f);
 	lightPos[3] = Vec3(0.0f, -3.0f, -6.5f);
-
 	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
 	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
 	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
 	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
-
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
-
 	return true;
-
 }
 
 void Scene0::OnDestroy() {
@@ -275,7 +333,8 @@ void Scene0::OnDestroy() {
 		delete camera;
 	}
 
-
+	skull->OnDestroy();
+	delete skull;
 
 	shader->OnDestroy();
 	delete shader;
@@ -285,49 +344,62 @@ void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 
 	camera->HandleEvents(sdlEvent);
 
-
-
 	switch (sdlEvent.type) {
-		//case SDL_KEYDOWN:
-		//	if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {//LEFT
-		//		//sphere->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
+		case SDL_KEYDOWN:
+			if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_F) {//LEFT
+				//skull->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+				//->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+				//skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
+				//skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_H) {//RIGHT
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
 
-		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {//RIGHT
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_T) {//UP
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
 
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {//UP
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 1.0f, 0.0f)));
+			//skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
 
-		//	//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_G) {//DOWN
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));
 
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {//DOWN
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Y) {//BEHIND
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X) {//BEHIND
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_U) {//FRONT
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {//FRONT
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_K) {//CENTER OBJECT
+				skull->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_L) {//ROTATE OBJECT 10 DEGREES
+			
+				skull->SetModelMatrix(skull->GetModelMatrix() *=
+					MMath::rotate(-90.0f, Vec3(0.0f, 1.0f, 0.0f)));
 
-		//	}
-		//	break;
+			//skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::rotate(10.0f,Vec3(0.0f,0.0f, 1.0f)));
+
+			}
+			else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_O) {//MOVE 10 UNITS
+				skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+
+			}
+			
+			break;
 	}
 }
 
 void Scene0::Update(const float deltaTime) {
-	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-
+	skull->GetPosition().print("Testing walls pos");
+	//theWalls[0]->GetPosition().print("Wall");
 	bool isTouching = false;
-
+	//theWalls[26]->GetPosition().print("Wall 027 pos");
 }
 
 void Scene0::Render() const {
@@ -347,10 +419,13 @@ void Scene0::Render() const {
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
 	//-----------------------
-
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, skull->GetModelMatrix());
+	glBindTexture(GL_TEXTURE_2D, skull->GetTexture()->getTextureID());
+	//skull->GetMesh()->Render(GL_TRIANGLES);
 	for (Wall* wall : theWalls) {
 		wall->Render();
 	}
+	theWalls[26]->Render();
 	glUseProgram(0);
 }
 
