@@ -6,6 +6,8 @@ Bullet::Bullet(Vec3 spawnPos, Vec3 velocity_, Component* parent_) : Actor(parent
 	velocity = velocity_;
 }
 
+Bullet::~Bullet() {}
+
 bool Bullet::OnCreate()
 {
 	// Create model

@@ -1,11 +1,12 @@
 #pragma once
+#include <SDL.h>
+
 #include "Actor.h"
 #include "Trackball.h"
-#include <SDL.h>
 #include "MMath.h"
 #include "Matrix.h"
 #include "Skybox.h"
-#include "PlayerGun.h"
+//#include "PlayerGun.h"
 
 using namespace MATH;
 
