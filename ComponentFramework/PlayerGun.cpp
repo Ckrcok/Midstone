@@ -1,12 +1,12 @@
 #include "PlayerGun.h"
 
-PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_) : Actor(parent_)
 {
 	offset = offset_;
 	position = offset;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	camera = camera_;
+	//camera = camera_;
 }
 
 PlayerGun::~PlayerGun() {}
@@ -56,20 +56,20 @@ void PlayerGun::Render()
 	model_3D->Render();
 
 	// Render the bullets
-	for (Bullet* bullet : spawnedBullets)
-		bullet->Render();
+	//for (Bullet* bullet : spawnedBullets)
+	//	bullet->Render();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void PlayerGun::Update(float deltaTime)
 {
-	position = camera->GetPlayerPosition() + offset;
+	//position = camera->GetPlayerPosition() + offset;
 	model_3D->SetModelMatrix(MMath::translate(position));
 
 	// Update the bullets
-	for (Bullet* bullet : spawnedBullets)
-		bullet->Update(deltaTime);
+	//for (Bullet* bullet : spawnedBullets)
+	//	bullet->Update(deltaTime);
 }
 
 void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
@@ -90,5 +90,5 @@ void PlayerGun::SpawnBullet(Vec3 velocity_)
 	Bullet* bullet = new Bullet(position, velocity_, this);
 	bullet->OnCreate();
 
-	spawnedBullets.push_back(bullet);
+	//spawnedBullets.push_back(bullet);
 }

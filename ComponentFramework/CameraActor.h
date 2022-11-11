@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Actor.h"
 #include "Trackball.h"
 #include <SDL.h>
