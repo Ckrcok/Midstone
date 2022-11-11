@@ -14,6 +14,7 @@ Wall::~Wall() {}
 bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	objFile->GetMesh()->OnCreate();
@@ -22,6 +23,9 @@ bool Wall::OnCreate()
 		//MMath::rotate(rotation, rotationAxis) * MMath::translate(position));
 =======
 	objFile->SetMesh(new Mesh(nullptr, "meshes/wallFinal.obj"));
+=======
+	objFile->SetMesh(new Mesh(nullptr, "meshes/wallCenter.obj"));
+>>>>>>> parent of cd11c76 (Wall implemented)
 	objFile->GetMesh()->OnCreate();
 
 	objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
