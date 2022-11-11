@@ -30,7 +30,7 @@ bool shaderScene::OnCreate() {
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
 
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/testingFrag.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
