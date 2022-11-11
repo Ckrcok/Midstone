@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{e8c82a08-d757-47ee-b6fe-eee59a99570f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Gun">
+      <UniqueIdentifier>{3e9107c8-d6cc-4ef1-a8f1-4fd81faae898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gun">
+      <UniqueIdentifier>{d5c47b74-ada4-4f0e-b54c-b61fd48fa46c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -112,7 +118,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGun.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Gun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +237,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGun.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Gun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

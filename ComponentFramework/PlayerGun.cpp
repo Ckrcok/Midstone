@@ -55,6 +55,10 @@ void PlayerGun::Render()
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, model_3D->GetModelMatrix());
 	model_3D->Render();
 
+	// Render the bullets
+	for (Bullet* bullet : spawnedBullets)
+		bullet->Render();
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -62,6 +66,29 @@ void PlayerGun::Update(float deltaTime)
 {
 	position = camera->GetPlayerPosition() + offset;
 	model_3D->SetModelMatrix(MMath::translate(position));
+
+	// Update the bullets
+	for (Bullet* bullet : spawnedBullets)
+		bullet->Update(deltaTime);
 }
 
-void PlayerGun::HandleEvents(const SDL_Event& sdlEvent) {}
+void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
+{
+	switch (sdlEvent.type) {
+	case SDL_MOUSEBUTTONDOWN:
+
+		// Left mouse button is down
+		if (SDL_BUTTON_LEFT == sdlEvent.button.button) {
+			cout << "Left mouse button is down!" << endl;
+			SpawnBullet(Vec3(1, 0, 1));
+		}
+	}
+}
+
+void PlayerGun::SpawnBullet(Vec3 velocity_)
+{
+	Bullet* bullet = new Bullet(position, velocity_, this);
+	bullet->OnCreate();
+
+	spawnedBullets.push_back(bullet);
+}

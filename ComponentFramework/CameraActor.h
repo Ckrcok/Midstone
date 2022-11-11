@@ -12,7 +12,7 @@ using namespace MATH;
 class CameraActor : public Actor
 {
 private:
-	PlayerGun* playerGun;
+	//PlayerGun* playerGun;
 
 public:
 	CameraActor(Vec3 spawnPos_, Component* parent_);
@@ -43,67 +43,47 @@ public:
 
 		// if all zero
 		if (cameraActorPosX == 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ == 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13], GetViewMatrix()[14]);
-		}
 
 		//if none zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ != 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14] * -1.0f);
-		}
 
 		// if cameraActorPosXis zero, cameraActorPosY & cameraActorPosZ not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ != 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14] * -1.0f);
-		}
 
 		// if cameraActorPosY is zero, cameraActorPosX & cameraActorPosZ not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ != 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13], GetViewMatrix()[14] * -1.0f);
-		}
 
 		// if cameraActorPosZ is zero, cameraActorPosX & cameraActorPosY not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ == 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14]);
-		}
 
 		// if cameraActorPosX & cameraActorPosY are zero, cameraActorPosZ not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ != 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13], GetViewMatrix()[14] * -1.0f);
-		}
 
 		// if cameraActorPosX & cameraActorPosZ are zero, cameraActorPosY not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ == 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14]);
-		}
 
 		// if cameraActorPosY & cameraActorPosZ are zero, cameraActorPosX not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ == 0.0f)
-		{
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13], GetViewMatrix()[14]);
-		}
 	}
 
 	inline Vec3 GetPlayerPosition() { return GetCameraActorPosition(); }
-
-
-
 
 private:
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
 	Matrix4 rotationMatrix;
 	Matrix4 translationMatrix;
+
 	Trackball* trackball;
 	Skybox* skybox;
+
 	Vec3 CameraActorPosition;
-
-
 };
-
