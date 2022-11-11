@@ -14,7 +14,7 @@ Wall::~Wall() {}
 bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
-	objFile->SetMesh(new Mesh(nullptr, "meshes/wallFinal.obj"));
+	objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	objFile->GetMesh()->OnCreate();
 
 	objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
