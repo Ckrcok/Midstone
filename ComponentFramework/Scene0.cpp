@@ -13,18 +13,201 @@
 #include "CameraActor.h"
 #include "Collision.h"
 
+
 Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 	trackball = new Trackball();
-	int spawnPos = -2.0f;
 
-	for (int i = 0; i < 5; i++)
-	{
-		Wall* wall = new Wall(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		spawnPos += 2;
+	//north limit
+	Wall* wall_o1 = new Wall(Vec3(20.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o2 = new Wall(Vec3(20.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o3 = new Wall(Vec3(20.0f, 0.0f, -20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o4 = new Wall(Vec3(20.0f, 0.0f, -16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o5 = new Wall(Vec3(20.0f, 0.0f, -12.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o6 = new Wall(Vec3(20.0f, 0.0f, -8.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o7 = new Wall(Vec3(20.0f, 0.0f, -4.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o8 = new Wall(Vec3(20.0f, 0.0f, 0.0f),   0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o9 = new Wall(Vec3(20.0f, 0.0f, 4.0f),   0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o10 = new Wall(Vec3(20.0f, 0.0f, 8.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o11 = new Wall(Vec3(20.0f, 0.0f, 12.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o12 = new Wall(Vec3(20.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o13 = new Wall(Vec3(20.0f, 0.0f, 20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	//south limit
+	Wall* wall_o14 = new Wall(Vec3(-24.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o15 = new Wall(Vec3(-24.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o16 = new Wall(Vec3(-24.0f, 0.0f, -20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o17 = new Wall(Vec3(-20.0f, 0.0f, -16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o18 = new Wall(Vec3(-20.0f, 0.0f, -12.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o19 = new Wall(Vec3(-24.0f, 0.0f, -8.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o20 = new Wall(Vec3(-24.0f, 0.0f, -4.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o21 = new Wall(Vec3(-24.0f, 0.0f, 0.0f),   0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o22 = new Wall(Vec3(-24.0f, 0.0f, 4.0f),   0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o23 = new Wall(Vec3(-24.0f, 0.0f, 8.0f),   0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o24 = new Wall(Vec3(-24.0f, 0.0f, 12.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o25 = new Wall(Vec3(-24.0f, 0.0f, 16.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o26 = new Wall(Vec3(-24.0f, 0.0f, 20.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
-		theWalls.push_back(wall);
-	}
+	//left limit
+	Wall* wall_o27 = new Wall(Vec3(-18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o28 = new Wall(Vec3(-14.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o29 = new Wall(Vec3(-10.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o30 = new Wall(Vec3(-6.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o31 = new Wall(Vec3(-2.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o32 = new Wall(Vec3(2.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o33 = new Wall(Vec3(6.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o34 = new Wall(Vec3(10.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o35 = new Wall(Vec3(14.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o36 = new Wall(Vec3(18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o37 = new Wall(Vec3(22.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//right limit
+
+	Wall* wall_38 = new Wall(Vec3(-18.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_39 = new Wall(Vec3(-14.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_40 = new Wall(Vec3(-10.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_41 = new Wall(Vec3(-6.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_42 = new Wall(Vec3(-2.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_43 = new Wall(Vec3(2.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_44 = new Wall(Vec3(6.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_45 = new Wall(Vec3(10.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_46 = new Wall(Vec3(14.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_47 = new Wall(Vec3(18.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_48 = new Wall(Vec3(22.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//a room
+	Wall* wall_a1 = new Wall(Vec3(4.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_a2 = new Wall(Vec3(4.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_a3 = new Wall(Vec3(4.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_a4 = new Wall(Vec3(2.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_a5 = new Wall(Vec3(-2.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_a6 = new Wall(Vec3(-6.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_a7 = new Wall(Vec3(-8.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_a8 = new Wall(Vec3(-8.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_a9 = new Wall(Vec3(-8.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//b room
+	Wall* wall_b0 = new Wall(Vec3(-12.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b1 = new Wall(Vec3(-12.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b2 = new Wall(Vec3(-12.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b3 = new Wall(Vec3(-16.0f, 0.0f, -16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b4 = new Wall(Vec3(-16.0f, 0.0f, -12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b5 = new Wall(Vec3(-14.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b6 = new Wall(Vec3(-14.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b7 = new Wall(Vec3(-22.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b8 = new Wall(Vec3(-22.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b9 = new Wall(Vec3(-12.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b10 = new Wall(Vec3(-12.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b11 = new Wall(Vec3(-12.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b12 = new Wall(Vec3(14.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b13 = new Wall(Vec3(18.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b14 = new Wall(Vec3(22.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b15 = new Wall(Vec3(-14.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b16 = new Wall(Vec3(-18.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b17 = new Wall(Vec3(-22.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_b18 = new Wall(Vec3(-12.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b19 = new Wall(Vec3(-12.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b20 = new Wall(Vec3(-12.0f, 0.0f, 12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b21 = new Wall(Vec3(-12.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_b22 = new Wall(Vec3(-12.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+
+	//c room
+	Wall* wall_c1 = new Wall(Vec3(18.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_c2 = new Wall(Vec3(14.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_c3 = new Wall(Vec3(18.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_c4 = new Wall(Vec3(14.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_c5 = new Wall(Vec3(12.0f, 0.0f, -16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c6 = new Wall(Vec3(12.0f, 0.0f, -12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c7 = new Wall(Vec3(12.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c8 = new Wall(Vec3(12.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c9 = new Wall(Vec3(12.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c10 = new Wall(Vec3(12.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_c11 = new Wall(Vec3(12.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//d room
+
+	Wall* wall_d1 = new Wall(Vec3(6.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d2 = new Wall(Vec3(2.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d3 = new Wall(Vec3(-2.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d4 = new Wall(Vec3(-6.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d5 = new Wall(Vec3(6.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d6 = new Wall(Vec3(2.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d7 = new Wall(Vec3(-2.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d8 = new Wall(Vec3(-6.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_d9 = new Wall(Vec3(8.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d10 = new Wall(Vec3(8.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d11 = new Wall(Vec3(8.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d12 = new Wall(Vec3(8.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d13 = new Wall(Vec3(8.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d14 = new Wall(Vec3(-8.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d15 = new Wall(Vec3(-8.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d16 = new Wall(Vec3(-8.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d17 = new Wall(Vec3(-8.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_d18 = new Wall(Vec3(-8.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//f room
+
+	Wall* wall_f1 = new Wall(Vec3(6.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_f2 = new Wall(Vec3(2.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_f3 = new Wall(Vec3(-2.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_f4 = new Wall(Vec3(-6.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
+	Wall* wall_f5 = new Wall(Vec3(8.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_f6 = new Wall(Vec3(8.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_f7 = new Wall(Vec3(-8.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_f8 = new Wall(Vec3(-8.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	theWalls.push_back(wall_o1);
+	theWalls.push_back(wall_o2);
+	theWalls.push_back(wall_o3);
+	theWalls.push_back(wall_o4);
+	theWalls.push_back(wall_o5);
+	theWalls.push_back(wall_o6);
+	theWalls.push_back(wall_o7);
+	theWalls.push_back(wall_o8);
+	theWalls.push_back(wall_o9);
+	theWalls.push_back(wall_o10);
+	theWalls.push_back(wall_o11);
+	theWalls.push_back(wall_o12);
+	theWalls.push_back(wall_o13);
+	theWalls.push_back(wall_o14);
+	theWalls.push_back(wall_o15);
+	theWalls.push_back(wall_o16);
+	theWalls.push_back(wall_o17);
+	theWalls.push_back(wall_o18);
+	theWalls.push_back(wall_o19);
+	theWalls.push_back(wall_o20);
+	theWalls.push_back(wall_o21);
+	theWalls.push_back(wall_o22);
+	theWalls.push_back(wall_o23);
+	theWalls.push_back(wall_o24);
+	theWalls.push_back(wall_o25);
+	theWalls.push_back(wall_o26);
+	theWalls.push_back(wall_o27);
+	theWalls.push_back(wall_o28);
+	theWalls.push_back(wall_o29);
+	theWalls.push_back(wall_o30);
+	theWalls.push_back(wall_o31);
+	theWalls.push_back(wall_o32);
+	theWalls.push_back(wall_o33);
+	theWalls.push_back(wall_o34);
+	theWalls.push_back(wall_o35);
+	theWalls.push_back(wall_o36);
+	theWalls.push_back(wall_o37);
+	theWalls.push_back(wall_38);
+	theWalls.push_back(wall_39);
+	theWalls.push_back(wall_40);
+	theWalls.push_back(wall_41);
+	theWalls.push_back(wall_42);
+	theWalls.push_back(wall_43);
+	theWalls.push_back(wall_44);
+	theWalls.push_back(wall_45);
+	theWalls.push_back(wall_46);
+	theWalls.push_back(wall_47);
+	theWalls.push_back(wall_48);
+
+
+
+
 }
 
 Scene0::~Scene0()
@@ -35,58 +218,27 @@ Scene0::~Scene0()
 
 bool Scene0::OnCreate()
 {
-	//doorPuzzle = new DoorPuzzle();
 
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
+
 
 	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
 
-	//ignore this ugly code made for testing
-	sphere = new Actor(nullptr);
-	sphere->SetMesh(new Mesh(nullptr, "meshes/wallCenter.obj"));
-	sphere->GetMesh()->OnCreate();
-	sphere->SetTexture(new Texture());
-	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
-	sphere->OnCreate();
-	sphere->SetModelMatrix(MMath::translate(Vec3(10.0f, 0.0f, 0.0f)));
-	blueBox = new Box(minCornerA, maxCornerA);
 
-
-	
-
-	cube = new Actor(nullptr);
-	cube->SetMesh(new Mesh(nullptr, "meshes/wallCenter.obj"));
-	cube->GetMesh()->OnCreate();
-	cube->SetTexture(new Texture());
-	cube->GetTexture()->LoadImage("textures/white_sphere.png");
-	cube->OnCreate();
-	//cube->SetModelMatrix(MMath::translate(Vec3(10.0f,0.0f,0.0f)));
-	//cube->SetModelMatrix(MMath::rotate(90, Vec3(0.0f, 1.0f, 0.0f)));
-	cube->SetModelMatrix(cube->GetModelMatrix() *= 
-		
-		MMath::translate(Vec3(8.25f, 0.0f, 7.00f)) *
-		MMath::rotate(-90, Vec3(0.0f,1.0f, 0.0f))
-	);
-	redBox = new Box(minCornerB, maxCornerB);
-	//Fancy maurits code to render the walls in a vector
 	for (Wall* wall : theWalls) {
 		wall->OnCreate();
 	}
 
 
 
-	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
 
-	shaderCube = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
-	if (shaderCube->OnCreate() == false)
-	{
-		Debug::Error("Can't load shader", __FILE__, __LINE__);
-	}
+
 
 
 
@@ -124,11 +276,6 @@ void Scene0::OnDestroy() {
 		delete camera;
 	}
 
-	if (sphere)
-	{
-		sphere->OnDestroy();
-		delete sphere;
-	}
 
 
 	shader->OnDestroy();
@@ -138,41 +285,41 @@ void Scene0::OnDestroy() {
 void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 
 	camera->HandleEvents(sdlEvent);
-	
+
 
 
 	switch (sdlEvent.type) {
-	//case SDL_KEYDOWN:
-	//	if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {//LEFT
-	//		//sphere->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-	//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
+		//case SDL_KEYDOWN:
+		//	if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {//LEFT
+		//		//sphere->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
 
-	//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-	//	}
-	//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {//RIGHT
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
+		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {//RIGHT
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
 
-	//	}
-	//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {//UP
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 1.0f, 0.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {//UP
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 1.0f, 0.0f)));
 
-	//	//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+		//	//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
 
-	//	}
-	//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {//DOWN
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {//DOWN
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 
-	//	}
-	//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X) {//BEHIND
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X) {//BEHIND
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 
-	//	}
-	//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {//FRONT
-	//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {//FRONT
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 
-	//	}
-	//	break;
+		//	}
+		//	break;
 	}
 }
 
@@ -181,26 +328,6 @@ void Scene0::Update(const float deltaTime) {
 	totalTime += deltaTime;
 
 	bool isTouching = false;
-	resultA = sphere->GetModelMatrix() * test;
-	minCornerA = resultA - Vec3(1.0f, 1.0f, 1.0f);
-	maxCornerA = resultA + Vec3(1.0f, 1.0f, 1.0f);
-
-	resultB = cube->GetModelMatrix() * test;
-	//resultA.print("Pos");
-	minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
-	maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
-	redBox->updateVertPos(minCornerA, maxCornerA);
-	blueBox->updateVertPos(minCornerB, maxCornerB);
-	Vec3 pos =  sphere->GetPosition();
-	Vec3 pos2 = cube->GetPosition();
-
-	pos.print("\n Pos ROJO");
-	pos2.print("\n Pos AZUL");
-	int a = Collision::boxBoxCollision(*blueBox, *redBox);
-	//printf("%i", a);
-	//cube->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 0.0f, 1.0f))); // test if update is working
-	//cube->SetModelMatrix(MMath::rotate(10 * totalTime, Vec3(0.0f, 1.0f, .0f))); // test if update is working
-
 
 }
 
@@ -220,28 +347,7 @@ void Scene0::Render() const {
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
-
-	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
-	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
-	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
-
-	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
-	sphere->GetMesh()->Render(GL_TRIANGLES);
 	//-----------------------
-	glUseProgram(shaderCube->GetProgram());
-	glUniformMatrix4fv(shaderCube->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shaderCube->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
-
-	glUniform3fv(shaderCube->GetUniformID("lightPos[0]"), 10, *lightPos);
-	glUniform4fv(shaderCube->GetUniformID("diffuse[0]"), 10, *diffuse);
-	glUniform4fv(shaderCube->GetUniformID("specular[0]"), 10, *specular);
-
-	glBindTexture(GL_TEXTURE_2D, cube->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shaderCube->GetUniformID("modelMatrix"), 1, GL_FALSE, cube->GetModelMatrix());
-	cube->Render();
-
-	glBindTexture(GL_TEXTURE_2D, 0);
 
 	for (Wall* wall : theWalls) {
 		wall->Render();
