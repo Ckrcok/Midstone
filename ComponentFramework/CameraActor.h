@@ -25,7 +25,7 @@ public:
 	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
 	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
-	
+
 	inline Vec3 GetCameraActorPosition()
 	{
 		float cameraActorPosX = GetViewMatrix()[12];
@@ -84,7 +84,7 @@ public:
 	}
 
 	inline Vec3 GetPlayerPosition() { return GetCameraActorPosition(); }
-	
+
 
 
 
@@ -96,7 +96,7 @@ private:
 	Trackball* trackball;
 	Skybox* skybox;
 	Vec3 CameraActorPosition;
-	
-	
+
+
 };
 

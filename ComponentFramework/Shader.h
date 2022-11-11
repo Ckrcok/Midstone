@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "glew.h"
 #include <unordered_map>
+#include <string>
+
 class Shader : public Component {
 	Shader(const Shader&) = delete;
 	Shader(Shader&&) = delete;
