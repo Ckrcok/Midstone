@@ -14,24 +14,18 @@ Wall::~Wall() {}
 bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
 	objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	objFile->GetMesh()->OnCreate();
 	objFile->SetModelMatrix(MMath::translate(position) * MMath::rotate(rotation, rotationAxis));
 	//objFile->SetModelMatrix(
 		//MMath::rotate(rotation, rotationAxis) * MMath::translate(position));
-=======
-	objFile->SetMesh(new Mesh(nullptr, "meshes/wallFinal.obj"));
-=======
-	objFile->SetMesh(new Mesh(nullptr, "meshes/wallCenter.obj"));
->>>>>>> parent of cd11c76 (Wall implemented)
+
 	objFile->GetMesh()->OnCreate();
 
 	objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
 	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
->>>>>>> Stashed changes
 	objFile->SetTexture(new Texture());
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
