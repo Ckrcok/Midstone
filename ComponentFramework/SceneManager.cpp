@@ -106,6 +106,10 @@ void SceneManager::HandleEvents()
 				[[fallthrough]]; /// C17 Prevents switch/case fallthrough warnings
 				break;
 
+			case SDL_SCANCODE_F10:
+				BuildNewScene(SCENE_NUMBER::SCENE0);
+				break;
+
 			case SDL_SCANCODE_F1:
 				BuildNewScene(SCENE_NUMBER::SCENE1);
 				break;

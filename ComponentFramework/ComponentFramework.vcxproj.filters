@@ -102,6 +102,14 @@
     <ClCompile Include="Scene4.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+=======
+>>>>>>> Stashed changes
     <ClCompile Include="Box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,6 +119,10 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+>>>>>>> d1ce3d115c03512f0f87d0efb5b530578fba7ebb
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -221,9 +233,18 @@
     <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Wall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> d1ce3d115c03512f0f87d0efb5b530578fba7ebb
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Text Include="GameEngineLog.txt">

@@ -278,12 +278,15 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 
 }
 
-Scene0::~Scene0()
-{
+Scene0::~Scene0() {
 	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
 	if (trackball) delete trackball;
 }
 
+<<<<<<< HEAD
+bool Scene0::OnCreate() {
+	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
+=======
 bool Scene0::OnCreate()
 {
 
@@ -297,6 +300,29 @@ bool Scene0::OnCreate()
 	skull->SetTexture(new Texture());
 	skull->GetTexture()->LoadImage("textures/white_sphere.png");
 	skull->OnCreate();
+
+	sphere = new Actor(nullptr);
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	sphere->GetMesh()->OnCreate();
+	sphere->SetTexture(new Texture());
+	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
+	sphere->OnCreate();
+	blueBox = new Box(minCornerA, maxCornerA);
+
+
+
+
+	cube = new Actor(nullptr);
+	cube->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	cube->GetMesh()->OnCreate();
+	cube->SetTexture(new Texture());
+	cube->GetTexture()->LoadImage("textures/white_sphere.png");
+	cube->OnCreate();
+	redBox = new Box(minCornerB, maxCornerB);
+
+
+
+
 
 	for (Wall* wall : theWalls) {
 		wall->OnCreate();
@@ -381,6 +407,45 @@ void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 			
 				skull->SetModelMatrix(skull->GetModelMatrix() *=
 					MMath::rotate(-90.0f, Vec3(0.0f, 1.0f, 0.0f)));
+=======
+void Scene0::OnDestroy() {
+	Debug::Info("Deleting assets Scene2: ", __FILE__, __LINE__);
+
+	if (camera)
+	{
+		camera->OnDestroy();
+		delete camera;
+	}
+
+
+
+	shader->OnDestroy();
+	delete shader;
+
+}
+void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
+
+	camera->HandleEvents(sdlEvent);
+
+
+
+	switch (sdlEvent.type) {
+		//case SDL_KEYDOWN:
+		//	if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {//LEFT
+		//		//sphere->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
+
+		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {//RIGHT
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
+
+		//	}
+		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {//UP
+		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 1.0f, 0.0f)));
+
+		//	//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
 
 			//skull->SetModelMatrix(skull->GetModelMatrix() *= MMath::rotate(10.0f,Vec3(0.0f,0.0f, 1.0f)));
 

@@ -16,7 +16,10 @@ using namespace std;
 class  Wall : public Actor
 {
 public:
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
