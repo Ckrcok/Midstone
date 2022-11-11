@@ -18,9 +18,9 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 	trackball = new Trackball();
 
-	//north limit
-	Wall* wall_o1 = new Wall(Vec3(20.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_o2 = new Wall(Vec3(20.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	//north limit (+x)
+	Wall* wall_o1 = new Wall(Vec3(10.0f, 0.0f, -20.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	Wall* wall_o2 = new Wall(Vec3(-10.0f, 0.0f, -20.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o3 = new Wall(Vec3(20.0f, 0.0f, -20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o4 = new Wall(Vec3(20.0f, 0.0f, -16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o5 = new Wall(Vec3(20.0f, 0.0f, -12.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
@@ -32,7 +32,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	Wall* wall_o11 = new Wall(Vec3(20.0f, 0.0f, 12.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o12 = new Wall(Vec3(20.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o13 = new Wall(Vec3(20.0f, 0.0f, 20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	//south limit
+	//south limit (-x)
 	Wall* wall_o14 = new Wall(Vec3(-24.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o15 = new Wall(Vec3(-24.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o16 = new Wall(Vec3(-24.0f, 0.0f, -20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
@@ -47,7 +47,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	Wall* wall_o25 = new Wall(Vec3(-24.0f, 0.0f, 16.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o26 = new Wall(Vec3(-24.0f, 0.0f, 20.0f),  0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
-	//left limit
+	//left limit (-z)
 	Wall* wall_o27 = new Wall(Vec3(-18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o28 = new Wall(Vec3(-14.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o29 = new Wall(Vec3(-10.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
@@ -60,7 +60,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	Wall* wall_o36 = new Wall(Vec3(18.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_o37 = new Wall(Vec3(22.0f, 0.0f, -30.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
-	//right limit
+	//right limit (+z)
 
 	Wall* wall_38 = new Wall(Vec3(-18.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 	Wall* wall_39 = new Wall(Vec3(-14.0f, 0.0f, 22.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
@@ -158,7 +158,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 
 	theWalls.push_back(wall_o1);
 	theWalls.push_back(wall_o2);
-	theWalls.push_back(wall_o3);
+	/*theWalls.push_back(wall_o3);
 	theWalls.push_back(wall_o4);
 	theWalls.push_back(wall_o5);
 	theWalls.push_back(wall_o6);
@@ -203,7 +203,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	theWalls.push_back(wall_45);
 	theWalls.push_back(wall_46);
 	theWalls.push_back(wall_47);
-	theWalls.push_back(wall_48);
+	theWalls.push_back(wall_48);*/
 
 
 
@@ -222,7 +222,7 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 
@@ -328,6 +328,9 @@ void Scene0::Update(const float deltaTime) {
 	totalTime += deltaTime;
 
 	bool isTouching = false;
+
+	printf("Camera1: \t");
+	camera->GetCameraActorPosition().print();
 
 }
 

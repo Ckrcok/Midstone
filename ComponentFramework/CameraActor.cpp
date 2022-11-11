@@ -20,38 +20,40 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 	//rotationMatrix = trackball->getMatrix4();
 	viewMatrix = rotationMatrix * translationMatrix;
 
+	cameraSpeed = 1.0f;
+
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
 
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= (MMath::translate(Vec3(0.0f, 0.0f, -1.0f) * cameraSpeed)));
 			// elapsed time 
 			// hookes law
 			// spring movement
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f) * cameraSpeed));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f) * cameraSpeed));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f) * cameraSpeed));
 		}
 
 		// Elevate
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_R)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));			
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f) * cameraSpeed));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_F)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f) * cameraSpeed));
 		}
 
 

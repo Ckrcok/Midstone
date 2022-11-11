@@ -17,8 +17,8 @@ bool Wall::OnCreate()
 	objFile->SetMesh(new Mesh(nullptr, "meshes/wallFinal.obj"));
 	objFile->GetMesh()->OnCreate();
 
-	objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
-	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	//objFile->SetModelMatrix(MMath::translate(position));											// Spawn position
+	objFile->SetModelMatrix(MMath::translate(position) * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	objFile->SetTexture(new Texture());
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");

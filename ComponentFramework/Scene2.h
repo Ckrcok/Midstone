@@ -6,6 +6,8 @@
 #include "Trackball.h"
 #include "CameraActor.h"
 #include "Skybox.h"
+#include "Collision.h"
+#include "Wall.h"
 using namespace MATH;
 
 /// Forward declarations 
@@ -19,12 +21,16 @@ class Shader;
 class Scene2 : public Scene {
 private:
 
+	//vector<Wall*> theWalls;
+
 	Trackball* trackball;
 	CameraActor* camera;
 
 	Actor* sphere;
+	Actor* cube;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
+	Shader* shaderCube;
 	/*Texture* texture; --> CameraActor handles these now
 	Matrix4 projectionMatrix; 
 	Matrix4 viewMatrix;

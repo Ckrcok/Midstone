@@ -155,9 +155,9 @@ Matrix4 MMath::unOrtho(const Matrix4 & ortho){
 /// Tested Feb 1 2013 SSF  
 Matrix4 MMath::translate(float x_, float y_, float z_){
 	return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f, 0.0f,
-				  0.0f, 0.0f, 1.0f, 0.0f,
-				  x_,   y_,   z_,	1.0f);  
+				   0.0f, 1.0f, 0.0f, 0.0f,
+				   0.0f, 0.0f, 1.0f, 0.0f,
+				   x_,   y_,   z_,	1.0f);  
 }
 Matrix4 MMath::translate(const Vec3 &translate_) {
 	return MMath::translate(translate_.x, translate_.y, translate_.z);

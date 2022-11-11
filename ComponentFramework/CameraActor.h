@@ -96,6 +96,7 @@ private:
 	Trackball* trackball;
 	Skybox* skybox;
 	Vec3 CameraActorPosition;
+	float cameraSpeed;
 	
 	
 };

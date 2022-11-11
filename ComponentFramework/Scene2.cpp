@@ -13,9 +13,15 @@
 #include "CameraActor.h"
 
 
-Scene2::Scene2() :sphere(nullptr), shader(nullptr) {
+Scene2::Scene2() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created Scene2: ", __FILE__, __LINE__);
 	trackball = new Trackball();
+
+	//Wall* wall_o1 = new Wall(Vec3(0.0f, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), NULL, NULL);
+	//Wall* wall_o2 = new Wall(Vec3(0.0f, 0.0f, -20.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+	//theWalls.push_back(wall_o1);
+	//theWalls.push_back(wall_o2);
 }
 
 Scene2::~Scene2() {
@@ -30,6 +36,10 @@ bool Scene2::OnCreate() {
 	camera->OnCreate();
 
 
+	/*for (Wall* wall : theWalls) {
+		wall->OnCreate();
+	}*/
+
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	sphere->GetMesh()->OnCreate();
@@ -43,6 +53,12 @@ bool Scene2::OnCreate() {
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
+
+	/*shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	if (shader->OnCreate() == false)
+	{
+		Debug::Error("Can't load shader", __FILE__, __LINE__);
+	}*/
 
 	// this work is prior to camera actor --- it will be obselete with camera actor
 	/*projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
@@ -83,7 +99,7 @@ void Scene2::OnDestroy() {
 		delete sphere;
 	}
 
-
+	
 	shader->OnDestroy();
 	delete shader;
 
@@ -113,22 +129,49 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
 	printf("Sphere: \t");	
 	sphere->GetPosition().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera1: \t");
 	camera->GetCameraActorPosition().print();
-	printf("\n\n");
+	//printf("\n\n");
 	//printf("P: \t");
 	//camera->GetPlayerPosition().print();
-	camera->GetViewMatrix().print();
-
+	//camera->GetViewMatrix().print();
+	//theWalls[0]->GetPosition().print();
 
 }
 
 void Scene2::Render() const {
+
+	//glCullFace(GL_BACK);
+	//glFrontFace(GL_CCW);
+
+	///// Clear the screen
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//camera->Render();
+
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
+
+	//glUseProgram(shader->GetProgram());
+	//glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	//glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+
+	//glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
+	//glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
+	//glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+
+	
+
+	//for (Wall* wall : theWalls) {
+	//	wall->Render();
+	//}
+
+	//glUseProgram(0);
 
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
@@ -140,23 +183,26 @@ void Scene2::Render() const {
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	//-----------------------
+
+	
 
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
-
-	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
-	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
-	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
 	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
 	sphere->Render();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+	//-----------------------
 
-
+	/*for (Wall* wall : theWalls) {
+		wall->Render();
+	}*/
 	glUseProgram(0);
+
 }
 
 
