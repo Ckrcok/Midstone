@@ -9,6 +9,7 @@
 #include "Debug.h"
 #include "MMAth.h"
 #include "CameraActor.h"
+#include "Vector.h"
 
 using namespace MATH;
 using namespace std;
@@ -19,7 +20,7 @@ public:
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
-
+	//vector<std::variant<Vec3,float, Vec3, CameraActor, Component>> northWalls;
 	// Model
 	Actor* objFile;
 	Shader* shader;
