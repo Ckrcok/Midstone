@@ -15,7 +15,7 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Mario.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
@@ -23,7 +23,7 @@ bool PlayerGun::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/ZombieTexture.png");
+	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
 	model_3D->OnCreate();
 
 	// Create shader
@@ -51,13 +51,13 @@ void PlayerGun::OnDestroy()
 
 void PlayerGun::Render()
 {
+	// Render the bullets
+	//for (Bullet* bullet : spawnedBullets)
+	//	bullet->Render();
+
 	glBindTexture(GL_TEXTURE_2D, model_3D->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, model_3D->GetModelMatrix());
 	model_3D->Render();
-
-	// Render the bullets
-	for (Bullet* bullet : spawnedBullets)
-		bullet->Render();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

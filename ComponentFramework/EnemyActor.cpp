@@ -32,7 +32,7 @@ bool EnemyActor::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/ZombieTexture.png");
+	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
 	model_3D->OnCreate();
 
 	// Create shader
