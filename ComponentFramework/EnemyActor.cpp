@@ -71,11 +71,14 @@ void EnemyActor::Update(float deltaTime)
 {
 	position = model_3D->GetPosition();
 
+	/**
 	cout << "Enemy pos: ";
 	model_3D->GetPosition().print();
 
 	cout << "Cam pos: ";
 	camera->GetPlayerPosition().print();
+	/**/
+
 
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, camera->GetPlayerPosition());
@@ -126,8 +129,8 @@ void EnemyActor::Update(float deltaTime)
 		//FaceTarget(deltaTime);
 	}
 
-	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
-	cout << "\n";
+	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
+	//cout << "\n";
 
 	/**/ // If player is in range, attack
 	if (distanceToPlayer < 0.05f)

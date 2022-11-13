@@ -18,6 +18,8 @@ private:
 	// Model
 	Actor* model_3D;
 	Shader* shader;
+	float destroyAfterSeconds = 5.0f;
+	float timer = 0.0f;
 
 public:
 	Bullet(Vec3 spawnPos, Vec3 velocity_, Component* parent_);

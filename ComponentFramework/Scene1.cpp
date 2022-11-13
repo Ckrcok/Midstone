@@ -62,18 +62,32 @@ bool Scene1::OnCreate() {
 
 void Scene1::OnDestroy() {
 	Debug::Info("Deleting assets Scene1: ", __FILE__, __LINE__);
-	sphere->OnDestroy();
-	delete sphere;
-	mesh->OnDestroy();
-	delete mesh;
-	shader->OnDestroy();
-	delete shader;
 
-	delete texture;
+	if (sphere)
+	{
+		sphere->OnDestroy();
+		delete sphere;
+	}
+
+	if (mesh)
+	{
+		mesh->OnDestroy();
+		delete mesh;
+	}
+
+	if (shader)
+	{
+		shader->OnDestroy();
+		delete shader;
+	}
+
+	if (texture)
+		delete texture;
 }
-void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
-	switch( sdlEvent.type ) {
-    case SDL_KEYDOWN:
+
+void Scene1::HandleEvents(const SDL_Event& sdlEvent) {
+	switch (sdlEvent.type) {
+	case SDL_KEYDOWN:
 		break;
 
 	case SDL_MOUSEMOTION:
@@ -83,11 +97,11 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		break;
 
 	case SDL_MOUSEBUTTONUP:
-	break;
+		break;
 
 	default:
 		break;
-    }
+	}
 }
 
 void Scene1::Update(const float deltaTime) {

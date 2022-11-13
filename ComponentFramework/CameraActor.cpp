@@ -1,11 +1,11 @@
 #include "CameraActor.h"
 #include "MMath.h"
 #include "Debug.h"
-#include "PlayerGun.h"
+//#include "PlayerGun.h"
 
 using namespace MATH;
 
-PlayerGun* playerGun;
+//PlayerGun* playerGun;
 
 CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 {
@@ -16,7 +16,7 @@ CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 
 	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_)); // we should be careful with this!!!
 
-	playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, NULL);
+	//playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, NULL);
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -103,7 +103,7 @@ bool CameraActor::OnCreate()
 		"textures/skybox/tron_lf_nx.png", "textures/skybox/tron_dn_ny.png", "textures/skybox/tron_bk_nz.png");
 	return skybox->OnCreate();
 
-	playerGun->OnCreate();
+	//playerGun->OnCreate();
 }
 
 void CameraActor::OnDestroy()
@@ -114,11 +114,11 @@ void CameraActor::OnDestroy()
 		delete skybox;
 	}
 
-	if (playerGun)
-	{
-		playerGun->OnDestroy();
-		delete playerGun;
-	}
+	//if (playerGun)
+	//{
+	//	playerGun->OnDestroy();
+	//	delete playerGun;
+	//}
 }
 
 CameraActor::~CameraActor()
@@ -137,7 +137,7 @@ void CameraActor::Render() const
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("viewMatrix"), 1, GL_FALSE, rotationMatrix);
 
-	playerGun->Render();
+	//playerGun->Render();
 	skybox->Render();
 
 	glUseProgram(0);
