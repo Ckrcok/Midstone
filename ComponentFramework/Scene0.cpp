@@ -19,134 +19,136 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	trackball = new Trackball();
 
 	//NorthLimit
-	float northWallZStart = -22.0f;
-	for (int a = 0; a < 23;  a++) //Until northWallZEnd
+	float northWallZStart = -30.0f;
+	for (int a = 0; a < 25; a++) //Until northWallZEnd
 	{
 		northWallZStart += 2.0f;
 		Wall* wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		theWalls.push_back(wallTest);
-	}
-	//SouthLimit
-	float southWallZStart = -22.0f;
-	for (int a = 0; a < 23; a++) //Until northWallZEnd
-	{
-		southWallZStart += 2.0f;
-		Wall* wallTest = new Wall(Vec3(-24.0f, 0.0f, southWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		theWalls.push_back(wallTest);
+		theWalls.push_back(wallTestSOUTH);
 	}
 
+
 	//WestLimit
-	float westWallXStart = -26.0f;
-	for (int a = 0; a < 23; a++) //Until northWallZEnd
+	float westWallXStart = 20.0f;
+	for (int a = 0; a < 22; a++) //Until northWallZEnd
 	{
-		westWallXStart += 2.0f;
-		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		westWallXStart -= 2.0f;
+		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		theWalls.push_back(wallTest);
+		theWalls.push_back(wallTesteast);
 	}
-	//EastLimit
-	float eastWallXStart = -26.0f;
-	for (int a = 0; a < 23; a++) //Until northWallZEnd
+	//A'RoomWalls
+	float AWallXStart = -30.0f;
+	float AWallzStart = -8.0f;
+	for (int a = 0; a < 5; a++)
 	{
-		eastWallXStart += 2.0f;
-		Wall* wallTest = new Wall(Vec3(eastWallXStart, 0.0f, 24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		theWalls.push_back(wallTest);
+		AWallXStart += 2.0f;
+		AWallzStart += 2.0f;
+
+		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+		theWalls.push_back(AwallTestNorth);
+		theWalls.push_back(AwallTestSouth);
+		theWalls.push_back(AwallTestEast);
 	}
 
 	//A'RoomWalls
-	float AWallXStart = -8.0f;
-	for (int a = 0; a < 13; a++) //Until northWallZEnd
+	float bWallXStart = -30.0f;
+	for (int a = 0; a < 5; a++)
 	{
-		AWallXStart += 2.0f;
-		Wall* wallTest = new Wall(Vec3(AWallXStart, 0.0f, 24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		theWalls.push_back(wallTest);
+		bWallXStart += 2.0f;
+		Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(BwallTestNorth);
+	}
+	float bWallzStart = -12.0f;
+	for (int a = 0; a < 1; a++)
+	{
+		bWallzStart -= 2.0f;
+		Wall* BwallTest = new Wall(Vec3(bWallzStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* BwallTestN = new Wall(Vec3(bWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(BwallTest);
+		theWalls.push_back(BwallTestN);
+	}
+	float bWallxzStart = -18.0f;
+	for (int a = 0; a < 3; a++)
+	{
+		bWallxzStart += 2.0f;
+		Wall* BwalzlTest = new Wall(Vec3(-16.0f, 0.0f, bWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(BwalzlTest);
+	}
+	//ERoomWalls
+	float EWallXStart = -10.0f;
+	for (int a = 0; a < 15; a++)
+	{
+		EWallXStart += 2.0f;
+		Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(EwallTestNorth);
 	}
 
-	//a room
-	Wall* wall_a1 = new Wall(Vec3(4.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_a2 = new Wall(Vec3(4.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_a3 = new Wall(Vec3(4.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_a4 = new Wall(Vec3(2.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_a5 = new Wall(Vec3(-2.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_a6 = new Wall(Vec3(-6.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_a7 = new Wall(Vec3(-8.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_a8 = new Wall(Vec3(-8.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_a9 = new Wall(Vec3(-8.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 
-	//b room
-	Wall* wall_b0 = new Wall(Vec3(-12.0f, 0.0f, -28.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b1 = new Wall(Vec3(-12.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b2 = new Wall(Vec3(-12.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b3 = new Wall(Vec3(-16.0f, 0.0f, -16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b4 = new Wall(Vec3(-16.0f, 0.0f, -12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b5 = new Wall(Vec3(-14.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b6 = new Wall(Vec3(-14.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b7 = new Wall(Vec3(-22.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b8 = new Wall(Vec3(-22.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b9 = new Wall(Vec3(-12.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b10 = new Wall(Vec3(-12.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b11 = new Wall(Vec3(-12.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b12 = new Wall(Vec3(14.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b13 = new Wall(Vec3(18.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b14 = new Wall(Vec3(22.0f, 0.0f, 0.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b15 = new Wall(Vec3(-14.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b16 = new Wall(Vec3(-18.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b17 = new Wall(Vec3(-22.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_b18 = new Wall(Vec3(-12.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b19 = new Wall(Vec3(-12.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b20 = new Wall(Vec3(-12.0f, 0.0f, 12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b21 = new Wall(Vec3(-12.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_b22 = new Wall(Vec3(-12.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+	//DRoom
+	float DWallZStart = -10.0f;
+	for (int a = 0; a < 9; a++) //Until northWallZEnd
+	{
+		DWallZStart += 2.0f;
+		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(DwallTest);
+		theWalls.push_back(DwallTestSOUTH);
+	}
+	//Droom
+	float DWallXStart = 8.0f;
+	for (int a = 0; a < 7; a++) //Until northWallZEnd
+	{
+		DWallXStart -= 2.0f;
+		Wall* DwallTest = new Wall(Vec3(DWallXStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* DwallTesteast = new Wall(Vec3(DWallXStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(DwallTest);
+		theWalls.push_back(DwallTesteast);
+	}
 
-
-	//c room
-	Wall* wall_c1 = new Wall(Vec3(18.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_c2 = new Wall(Vec3(14.0f, 0.0f, -18.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_c3 = new Wall(Vec3(18.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_c4 = new Wall(Vec3(14.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_c5 = new Wall(Vec3(12.0f, 0.0f, -16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c6 = new Wall(Vec3(12.0f, 0.0f, -12.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c7 = new Wall(Vec3(12.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c8 = new Wall(Vec3(12.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c9 = new Wall(Vec3(12.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c10 = new Wall(Vec3(12.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_c11 = new Wall(Vec3(12.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-
-	//d room
-
-	Wall* wall_d1 = new Wall(Vec3(6.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d2 = new Wall(Vec3(2.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d3 = new Wall(Vec3(-2.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d4 = new Wall(Vec3(-6.0f, 0.0f, -10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d5 = new Wall(Vec3(6.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d6 = new Wall(Vec3(2.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d7 = new Wall(Vec3(-2.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d8 = new Wall(Vec3(-6.0f, 0.0f, 10.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_d9 = new Wall(Vec3(8.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d10 = new Wall(Vec3(8.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d11 = new Wall(Vec3(8.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d12 = new Wall(Vec3(8.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d13 = new Wall(Vec3(8.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d14 = new Wall(Vec3(-8.0f, 0.0f, -8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d15 = new Wall(Vec3(-8.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d16 = new Wall(Vec3(-8.0f, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d17 = new Wall(Vec3(-8.0f, 0.0f, 4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_d18 = new Wall(Vec3(-8.0f, 0.0f, 8.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-
-	//f room
-
-	Wall* wall_f1 = new Wall(Vec3(6.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_f2 = new Wall(Vec3(2.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_f3 = new Wall(Vec3(-2.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_f4 = new Wall(Vec3(-6.0f, 0.0f, 14.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);// I
-	Wall* wall_f5 = new Wall(Vec3(8.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_f6 = new Wall(Vec3(8.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_f7 = new Wall(Vec3(-8.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-	Wall* wall_f8 = new Wall(Vec3(-8.0f, 0.0f, 20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-
-
-
-
-
+	//FRoom
+	float FWallZStart = 14.0f;
+	for (int a = 0; a < 3; a++) //Until northWallZEnd
+	{
+		FWallZStart += 2.0f;
+		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(DwallTest);
+		theWalls.push_back(DwallTestSOUTH);
+	}
+	//Froom
+	float FWallXStart = 8.0f;
+	for (int a = 0; a < 7; a++) //Until northWallZEnd
+	{
+		FWallXStart -= 2.0f;
+		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(FwallTest);
+	}
+	
+	//CRoom
+	float CWallZStart = 20.0f;
+	for (int a = 0; a < 3; a++) //Until northWallZEnd
+	{
+		CWallZStart -= 2.0f;
+		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f,-18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(CwallTest);
+		theWalls.push_back(CwallTestSOUTH);
+	}
+	//Croom
+	float CWallXStart = -18.0f;
+	for (int a = 0; a < 13; a++) 
+	{
+		CWallXStart += 2.0f;
+		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		theWalls.push_back(CwallTest);
+	}
 }
 
 Scene0::~Scene0()
@@ -161,7 +163,7 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 10.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 
