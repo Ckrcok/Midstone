@@ -163,7 +163,7 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, 10.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 100.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 
@@ -267,9 +267,20 @@ void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 void Scene0::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
+	//Updating player collider position.
+	resultPlayer = camera->GetPlayerPosition();
+	minCornerPlayer = resultPlayer - Vec3(1.0f, 1.0f, 1.0f);
+	maxCornerPlayer = resultPlayer + Vec3(1.0f, 1.0f, 1.0f);
+	playerColliderBox.updateVertPos(minCornerPlayer, maxCornerPlayer);
 
-	bool isTouching = false;
-
+	for (Wall* wall : theWalls) {
+		resultB  = wall->GetPosition();
+		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
+		blueBox.updateVertPos(minCornerB, maxCornerB);
+		int a = Collision::boxBoxCollision(blueBox, playerColliderBox);
+		printf("%i", a);
+	}
 }
 
 void Scene0::Render() const {

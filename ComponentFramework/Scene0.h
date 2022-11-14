@@ -43,16 +43,16 @@ private:
 
 
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);
-	Vec3 resultA = Vec3(1.0f, 1.0f, 1.0f);
-	Vec3 minCornerA = Vec3(0.0f, 0.0f, 0.0f);
-	Vec3 maxCornerA = Vec3(0.0f, 0.0f, 0.0f);
+	Vec3 resultPlayer = Vec3(1.0f, 1.0f, 1.0f);
+	Vec3 minCornerPlayer = Vec3(0.0f, 0.0f, 0.0f);
+	Vec3 maxCornerPlayer = Vec3(0.0f, 0.0f, 0.0f);
 
 	Vec3 resultB = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 minCornerB = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 maxCornerB = Vec3(0.0f, 0.0f, 0.0f);
 
-	Box* redBox; //= Box(minCornerA, maxCornerA);
-	Box* blueBox;//= Box(minCornerB, maxCornerB);
+	Box playerColliderBox; //= Box(minCornerA, maxCornerA);
+	Box blueBox;//= Box(minCornerB, maxCornerB);
 
 
 public:
