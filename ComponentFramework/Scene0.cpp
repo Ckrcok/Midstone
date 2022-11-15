@@ -130,25 +130,28 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		theWalls.push_back(FwallTest);
 	}
-	
+
 	//CRoom
 	float CWallZStart = 20.0f;
 	for (int a = 0; a < 3; a++) //Until northWallZEnd
 	{
 		CWallZStart -= 2.0f;
-		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f,-18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		theWalls.push_back(CwallTest);
 		theWalls.push_back(CwallTestSOUTH);
 	}
 	//Croom
 	float CWallXStart = -18.0f;
-	for (int a = 0; a < 13; a++) 
+	for (int a = 0; a < 13; a++)
 	{
 		CWallXStart += 2.0f;
 		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
 		theWalls.push_back(CwallTest);
 	}
+
+
+
 }
 
 Scene0::~Scene0()
@@ -163,8 +166,23 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, 100.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, -10.0f, 0.0f), nullptr);
 	camera->OnCreate();
+	
+	sphere = new Actor(nullptr);
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	sphere->GetMesh()->OnCreate();
+	sphere->SetTexture(new Texture());
+	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
+	sphere->OnCreate();
+
+	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+	if (shader->OnCreate() == false)
+	{
+		Debug::Error("Can't load shader", __FILE__, __LINE__);
+	}
+	sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+
 
 
 	for (Wall* wall : theWalls) {
@@ -178,16 +196,6 @@ bool Scene0::OnCreate()
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
-
-
-
-
-
-	// this work is prior to camera actor --- it will be obselete with camera actor
-	/*projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 15.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-	viewMatrix.print();
-	modelMatrix.loadIdentity();*/
 
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
 	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
@@ -217,69 +225,50 @@ void Scene0::OnDestroy() {
 		delete camera;
 	}
 
+	if (sphere)
+	{
+		sphere->OnDestroy();
+		delete sphere;
+	}
 
 
 	shader->OnDestroy();
 	delete shader;
 
+	delete texture;
+
 }
 void Scene0::HandleEvents(const SDL_Event& sdlEvent) {
 
 	camera->HandleEvents(sdlEvent);
-
-
-
-	switch (sdlEvent.type) {
-		//case SDL_KEYDOWN:
-		//	if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {//LEFT
-		//		//sphere->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 0.0f, -1.0f)));
-
-		//		//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {//RIGHT
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f,1.0f)));
-
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {//UP
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::rotate(-90, Vec3(0.0f, 1.0f, 0.0f)));
-
-		//	//sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
-
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {//DOWN
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_X) {//BEHIND
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
-
-		//	}
-		//	else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {//FRONT
-		//		sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
-
-		//	}
-		//	break;
-	}
 }
 
 void Scene0::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
+	sphere->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker));
+	
 	//Updating player collider position.
-	resultPlayer = camera->GetPlayerPosition();
+	resultPlayer = -camera->cameraPositionTracker;
 	minCornerPlayer = resultPlayer - Vec3(1.0f, 1.0f, 1.0f);
 	maxCornerPlayer = resultPlayer + Vec3(1.0f, 1.0f, 1.0f);
-	playerColliderBox.updateVertPos(minCornerPlayer, maxCornerPlayer);
 
+	playerColliderBox->updateVertPos(minCornerPlayer, maxCornerPlayer);
 	for (Wall* wall : theWalls) {
-		resultB  = wall->GetPosition();
+		resultB  = wall->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
-		blueBox.updateVertPos(minCornerB, maxCornerB);
-		int a = Collision::boxBoxCollision(blueBox, playerColliderBox);
-		printf("%i", a);
+		blueBox->updateVertPos(minCornerB, maxCornerB);
+		int a = Collision::boxBoxCollision(*playerColliderBox, *blueBox);
+
+		if(a){
+			camera->isFacingWall = true;
+			printf("%i", a);
+			//resultB.print("Box ---");
+		}else {
+			camera->isFacingWall = false;
+			printf("0", a);
+		}
 	}
 }
 
@@ -304,6 +293,19 @@ void Scene0::Render() const {
 	for (Wall* wall : theWalls) {
 		wall->Render();
 	}
+
+	//-----------------------
+	glUseProgram(shader->GetProgram());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
+	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
+	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
+	sphere->GetMesh()->Render(GL_TRIANGLES);
+	//-----------------------
+
 	glUseProgram(0);
 }
 

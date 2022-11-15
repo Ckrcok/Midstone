@@ -22,20 +22,20 @@ class Scene0 : public Scene
 {
 private:
 	vector<Wall*> theWalls;
-
 	Trackball* trackball;
 	CameraActor* camera;
 
 	Actor* sphere;
 	Actor* cube;
-	//Mesh* mesh; --> CameraActor handles this now
+	Mesh* mesh; 
 	Shader* shader;
 	Shader* shaderCube;
+	Texture* texture;
 
-	/*Texture* texture; --> CameraActor handles these now
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
-	Matrix4 modelMatrix;*/
+	Matrix4 modelMatrix;
+
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
@@ -51,8 +51,8 @@ private:
 	Vec3 minCornerB = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 maxCornerB = Vec3(0.0f, 0.0f, 0.0f);
 
-	Box playerColliderBox; //= Box(minCornerA, maxCornerA);
-	Box blueBox;//= Box(minCornerB, maxCornerB);
+	Box* playerColliderBox = new Box(minCornerPlayer, maxCornerPlayer); //= Box(minCornerA, maxCornerA);
+	Box* blueBox = new Box(minCornerB, maxCornerB);//= Box(minCornerB, maxCornerB);
 
 
 public:

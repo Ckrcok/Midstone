@@ -31,7 +31,7 @@ public:
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
-
+	Vec3 getPos() { return position; }
 	
 };
 
