@@ -1,7 +1,7 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-// Attributes 
+// Attributes
 layout(location = 0) in vec4 vVertex;
 
 layout (location = 0) uniform mat4 viewMatrix;

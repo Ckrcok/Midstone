@@ -12,7 +12,7 @@
 
 
 shaderScene::shaderScene() :sphere(nullptr), mesh(nullptr), shader(nullptr), texture(nullptr) {
-	Debug::Info("Created Scene1: ", __FILE__, __LINE__);
+	Debug::Info("Created shaderScene: ", __FILE__, __LINE__);
 }
 
 shaderScene::~shaderScene() {
@@ -21,7 +21,7 @@ shaderScene::~shaderScene() {
 }
 
 bool shaderScene::OnCreate() {
-	Debug::Info("Loading assets Scene1: ", __FILE__, __LINE__);
+	Debug::Info("Loading assets shaderScene: ", __FILE__, __LINE__);
 
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
@@ -30,7 +30,7 @@ bool shaderScene::OnCreate() {
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
 
-	shader = new Shader(nullptr, "shaders/testingFrag.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/testingFrag.glsl", "shaders/testingVert.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
@@ -39,7 +39,6 @@ bool shaderScene::OnCreate() {
 	// this work is prior to camera actor --- it will be obselete with camera actor
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 15.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-	viewMatrix.print();
 	modelMatrix.loadIdentity();
 
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
@@ -96,16 +95,14 @@ void shaderScene::Update(const float deltaTime) {
 
 void shaderScene::Render() const {
 
-	/*glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);*/
+
 
 	glEnable(GL_DEPTH_TEST);
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+
 
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
@@ -119,10 +116,7 @@ void shaderScene::Render() const {
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
 	sphere->Render();
 
-	/*glBindTexture(GL_TEXTURE_2D, camera->GetSkyBox()->GetSkyboxTextureID());
-	glBindTexture(GL_TEXTURE_CUBE_MAP, camera->GetSkyBox()->GetSkyboxTextureID());
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);*/
+
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
