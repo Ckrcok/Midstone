@@ -123,11 +123,13 @@ void EnemyActor::Update(float deltaTime)
 			currentTimeBetweenTargets = timeBetweenTargets;
 		}
 	}
-	else if (attackTarget == nullptr)
+	else if (attackTarget == nullptr && distanceToTarget > 0.5f)
 	{
 		MoveToTarget(deltaTime);
-		//FaceTarget(deltaTime);
+		FaceTarget(deltaTime);
 	}
+	else
+		return;
 
 	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
 	//cout << "\n";

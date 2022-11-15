@@ -65,8 +65,9 @@ void Bullet::Update(float deltaTime)
 {
 	if (timer > 0.0f)
 		timer -= deltaTime;
-	else
-		OnDestroy();
+	else {
+		//OnDestroy();
+	}
 
 	position = model_3D->GetPosition() + velocity;
 	model_3D->SetModelMatrix(MMath::translate(position));
@@ -80,5 +81,5 @@ void Bullet::Update(float deltaTime)
 void Bullet::OnCollision()
 {
 	// [TODO]: Add collision check with the enemy
-	OnDestroy();
+	//OnDestroy();
 }
