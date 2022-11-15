@@ -11,7 +11,7 @@
 
 using namespace MATH;
 
-/// Forward declarations 
+/// Forward declarations
 union SDL_Event;
 class Actor;
 // class Mesh; --> CameraActor handles this now
@@ -39,7 +39,7 @@ private:
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
-	
+
 
 
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);

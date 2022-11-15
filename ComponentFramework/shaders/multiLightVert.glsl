@@ -1,7 +1,7 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-// Attributes 
+// Attributes
 layout(location = 0) in vec4 vVertex;
 layout(location = 1) in vec3 vNormal;
 layout(location = 2) in vec2 uvCoord;
@@ -21,13 +21,13 @@ layout(location = 13) out vec4 diffuseFrag[4];
 layout(location = 23) out vec4 specularFrag[4];
 
 void main() {
-    
+
     for (int x = 0; x < diffuse.length; x++)
     {
         diffuseFrag[x] = diffuse[x];
         specularFrag[x] = specular[x];
     }
-   
+
 
     texCoord = uvCoord;
     texCoord.y *= -1.0;
@@ -40,8 +40,9 @@ void main() {
 
     for (int li = 0; li < lightDir.length; li++)
     {
-        lightDir[li] = normalize(lightPos[li] - vertPos); 
+        lightDir[li] = normalize(lightPos[li] - vertPos);
     }
+
 
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vVertex;
 }

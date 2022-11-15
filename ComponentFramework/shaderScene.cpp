@@ -1,10 +1,9 @@
 #include <glew.h>
 #include <iostream>
 #include <SDL.h>
-//#include "Debug.h"
 #include "shaderScene.h"
 #include "MMath.h"
-#include "Debug.h" // need to include Debug after Scene.h... why??
+#include "Debug.h"
 #include "Actor.h"
 #include "Mesh.h"
 #include "Shader.h"
@@ -30,7 +29,7 @@ bool shaderScene::OnCreate() {
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
 
-	shader = new Shader(nullptr, "shaders/testingFrag.glsl", "shaders/testingVert.glsl");
+	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
@@ -39,6 +38,7 @@ bool shaderScene::OnCreate() {
 	// this work is prior to camera actor --- it will be obselete with camera actor
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 15.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+	viewMatrix.print();
 	modelMatrix.loadIdentity();
 
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
@@ -60,11 +60,9 @@ bool shaderScene::OnCreate() {
 }
 
 void shaderScene::OnDestroy() {
-	Debug::Info("Deleting assets Scene1: ", __FILE__, __LINE__);
+	Debug::Info("Deleting assets shaderScene: ", __FILE__, __LINE__);
 	sphere->OnDestroy();
 	delete sphere;
-	mesh->OnDestroy();
-	delete mesh;
 	shader->OnDestroy();
 	delete shader;
 
@@ -95,14 +93,16 @@ void shaderScene::Update(const float deltaTime) {
 
 void shaderScene::Render() const {
 
-
+	/*glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);*/
 
 	glEnable(GL_DEPTH_TEST);
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
 
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
@@ -116,7 +116,10 @@ void shaderScene::Render() const {
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
 	sphere->Render();
 
-
+	/*glBindTexture(GL_TEXTURE_2D, camera->GetSkyBox()->GetSkyboxTextureID());
+	glBindTexture(GL_TEXTURE_CUBE_MAP, camera->GetSkyBox()->GetSkyboxTextureID());
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

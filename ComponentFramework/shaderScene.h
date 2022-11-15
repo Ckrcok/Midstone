@@ -1,5 +1,5 @@
-#ifndef SHADERSCENE_H
-#define SHADERSCENE_H
+#ifndef shaderScene_H
+#define shaderScene_H
 #include "Scene.h"
 #include "Vector.h"
 #include "Matrix.h"
@@ -38,4 +38,4 @@ public:
 };
 
 
-#endif // SHADERSCENE_H
+#endif // shaderScene_H
