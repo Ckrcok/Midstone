@@ -1,10 +1,11 @@
 #include "Wall.h"
 
-Wall::Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+Wall::Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_, char id_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
+	id = id_;
 
 }
 
@@ -23,8 +24,11 @@ bool Wall::OnCreate()
 	objFile->SetTexture(new Texture());
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
-
-	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	if (id == 'w') {
+		shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	}else {
+	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+	}
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 

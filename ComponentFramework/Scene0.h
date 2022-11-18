@@ -53,6 +53,7 @@ private:
 
 	Box* playerColliderBox = new Box(minCornerPlayer, maxCornerPlayer); //= Box(minCornerA, maxCornerA);
 	Box* blueBox = new Box(minCornerB, maxCornerB);//= Box(minCornerB, maxCornerB);
+	short int isDoor = 1;
 
 
 public:

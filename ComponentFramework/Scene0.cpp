@@ -17,14 +17,14 @@
 Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 	trackball = new Trackball();
-
+	char isDoor ; 
 	//NorthLimit
 	float northWallZStart = -30.0f;
 	for (int a = 0; a < 25; a++) //Until northWallZEnd
 	{
 		northWallZStart += 2.0f;
-		Wall* wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTestSOUTH);
 	}
@@ -35,12 +35,12 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 22; a++) //Until northWallZEnd
 	{
 		westWallXStart -= 2.0f;
-		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTesteast);
 	}
-	//A'RoomWalls
+	//A'RoomWalls  DOOR
 	float AWallXStart = -30.0f;
 	float AWallzStart = -8.0f;
 	for (int a = 0; a < 5; a++)
@@ -48,29 +48,35 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		AWallXStart += 2.0f;
 		AWallzStart += 2.0f;
 
-		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		if (AWallzStart == 2.0f) {
+			Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
+		}
+		Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		theWalls.push_back(AwallTestNorth);
 		theWalls.push_back(AwallTestSouth);
 		theWalls.push_back(AwallTestEast);
 	}
 
-	//A'RoomWalls
+	//B'RoomWalls DOOR
 	float bWallXStart = -30.0f;
 	for (int a = 0; a < 5; a++)
 	{
 		bWallXStart += 2.0f;
-		Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		if (bWallXStart == -28.0f) {
+			Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'b');
+		}
+		Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(BwallTestNorth);
 	}
 	float bWallzStart = -12.0f;
 	for (int a = 0; a < 1; a++)
 	{
 		bWallzStart -= 2.0f;
-		Wall* BwallTest = new Wall(Vec3(bWallzStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* BwallTestN = new Wall(Vec3(bWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* BwallTest = new Wall(Vec3(bWallzStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* BwallTestN = new Wall(Vec3(bWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(BwallTest);
 		theWalls.push_back(BwallTestN);
 	}
@@ -78,47 +84,77 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 3; a++)
 	{
 		bWallxzStart += 2.0f;
-		Wall* BwalzlTest = new Wall(Vec3(-16.0f, 0.0f, bWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* BwalzlTest = new Wall(Vec3(-16.0f, 0.0f, bWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(BwalzlTest);
 	}
-	//ERoomWalls
+	//SecurityRoomDoor
+	float sWallxzStart = -12.0f;
+	for (int a = 0; a < 5; a++)
+	{
+		sWallxzStart -= 2.0f;
+		if (sWallxzStart == -14.0f) {
+			Wall* SwalzlTest = new Wall(Vec3(-16.0f, 0.0f, sWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
+			printf("%f ------------------------------------------", sWallxzStart);
+
+		}
+		Wall* SwalzlTest = new Wall(Vec3(-16.0f, 0.0f, sWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		theWalls.push_back(SwalzlTest);
+	}
+	//ERoomWalls DOOR
 	float EWallXStart = -10.0f;
 	for (int a = 0; a < 15; a++)
 	{
 		EWallXStart += 2.0f;
-		Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+		if (EWallXStart == 12.0f) {
+			Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
+		}
+		Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		
 		theWalls.push_back(EwallTestNorth);
 	}
 
 
-	//DRoom
+	//DRoom DOORS
 	float DWallZStart = -10.0f;
 	for (int a = 0; a < 9; a++) //Until northWallZEnd
 	{
 		DWallZStart += 2.0f;
-		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		if (DWallZStart == -6.0f) {
+			Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'd');
+		}
+			Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		
+		if (DWallZStart == -6.0f) {
+			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
+		}
+			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
-	//Droom
+	//DroomEASTWEST
 	float DWallXStart = 8.0f;
-	for (int a = 0; a < 7; a++) //Until northWallZEnd
+	for (int a = 0; a < 7; a++)
 	{
 		DWallXStart -= 2.0f;
-		Wall* DwallTest = new Wall(Vec3(DWallXStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* DwallTesteast = new Wall(Vec3(DWallXStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* DwallTest = new Wall(Vec3(DWallXStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* DwallTesteast = new Wall(Vec3(DWallXStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTesteast);
 	}
 
-	//FRoom
+	//FRoom door
 	float FWallZStart = 14.0f;
-	for (int a = 0; a < 3; a++) //Until northWallZEnd
+	for (int a = 0; a < 3; a++) 
 	{
 		FWallZStart += 2.0f;
-		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		if (FWallZStart == 20.0f) {
+			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'f');
+
+		}
+		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
@@ -127,7 +163,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 7; a++) //Until northWallZEnd
 	{
 		FWallXStart -= 2.0f;
-		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(FwallTest);
 	}
 
@@ -136,8 +172,11 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 3; a++) //Until northWallZEnd
 	{
 		CWallZStart -= 2.0f;
-		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
+		if (CWallZStart == 18) {
+		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
+		}
+		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
 		theWalls.push_back(CwallTest);
 		theWalls.push_back(CwallTestSOUTH);
 	}
@@ -146,7 +185,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 13; a++)
 	{
 		CWallXStart += 2.0f;
-		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(CwallTest);
 	}
 
@@ -166,7 +205,7 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, -10.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f,  -50.0f, 0.0f), nullptr);
 	camera->OnCreate();
 	
 	sphere = new Actor(nullptr);
@@ -189,13 +228,6 @@ bool Scene0::OnCreate()
 		wall->OnCreate();
 	}
 
-
-
-	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
-	if (shader->OnCreate() == false)
-	{
-		Debug::Error("Can't load shader", __FILE__, __LINE__);
-	}
 
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
 	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
@@ -261,13 +293,12 @@ void Scene0::Update(const float deltaTime) {
 		blueBox->updateVertPos(minCornerB, maxCornerB);
 		int a = Collision::boxBoxCollision(*playerColliderBox, *blueBox);
 
-		if(a){
-			camera->isFacingWall = true;
-			printf("%i", a);
-			//resultB.print("Box ---");
+		if(a) {
+			//camera->isFacingWall = true;
+			resultB.print("Box ---");
 		}else {
-			camera->isFacingWall = false;
-			printf("0", a);
+			//camera->isFacingWall = false;
+			//printf("0", a);
 		}
 	}
 }

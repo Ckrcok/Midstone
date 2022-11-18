@@ -20,12 +20,13 @@ public:
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
+	char id;
 	//vector<std::variant<Vec3,float, Vec3, CameraActor, Component>> northWalls;
 	// Model
 	Actor* objFile;
 	Shader* shader;
 public:
-	Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
+	Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_, char id);
 	~Wall();
 
 	bool OnCreate();
