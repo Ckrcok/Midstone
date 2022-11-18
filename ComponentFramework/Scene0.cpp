@@ -51,7 +51,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		if (AWallzStart == 2.0f) {
-			Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
+			Wall* AwallTestEast = new Wall(Vec3(AWallzStart, -10.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
 		}
 		Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
@@ -66,7 +66,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	{
 		bWallXStart += 2.0f;
 		if (bWallXStart == -28.0f) {
-			Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'b');
+			Wall* BwallTestNorth = new Wall(Vec3(-12.0f, -10.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'b');
 		}
 		Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(BwallTestNorth);
@@ -93,13 +93,24 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	{
 		sWallxzStart -= 2.0f;
 		if (sWallxzStart == -14.0f) {
-			Wall* SwalzlTest = new Wall(Vec3(-16.0f, 0.0f, sWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
-			printf("%f ------------------------------------------", sWallxzStart);
-
+			Wall* SwalzlTest = new Wall(Vec3(sWallxzStart, -10.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
 		}
-		Wall* SwalzlTest = new Wall(Vec3(-16.0f, 0.0f, sWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		theWalls.push_back(SwalzlTest);
 	}
+
+	//PowerRoomDoor
+	float pWallxzStart = -12.0f;
+	for (int a = 0; a < 5; a++)
+	{
+		pWallxzStart -= 2.0f;
+		if (pWallxzStart == -14.0f) {
+			Wall* PwalzlTest = new Wall(Vec3(pWallxzStart, -10.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
+		}
+		Wall* PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		theWalls.push_back(PwalzlTest);
+	}
+
 	//ERoomWalls DOOR
 	float EWallXStart = -10.0f;
 	for (int a = 0; a < 15; a++)
@@ -107,7 +118,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		EWallXStart += 2.0f;
 
 		if (EWallXStart == 12.0f) {
-			Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
+			Wall* EwallTestNorth = new Wall(Vec3(-12.0f, -10.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
 		}
 		Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		
@@ -121,12 +132,12 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	{
 		DWallZStart += 2.0f;
 		if (DWallZStart == -6.0f) {
-			Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'd');
+			Wall* DwallTest = new Wall(Vec3(8.0f, -10.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'd');
 		}
 			Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		
 		if (DWallZStart == -6.0f) {
-			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
+			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, -10.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
 		}
 			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		
@@ -151,7 +162,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		FWallZStart += 2.0f;
 		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		if (FWallZStart == 20.0f) {
-			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'f');
+			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, -10.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'f');
 
 		}
 		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
@@ -173,10 +184,14 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	{
 		CWallZStart -= 2.0f;
 		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
-		if (CWallZStart == 18) {
-		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
+		Wall* CwallTestSOUTH;
+		if (CWallZStart == 18.0f) {
+		CwallTestSOUTH = new Wall(Vec3(CWallZStart, -10.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
 		}
-		Wall* CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
+		else {
+		CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
+
+		}
 		theWalls.push_back(CwallTest);
 		theWalls.push_back(CwallTestSOUTH);
 	}
@@ -205,7 +220,7 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f,  -50.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f,  -30.0f, 0.0f), nullptr);
 	camera->OnCreate();
 	
 	sphere = new Actor(nullptr);
@@ -326,12 +341,11 @@ void Scene0::Render() const {
 	}
 
 	//-----------------------
-	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+
+
 	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
 	sphere->GetMesh()->Render(GL_TRIANGLES);

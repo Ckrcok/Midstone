@@ -6,7 +6,6 @@ Wall::Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, C
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
 	id = id_;
-
 }
 
 
@@ -53,8 +52,10 @@ void Wall::OnDestroy()
 
 void Wall::Render()
 {
-	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
+
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
-	objFile->Render();
+	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
+	objFile->GetMesh()->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
