@@ -47,13 +47,15 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	{
 		AWallXStart += 2.0f;
 		AWallzStart += 2.0f;
-
+		Wall* AwallTestEast;
 		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		if (AWallzStart == 2.0f) {
-			Wall* AwallTestEast = new Wall(Vec3(AWallzStart, -10.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
+			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
 		}
-		Wall* AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+		AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		}
 
 		theWalls.push_back(AwallTestNorth);
 		theWalls.push_back(AwallTestSouth);
@@ -64,11 +66,14 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	float bWallXStart = -30.0f;
 	for (int a = 0; a < 5; a++)
 	{
+		Wall* BwallTestNorth;
 		bWallXStart += 2.0f;
 		if (bWallXStart == -28.0f) {
-			Wall* BwallTestNorth = new Wall(Vec3(-12.0f, -10.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'b');
+			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'b');
 		}
-		Wall* BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		}
 		theWalls.push_back(BwallTestNorth);
 	}
 	float bWallzStart = -12.0f;
@@ -89,13 +94,17 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	}
 	//SecurityRoomDoor
 	float sWallxzStart = -12.0f;
+	Wall* SwalzlTest;
 	for (int a = 0; a < 5; a++)
 	{
 		sWallxzStart -= 2.0f;
 		if (sWallxzStart == -14.0f) {
-			Wall* SwalzlTest = new Wall(Vec3(sWallxzStart, -10.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
+			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
 		}
-		Wall* SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+		SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		}
 		theWalls.push_back(SwalzlTest);
 	}
 
@@ -103,11 +112,11 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	float pWallxzStart = -12.0f;
 	for (int a = 0; a < 5; a++)
 	{
+		Wall* PwalzlTest;
 		pWallxzStart -= 2.0f;
-		if (pWallxzStart == -14.0f) {
-			Wall* PwalzlTest = new Wall(Vec3(pWallxzStart, -10.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
-		}
-		Wall* PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		
 		theWalls.push_back(PwalzlTest);
 	}
 
@@ -116,12 +125,14 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 15; a++)
 	{
 		EWallXStart += 2.0f;
-
+		Wall* EwallTestNorth;
 		if (EWallXStart == 12.0f) {
-			Wall* EwallTestNorth = new Wall(Vec3(-12.0f, -10.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
+			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
 		}
-		Wall* EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
-		
+		else {
+		EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		}
 		theWalls.push_back(EwallTestNorth);
 	}
 
@@ -131,15 +142,22 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 9; a++) //Until northWallZEnd
 	{
 		DWallZStart += 2.0f;
+		Wall* DwallTest;
+		Wall* DwallTestSOUTH;
 		if (DWallZStart == -6.0f) {
-			Wall* DwallTest = new Wall(Vec3(8.0f, -10.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'd');
+			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'd');
 		}
-			Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		}
 		
 		if (DWallZStart == -6.0f) {
-			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, -10.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
+			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
 		}
-			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		}
 		
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
@@ -159,13 +177,18 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	float FWallZStart = 14.0f;
 	for (int a = 0; a < 3; a++) 
 	{
+
 		FWallZStart += 2.0f;
+		Wall* DwallTestSOUTH;
 		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		if (FWallZStart == 20.0f) {
-			Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, -10.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'f');
+			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'f');
 
 		}
-		Wall* DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		else {
+		DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		}
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
@@ -186,7 +209,7 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
 		Wall* CwallTestSOUTH;
 		if (CWallZStart == 18.0f) {
-		CwallTestSOUTH = new Wall(Vec3(CWallZStart, -10.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
+		CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
 		}
 		else {
 		CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
@@ -200,10 +223,25 @@ Scene0::Scene0() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nu
 	for (int a = 0; a < 13; a++)
 	{
 		CWallXStart += 2.0f;
-		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+		Wall* CwallTest;
+		
+			CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+		
+		
 		theWalls.push_back(CwallTest);
 	}
+	//PICKUPS
+	//weapon pickup
+	Wall* wpPickup = new Wall(Vec3(6.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'o');
+	//health pickup
+	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'h');
+	//key pickup
+	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'k');
 
+	theWalls.push_back(wpPickup);
+	theWalls.push_back(hpPickup);
+	theWalls.push_back(kpPickup);
 
 
 }
@@ -220,11 +258,11 @@ bool Scene0::OnCreate()
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f,  -30.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f,  0.0f, 0.0f), nullptr);
 	camera->OnCreate();
 	
 	sphere = new Actor(nullptr);
-	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	sphere->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	sphere->GetMesh()->OnCreate();
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
@@ -297,24 +335,44 @@ void Scene0::Update(const float deltaTime) {
 	
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
-	minCornerPlayer = resultPlayer - Vec3(1.0f, 1.0f, 1.0f);
-	maxCornerPlayer = resultPlayer + Vec3(1.0f, 1.0f, 1.0f);
-
-	playerColliderBox->updateVertPos(minCornerPlayer, maxCornerPlayer);
+	
 	for (Wall* wall : theWalls) {
+		
 		resultB  = wall->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
-		blueBox->updateVertPos(minCornerB, maxCornerB);
-		int a = Collision::boxBoxCollision(*playerColliderBox, *blueBox);
+		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
+		playerColliderBox->updateVertPos(resultPlayer,minCornerPlayer, maxCornerPlayer);
 
-		if(a) {
-			//camera->isFacingWall = true;
-			resultB.print("Box ---");
-		}else {
-			//camera->isFacingWall = false;
-			//printf("0", a);
+		int playerWallorDorCollision = Collision::distancePointBox(resultPlayer, *blueBox);
+		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *blueBox);
+
+		if(playerWallorDorCollision && (wall->id == 'w')) {//Test if facing wall
+			printf("Collided with wall \n");
 		}
+		else if (playerWallorDorCollision && ((wall->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
+			|| (wall->id == 'D') || (wall->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
+			printf("Collided with door \n");
+			wall->moveWall();
+		}
+		else if (playerWallorDorCollision && (wall->id == 'd')) {//testing of colliding with locked door
+			printf("Collided with locked door \n");
+		}
+		else if (playerPickupCollision && (wall->id == 'o')) {//testing if collided with weapon pickup
+			printf("Collided with weapon \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+		}
+		else if (playerPickupCollision && (wall->id == 'h')) {//testing if collided with healthpack pickup
+			printf("Collided with healthpack \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+
+		}
+		else if (playerPickupCollision && (wall->id == 'k')) {//testing if collided with key pickup
+			printf("Collided with key pickup \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+
+		}
+
 	}
 }
 

@@ -51,9 +51,12 @@ private:
 	Vec3 minCornerB = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 maxCornerB = Vec3(0.0f, 0.0f, 0.0f);
 
-	Box* playerColliderBox = new Box(minCornerPlayer, maxCornerPlayer); //= Box(minCornerA, maxCornerA);
-	Box* blueBox = new Box(minCornerB, maxCornerB);//= Box(minCornerB, maxCornerB);
+	Box* playerColliderBox = new Box(test, minCornerPlayer, maxCornerPlayer); //= Box(minCornerA, maxCornerA);
+	Box* blueBox = new Box(test, minCornerB, maxCornerB);//= Box(minCornerB, maxCornerB);
 	short int isDoor = 1;
+	bool hasWeapon = false;
+	bool hasHealth = false;
+	bool hasKey = false;
 
 
 public:
