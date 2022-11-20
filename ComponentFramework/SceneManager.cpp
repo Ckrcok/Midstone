@@ -4,7 +4,7 @@
 #include "Timer.h"
 #include "Window.h"
 
-#include "Scene0.h"
+#include "LevelScene.h"
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
@@ -57,7 +57,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	BuildNewScene(SCENE_NUMBER::SCENE0);
+	BuildNewScene(SCENE_NUMBER::LEVELSCENE);
 
 	return true;
 }
@@ -151,8 +151,8 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 
 	switch (scene)
 	{
-	case SCENE_NUMBER::SCENE0:
-		currentScene = new Scene0();
+	case SCENE_NUMBER::LEVELSCENE:
+		currentScene = new LevelScene();
 		status = currentScene->OnCreate();
 		break;
 

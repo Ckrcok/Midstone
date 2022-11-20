@@ -94,6 +94,7 @@
     <ClCompile Include="DoorPuzzle.cpp" />
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="EnemyActor.cpp" />
+    <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
@@ -104,7 +105,6 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MMath.cpp" />
-    <ClCompile Include="Scene0.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -127,6 +127,7 @@
     <ClInclude Include="EMath.h" />
     <ClInclude Include="EnemyActor.h" />
     <ClInclude Include="Euler.h" />
+    <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PuzzleButton.h" />
     <ClInclude Include="QMath.h" />
@@ -140,7 +141,6 @@
     <ClInclude Include="MMath.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Scene0.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sphere.h" />
