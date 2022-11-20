@@ -58,8 +58,10 @@ void Wall::OnDestroy()
 }
 void Wall::moveWall()
 {
-	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::translate(Vec3(10.0f, 0.0f, 0.0f)));	// Spawn rotation
-
+	//Sleep(1000);
+	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+	//Sleep(1000);
+	objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::translate(Vec3(0.0f, -10.0f, 0.0f)));
 }
 
 
