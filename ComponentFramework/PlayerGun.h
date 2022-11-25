@@ -32,6 +32,7 @@ private:
 
 	// Bullets
 	vector<Bullet*> spawnedBullets;
+	int bulletLabel = 0;
 
 public:
 	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
@@ -45,6 +46,7 @@ public:
 	void HandleEvents(const SDL_Event& sdlEvent);
 
 	void SpawnBullet(Vec3 velocity_);
+	void DestroyBullet(int label);
 };
 
 #endif // !PLAYER_GUN_H

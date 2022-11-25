@@ -66,8 +66,22 @@ void PlayerGun::Render()
 
 void PlayerGun::Update(float deltaTime)
 {
-	position = camera->GetPlayerPosition() + offset;
-	model_3D->SetModelMatrix(MMath::translate(position));
+	//position = camera->GetPlayerPosition() + offset;
+	//model_3D->SetModelMatrix(MMath::translate(position));
+
+	//cout << "Position_Cam: ";
+	//camera->GetCameraActorPosition().print();
+
+	// First rotate, then move
+	// This way, the forward vector is also changed
+	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * camera->GetRotationMatrix());
+	//model_3D->SetModelMatrix(MMath::translate(camera->GetPlayerPosition() + offset));
+
+	//model_3D->SetModelMatrix(MMath::rotate(-(camera->GetRotationMatrix()[10]), Vec3(0.0f, 0.0f, 1.0f)) * MMath::translate(camera->GetPlayerPosition() + offset));
+	model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::translate(camera->GetPlayerPosition() + offset));
+
+	std::cout << "Camera rotation matrix: " << camera->GetRotationMatrix()[10] << std::endl;
+
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
@@ -90,8 +104,23 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
 	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);
-	Bullet* bullet = new Bullet(position + offset, velocity_, this);
+	//Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this, this);
+	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);
+	bulletLabel++;
 
 	bullet->OnCreate();
 	spawnedBullets.push_back(bullet);
+}
+
+void PlayerGun::DestroyBullet(int label)
+{
+	for (int i = 0; i < spawnedBullets.size(); i++)
+	{
+		if (spawnedBullets[i]->GetLabel() == label) {
+			spawnedBullets[i]->OnDestroy();
+
+			spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
+			return;
+		}
+	}
 }

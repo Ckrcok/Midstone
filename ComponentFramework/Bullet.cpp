@@ -1,9 +1,14 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Vec3 spawnPos, Vec3 velocity_, Component* parent_) : Actor(parent_)
+//Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, PlayerGun* playerGun_, Component* parent_) : Actor(parent_)
+Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, Component* parent_) : Actor(parent_)
 {
+	label = label_;
+
 	position = spawnPos;
 	velocity = velocity_;
+
+	//playerGun = playerGun_;
 
 	timer = destroyAfterSeconds;
 }
@@ -58,24 +63,27 @@ void Bullet::Render()
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	std::cout << this << " is Render" << std::endl;
+	//std::cout << this << " is Render" << std::endl;
 }
 
 void Bullet::Update(float deltaTime)
 {
-	if (timer > 0.0f)
+	if (timer > 0.0f && !bulletDestroyIsCalled)
 		timer -= deltaTime;
-	else {
-		//OnDestroy();
+	else if (timer <= 0.0f && !bulletDestroyIsCalled)
+	{
+		std::cout << "Destroy is called for " << this << " bullet!" << std::endl;
+		bulletDestroyIsCalled = true;
+		//playerGun->DestroyBullet(label);
 	}
 
 	position = model_3D->GetPosition() + velocity;
 	model_3D->SetModelMatrix(MMath::translate(position));
 
-	std::cout << this << " position: ";
-	position.print();
+	//std::cout << this << " position: ";
+	//position.print();
 
-	std::cout << this << " is Update" << std::endl;
+	//std::cout << this << " is Update" << std::endl;
 }
 
 void Bullet::OnCollision()
