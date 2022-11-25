@@ -332,10 +332,12 @@ void LevelScene::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
 	sphere->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker));
-
+	float test = camera->GetRotationMatrix()[10];
+	cout << test << endl;
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
-
+	rotationVec = camera->cameraRotationTracker;
+	rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
 
 		resultB = wall->getPos();

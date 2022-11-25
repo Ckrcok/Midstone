@@ -12,6 +12,8 @@ class CameraActor : public Actor
 {
 public:
 	Vec3 cameraPositionTracker = Vec3(0.0f, 0.0f, 0.0f);
+	Vec3 cameraRotationTracker = Vec3(0.0f, 0.0f, 0.0f);
+
 	bool isFacingWall = false;
 	CameraActor(Vec3 spawnPos_, Component* parent_);
 	~CameraActor();
