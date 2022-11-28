@@ -365,15 +365,17 @@ void LevelScene::Update(const float deltaTime) {
 		}
 		else if (playerPickupCollision && (wall->id == 'o')) {//testing if collided with weapon pickup
 			printf("Collided with weapon \n");
+			hasWeapon = true;
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (wall->id == 'h')) {//testing if collided with healthpack pickup
 			printf("Collided with healthpack \n");
+			hasHealth =  true;
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
-
 		}
 		else if (playerPickupCollision && (wall->id == 'k')) {//testing if collided with key pickup
 			printf("Collided with key pickup \n");
+			hasKey = true;
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 
 		}
