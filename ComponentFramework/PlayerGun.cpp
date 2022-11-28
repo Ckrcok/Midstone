@@ -19,7 +19,8 @@ bool PlayerGun::OnCreate()
 	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
+	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
+
 	if (rotation > 0)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
@@ -78,10 +79,24 @@ void PlayerGun::Update(float deltaTime)
 	//model_3D->SetModelMatrix(MMath::translate(camera->GetPlayerPosition() + offset));
 
 	//model_3D->SetModelMatrix(MMath::rotate(-(camera->GetRotationMatrix()[10]), Vec3(0.0f, 0.0f, 1.0f)) * MMath::translate(camera->GetPlayerPosition() + offset));
-	model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::translate(camera->GetPlayerPosition() + offset));
+	//model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::translate(camera->GetPlayerPosition() + offset));
+	//model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::rotate(camera->GetRotationMatrix()));
 
-	std::cout << "Camera rotation matrix: " << camera->GetRotationMatrix()[10] << std::endl;
+	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(camera->cameraPositionTracker + offset));
+	//model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	//model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset));
 
+	model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))) * MMath::translate(-camera->cameraPositionTracker + offset));
+
+	//std::cout << "Camera rotation matrix: " << camera->GetRotationMatrix()[10] << std::endl;
+	std::cout << "Camera position tracker: ";
+	camera->cameraPositionTracker.print();
+
+	std::cout << "Camera rotation tracker: ";
+	camera->cameraRotationTracker.print();
+
+	std::cout << "Gun model matrix:\n";
+	model_3D->GetModelMatrix().print();
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
