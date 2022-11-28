@@ -31,14 +31,14 @@ bool Scene2::OnCreate() {
 
 
 	sphere = new Actor(nullptr);
-	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	sphere->GetMesh()->OnCreate();
 	sphere->SetModelMatrix(MMath::translate(Vec3(2.0f, 5.0f, -20.0f)));
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
 
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
@@ -113,7 +113,7 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 void Scene2::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
-	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
 	printf("Sphere: \t");	
 	sphere->GetPosition().print();
 	printf("\n\n");

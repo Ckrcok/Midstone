@@ -12,6 +12,7 @@
 #include "Trackball.h"
 #include "CameraActor.h"
 #include "Collision.h"
+#include "Wall.h"
 
 
 LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
@@ -237,7 +238,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	//health pickup
 	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'h');
 	//key pickup
-	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'k');
+	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'k');
 
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
@@ -258,7 +259,7 @@ bool LevelScene::OnCreate()
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, -5.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 	sphere = new Actor(nullptr);
@@ -331,14 +332,16 @@ void LevelScene::HandleEvents(const SDL_Event& sdlEvent) {
 void LevelScene::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
+
 	sphere->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker));
-	float test = camera->GetRotationMatrix()[10];
-	cout << test << endl;
+	
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
 	rotationVec = camera->cameraRotationTracker;
 	rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
+		wall->rotateWall(totalTime,wall);
+		
 
 		resultB = wall->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
@@ -355,7 +358,7 @@ void LevelScene::Update(const float deltaTime) {
 		else if (playerWallorDorCollision && ((wall->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
 			|| (wall->id == 'D') || (wall->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
 			printf("Collided with door \n");
-			wall->moveWall();
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerWallorDorCollision && (wall->id == 'd')) {//testing of colliding with locked door
 			printf("Collided with locked door \n");
