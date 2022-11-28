@@ -86,7 +86,8 @@ void PlayerGun::Update(float deltaTime)
 	//model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 	//model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset));
 
-	model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))) * MMath::translate(-camera->cameraPositionTracker + offset));
+	//model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))) * MMath::translate(-camera->cameraPositionTracker + offset));
+	model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 
 	//std::cout << "Camera rotation matrix: " << camera->GetRotationMatrix()[10] << std::endl;
 	std::cout << "Camera position tracker: ";

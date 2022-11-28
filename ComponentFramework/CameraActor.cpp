@@ -31,9 +31,9 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
-			if(isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
-			cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
+			if (isFacingWall == false) {
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+				cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
 			}
 			// elapsed time 
 			// hookes law
@@ -42,24 +42,24 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
 			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
-			cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+				cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
 			}
 
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
 			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-			cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+				cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
 			}
 
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
 			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-			cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+				cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
 			}
 
 		}
@@ -68,12 +68,13 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_R)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));
+			cameraPositionTracker += Vec3(0.0f, 1.0f, 0.0f);
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_F)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+			cameraPositionTracker += Vec3(0.0f, -1.0f, 0.0f);
 		}
-
 
 
 		// LOOK AROUND --- solve the issue with tilting
