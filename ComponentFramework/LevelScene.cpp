@@ -259,7 +259,7 @@ bool LevelScene::OnCreate()
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, -5.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, -20.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 	sphere = new Actor(nullptr);
@@ -404,6 +404,7 @@ void LevelScene::Render() const {
 	for (Wall* wall : theWalls) {
 		wall->Render();
 	}
+
 
 	//-----------------------
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
