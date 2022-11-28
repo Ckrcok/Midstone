@@ -16,7 +16,8 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
@@ -79,8 +80,17 @@ void PlayerGun::Update(float deltaTime)
 	model_3D->GetModelMatrix().print();
 
 	// Update the bullets
-	for (Bullet* bullet : spawnedBullets)
+	for (Bullet* bullet : spawnedBullets) {
 		bullet->Update(deltaTime);
+
+		if (bullet->GetBulletDestroyIsCalled()) {
+			cout << "BulletDestroyIsCalled is true" << endl;
+			//DestroyBullet(bullet->GetLabel());
+
+			//spawnedBullets.erase()
+			//spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
+		}
+	}
 }
 
 void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)

@@ -10,6 +10,8 @@
 #include "MMAth.h"
 //#include "PlayerGun.h"
 
+class PlayerGun;
+
 class Bullet : public Actor
 {
 private:
@@ -40,6 +42,7 @@ public:
 
 	void OnCollision();
 	int GetLabel() { return label; };
+	bool GetBulletDestroyIsCalled() { return bulletDestroyIsCalled; };
 };
 
 #endif // !BULLET_H

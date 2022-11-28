@@ -82,8 +82,6 @@ void Bullet::Update(float deltaTime)
 
 	//std::cout << this << " position: ";
 	//position.print();
-
-	//std::cout << this << " is Update" << std::endl;
 }
 
 void Bullet::OnCollision()
