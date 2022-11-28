@@ -31,22 +31,37 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
+			if(isFacingWall == false) {
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+			cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
+			}
 			// elapsed time 
 			// hookes law
 			// spring movement
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
+			if (isFacingWall == false) {
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+			cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
+			}
+
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
+			if (isFacingWall == false) {
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+			cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
+			}
+
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
+			if (isFacingWall == false) {
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+			cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
+			}
+
 		}
 
 		// Elevate
@@ -67,18 +82,25 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(-1.0f, 0.0f, 0.0f)));
+			cameraRotationTracker -= Vec3(10.0f, 0.0f, 0.0f);
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(1.0f, 0.0f, 0.0f)));
+			cameraRotationTracker += Vec3(10.0f, 0.0f, 0.0f);
+
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, -1.0f, 0.0f)));
+			cameraRotationTracker -= Vec3(0.0f, 10.0f, 0.0f);
+
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, 1.0f, 0.0f)));
+			cameraRotationTracker += Vec3(0.0f, 10.0f, 0.0f);
+
 		}
 
 		/*else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E)

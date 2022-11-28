@@ -24,7 +24,7 @@ private:
 	vector<Wall*> theWalls;
 	Trackball* trackball;
 	CameraActor* camera;
-
+	
 	Actor* sphere;
 	Actor* cube;
 	Mesh* mesh; 
@@ -41,7 +41,7 @@ private:
 	Vec4 specular[10];
 	
 
-
+	Vec3 rotationVec = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 resultPlayer = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 minCornerPlayer = Vec3(0.0f, 0.0f, 0.0f);

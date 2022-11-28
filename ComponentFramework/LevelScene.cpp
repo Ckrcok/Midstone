@@ -17,7 +17,7 @@
 LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created LevelScene: ", __FILE__, __LINE__);
 	trackball = new Trackball();
-	char isDoor ; 
+	char isDoor;
 	//NorthLimit
 	float northWallZStart = -30.0f;
 	for (int a = 0; a < 25; a++) //Until northWallZEnd
@@ -54,7 +54,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'a');
 		}
 		else {
-		AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		}
 
 		theWalls.push_back(AwallTestNorth);
@@ -102,7 +102,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 's');
 		}
 		else {
-		SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		}
 		theWalls.push_back(SwalzlTest);
@@ -116,7 +116,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 		pWallxzStart -= 2.0f;
 		PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
-		
+
 		theWalls.push_back(PwalzlTest);
 	}
 
@@ -127,10 +127,10 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 		EWallXStart += 2.0f;
 		Wall* EwallTestNorth;
 		if (EWallXStart == 12.0f) {
-			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'g');
+			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'g');
 		}
 		else {
-		EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		}
 		theWalls.push_back(EwallTestNorth);
@@ -150,7 +150,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 		else {
 			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		}
-		
+
 		if (DWallZStart == -6.0f) {
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'D');
 		}
@@ -158,7 +158,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		}
-		
+
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
@@ -175,7 +175,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 
 	//FRoom door
 	float FWallZStart = 14.0f;
-	for (int a = 0; a < 3; a++) 
+	for (int a = 0; a < 3; a++)
 	{
 
 		FWallZStart += 2.0f;
@@ -186,7 +186,7 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 
 		}
 		else {
-		DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		}
 		theWalls.push_back(DwallTest);
@@ -206,13 +206,13 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	for (int a = 0; a < 3; a++) //Until northWallZEnd
 	{
 		CWallZStart -= 2.0f;
-		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
+		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 		Wall* CwallTestSOUTH;
 		if (CWallZStart == 18.0f) {
-		CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'c');
+			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'c');
 		}
 		else {
-		CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL,'w');
+			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
 		}
 		theWalls.push_back(CwallTest);
@@ -224,11 +224,11 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	{
 		CWallXStart += 2.0f;
 		Wall* CwallTest;
-		
-			CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
 
-		
-		
+		CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'w');
+
+
+
 		theWalls.push_back(CwallTest);
 	}
 	//PICKUPS
@@ -258,9 +258,9 @@ bool LevelScene::OnCreate()
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f,  0.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
 	camera->OnCreate();
-	
+
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	sphere->GetMesh()->OnCreate();
@@ -332,22 +332,24 @@ void LevelScene::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
 	sphere->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker));
-	
+	float test = camera->GetRotationMatrix()[10];
+	cout << test << endl;
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
-	
+	rotationVec = camera->cameraRotationTracker;
+	rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
-		
-		resultB  = wall->getPos();
+
+		resultB = wall->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
 		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
-		playerColliderBox->updateVertPos(resultPlayer,minCornerPlayer, maxCornerPlayer);
+		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
 		int playerWallorDorCollision = Collision::distancePointBox(resultPlayer, *blueBox);
 		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *blueBox);
 
-		if(playerWallorDorCollision && (wall->id == 'w')) {//Test if facing wall
+		if (playerWallorDorCollision && (wall->id == 'w')) {//Test if facing wall
 			printf("Collided with wall \n");
 		}
 		else if (playerWallorDorCollision && ((wall->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
