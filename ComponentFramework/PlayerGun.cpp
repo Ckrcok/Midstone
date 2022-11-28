@@ -67,29 +67,8 @@ void PlayerGun::Render()
 
 void PlayerGun::Update(float deltaTime)
 {
-	//position = camera->GetPlayerPosition() + offset;
-	//model_3D->SetModelMatrix(MMath::translate(position));
-
-	//cout << "Position_Cam: ";
-	//camera->GetCameraActorPosition().print();
-
-	// First rotate, then move
-	// This way, the forward vector is also changed
-	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * camera->GetRotationMatrix());
-	//model_3D->SetModelMatrix(MMath::translate(camera->GetPlayerPosition() + offset));
-
-	//model_3D->SetModelMatrix(MMath::rotate(-(camera->GetRotationMatrix()[10]), Vec3(0.0f, 0.0f, 1.0f)) * MMath::translate(camera->GetPlayerPosition() + offset));
-	//model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::translate(camera->GetPlayerPosition() + offset));
-	//model_3D->SetModelMatrix(camera->GetModelMatrix() * MMath::rotate(camera->GetRotationMatrix()));
-
-	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(camera->cameraPositionTracker + offset));
-	//model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
-	//model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset));
-
-	//model_3D->SetModelMatrix(MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))) * MMath::translate(-camera->cameraPositionTracker + offset));
 	model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 
-	//std::cout << "Camera rotation matrix: " << camera->GetRotationMatrix()[10] << std::endl;
 	std::cout << "Camera position tracker: ";
 	camera->cameraPositionTracker.print();
 
