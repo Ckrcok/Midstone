@@ -334,14 +334,14 @@ void LevelScene::Update(const float deltaTime) {
 	totalTime += deltaTime;
 
 	sphere->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker));
-	
+
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
 	rotationVec = camera->cameraRotationTracker;
-	rotationVec.print("ROTATION TRACKER");
+	//rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
-		wall->rotateWall(totalTime,wall);
-		
+		wall->rotateWall(totalTime, wall);
+
 
 		resultB = wall->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
@@ -370,7 +370,7 @@ void LevelScene::Update(const float deltaTime) {
 		}
 		else if (playerPickupCollision && (wall->id == 'h')) {//testing if collided with healthpack pickup
 			printf("Collided with healthpack \n");
-			hasHealth =  true;
+			hasHealth = true;
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (wall->id == 'k')) {//testing if collided with key pickup
@@ -399,6 +399,8 @@ void LevelScene::Render() const {
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUseProgram(0);
+
 	//-----------------------
 
 	for (Wall* wall : theWalls) {
