@@ -24,7 +24,7 @@ bool Wall::OnCreate()
 	if (id == 'o') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
 	}
-	else if ( id == 'k') {
+	else if (id == 'k') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/securityCard.obj"));
 	}
 	else if (id == 'h') {
@@ -32,7 +32,6 @@ bool Wall::OnCreate()
 	}
 	else {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
-
 	}
 	objFile->GetMesh()->OnCreate();
 
@@ -42,11 +41,19 @@ bool Wall::OnCreate()
 	objFile->SetTexture(new Texture());
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
+
+	cout << "ID: " << id << endl;
+
 	if (id == 'w') {
 		shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
-	}else {
-		shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+		//shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
 	}
+	else {
+		shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+		//shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+
+	}
+
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
@@ -65,18 +72,20 @@ void Wall::OnDestroy()
 void Wall::rotateWall(float toatlTime_, Wall* theObject_)
 {
 	if (id == 'k' || id == 'h' || id == 'o') {
-		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate( 1.5f, Vec3(0.0f, 1.0f, 0.0f)));
+		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(1.5f, Vec3(0.0f, 1.0f, 0.0f)));
 	}
 }
 
 void Wall::Render()
 {
 
-	//glUseProgram(shader->GetProgram());
+	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
 	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
 	objFile->GetMesh()->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	//glUseProgram(0);
+
 
 }
 
