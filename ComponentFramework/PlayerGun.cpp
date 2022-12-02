@@ -70,6 +70,7 @@ void PlayerGun::Update(float deltaTime)
 {
 	model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 
+	/**
 	std::cout << "Camera position tracker: ";
 	camera->cameraPositionTracker.print();
 
@@ -78,17 +79,37 @@ void PlayerGun::Update(float deltaTime)
 
 	std::cout << "Gun model matrix:\n";
 	model_3D->GetModelMatrix().print();
+	/**/
+
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets) {
 		bullet->Update(deltaTime);
+	}
 
-		if (bullet->GetBulletDestroyIsCalled()) {
-			cout << "BulletDestroyIsCalled is true" << endl;
-			//DestroyBullet(bullet->GetLabel());
+	//	if (bullet->GetBulletDestroyIsCalled()) {
+	//		cout << "BulletDestroyIsCalled is true" << endl;
 
-			//spawnedBullets.erase()
-			//spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
+	//		//spawnedBullets.erase()
+	//		//spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
+
+	//		bullet->OnDestroy();
+	//	}
+	//}
+
+
+	//spawnedBullets.erase(std::remove_if(spawnedBullets.begin(), spawnedBullets.end(), [](Bullet* const& p) { return p->GetBulletDestroyIsCalled() == 1; }), spawnedBullets.end());
+
+	if (spawnedBullets.empty() == false)
+	{
+		for (int i = spawnedBullets.size() - 1; i >= 0; i--)
+		{
+			if (spawnedBullets.at(i)->GetBulletDestroyIsCalled())
+			{
+				spawnedBullets[i]->OnDestroy();
+				spawnedBullets.erase(spawnedBullets.begin() + i);
+				cout << "Bullet is destroyed!" << endl;
+			}
 		}
 	}
 }

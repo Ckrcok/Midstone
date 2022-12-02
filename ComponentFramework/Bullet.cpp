@@ -68,6 +68,8 @@ void Bullet::Render()
 
 void Bullet::Update(float deltaTime)
 {
+	cout << "Timer: " << timer << endl;
+
 	if (timer > 0.0f && !bulletDestroyIsCalled)
 		timer -= deltaTime;
 	else if (timer <= 0.0f && !bulletDestroyIsCalled)
@@ -77,7 +79,7 @@ void Bullet::Update(float deltaTime)
 		//playerGun->DestroyBullet(label);
 	}
 
-	position = model_3D->GetPosition() + velocity;
+	//position = model_3D->GetPosition() + velocity;
 	model_3D->SetModelMatrix(MMath::translate(position));
 
 	//std::cout << this << " position: ";

@@ -10,6 +10,8 @@
 #include "MMAth.h"
 //#include "PlayerGun.h"
 
+using namespace std;
+
 class PlayerGun;
 
 class Bullet : public Actor
