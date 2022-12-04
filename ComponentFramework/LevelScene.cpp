@@ -243,8 +243,6 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
-
-
 }
 
 LevelScene::~LevelScene()
@@ -269,8 +267,10 @@ bool LevelScene::OnCreate()
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
 
+	shaderCube = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
 	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
-	if (shader->OnCreate() == false)
+
+	if (shaderCube->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
@@ -321,11 +321,14 @@ void LevelScene::OnDestroy() {
 	shader->OnDestroy();
 	delete shader;
 
+	shaderCube->OnDestroy();
+	delete shaderCube;
+
+
 	delete texture;
 
 }
 void LevelScene::HandleEvents(const SDL_Event& sdlEvent) {
-
 	camera->HandleEvents(sdlEvent);
 }
 
@@ -384,42 +387,43 @@ void LevelScene::Update(const float deltaTime) {
 }
 
 void LevelScene::Render() const {
-
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
-
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	camera->Render();
-
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
 	//-----------------------
-	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUseProgram(shaderCube->GetProgram());
+	glUniformMatrix4fv(shaderCube->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	glUniformMatrix4fv(shaderCube->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+
+	//-----------------------
+	glUniformMatrix4fv(shaderCube->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
+	
+	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
+	sphere->GetMesh()->Render(GL_TRIANGLES);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
 
 	//-----------------------
+
+	glUseProgram(theWalls[0]->objFile->GetShader()->GetProgram());
+	glUniformMatrix4fv(theWalls[0]->objFile->GetShader()->GetUniformID("modelMatrix"), 1, GL_FALSE, theWalls[0]->objFile->GetModelMatrix());
+	theWalls[0]->objFile->GetMesh()->Render(GL_TRIANGLES);
+	glUseProgram(0);
+
+	//theWalls[0]->Render();
 
 	for (Wall* wall : theWalls) {
 		wall->Render();
+
 	}
-
-
-	//-----------------------
-	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
-	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
-	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
-
-
-	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
-	sphere->GetMesh()->Render(GL_TRIANGLES);
-	//-----------------------
-
 	glUseProgram(0);
+	
 }
 
 

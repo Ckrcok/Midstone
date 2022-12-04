@@ -42,19 +42,19 @@ bool Wall::OnCreate()
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
 
+
 	cout << "ID: " << id << endl;
 
 	if (id == 'w') {
-		shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+		objFile->SetShader(new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl")) ;
 		//shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
 	}
 	else {
-		shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+		objFile->SetShader(new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl"));
 		//shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
-
 	}
 
-	if (shader->OnCreate() == false)
+	if (objFile->GetShader()->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
 	return true;
@@ -79,13 +79,12 @@ void Wall::rotateWall(float toatlTime_, Wall* theObject_)
 void Wall::Render()
 {
 
-	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
+	glUseProgram(objFile->GetShader()->GetProgram());
+	glUniformMatrix4fv(objFile->GetShader()->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
 	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
 	objFile->GetMesh()->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//glUseProgram(0);
-
+	glUseProgram(0);
 
 }
 
@@ -96,3 +95,4 @@ void Wall::moveWall(float toatlTime_, Wall* theObject_)
 
 	}
 }
+

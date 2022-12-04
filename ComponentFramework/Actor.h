@@ -6,12 +6,14 @@
 using namespace MATH;
 #include "Mesh.h"
 #include "Texture.h"
+#include "Shader.h"
 
 class Actor : public Component {
 private:
 	std::vector<Component*> components;
 	class Mesh* mesh;
 	class Texture* texture;
+	class Shader* shader;
 	Matrix4 modelMatrix;
 public:
 
@@ -80,10 +82,16 @@ public:
 
 	inline Mesh* GetMesh() { return mesh; }
 	inline void SetMesh(Mesh* mesh_) { mesh = mesh_; }
+	
+	inline Shader* GetShader() { return shader; }
+	inline void SetShader(Shader* shader_) { shader = shader_; }
+	
 	inline Texture* GetTexture() { return texture; }
 	inline void SetTexture(Texture* texture_) { texture = texture_; }
+	
 	inline Matrix4 GetModelMatrix() { return modelMatrix; }
 	inline void SetModelMatrix(const Matrix4& modelMatrix_) { modelMatrix = modelMatrix_; }
+	
 	inline Vec3 GetPosition() { return Vec3(GetModelMatrix()[12], GetModelMatrix()[13], GetModelMatrix()[14]); }
 	
 		

@@ -118,20 +118,9 @@ void Skybox::Update(const float deltaTime_) {}
 
 void Skybox::Render() const
 {
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_CULL_FACE);
-	//// clear the screen
-	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	/*glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());*/
-
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	mesh->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
 
 }
 
