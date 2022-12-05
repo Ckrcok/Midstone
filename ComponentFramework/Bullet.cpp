@@ -8,8 +8,6 @@ Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, Component* parent_) : 
 	position = spawnPos;
 	velocity = velocity_;
 
-	//playerGun = playerGun_;
-
 	timer = destroyAfterSeconds;
 }
 
@@ -20,7 +18,6 @@ bool Bullet::OnCreate()
 	// Create model
 	model_3D = new Actor(nullptr);
 	model_3D->SetMesh(new Mesh(nullptr, "meshes/GunBullet2.obj"));
-	//model_3D->SetMesh(new Mesh(nullptr, "meshes/Mario.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));	// Spawn position
@@ -68,7 +65,7 @@ void Bullet::Render()
 
 void Bullet::Update(float deltaTime)
 {
-	cout << "Timer: " << timer << endl;
+	cout << this << " || Timer: " << timer << endl;
 
 	if (timer > 0.0f && !bulletDestroyIsCalled)
 		timer -= deltaTime;
@@ -76,14 +73,13 @@ void Bullet::Update(float deltaTime)
 	{
 		std::cout << "Destroy is called for " << this << " bullet!" << std::endl;
 		bulletDestroyIsCalled = true;
-		//playerGun->DestroyBullet(label);
 	}
 
-	//position = model_3D->GetPosition() + velocity;
+	position = model_3D->GetPosition() + velocity;
 	model_3D->SetModelMatrix(MMath::translate(position));
 
-	//std::cout << this << " position: ";
-	//position.print();
+	/*std::cout << this << " position: ";
+	position.print();*/
 }
 
 void Bullet::OnCollision()

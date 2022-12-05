@@ -3,8 +3,6 @@
 PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
 {
 	offset = offset_;
-	//if (camera->GetPlayerPosition() != nullptr)
-		//position = camera->GetPlayerPosition() + offset;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
 	camera = camera_;
@@ -16,12 +14,12 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
 
+	// Only rotate if a rotation value is given
 	if (rotation > 0)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
@@ -68,9 +66,15 @@ void PlayerGun::Render()
 
 void PlayerGun::Update(float deltaTime)
 {
-	model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	// Position with correct camera position matrix
+	Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+
+	// Set the model matrix and the position value
+	model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	position = model_3D->GetPosition();
 
 	/**
+	// Debug
 	std::cout << "Camera position tracker: ";
 	camera->cameraPositionTracker.print();
 
@@ -81,25 +85,18 @@ void PlayerGun::Update(float deltaTime)
 	model_3D->GetModelMatrix().print();
 	/**/
 
+	/*cout << "Position of gun: ";
+	model_3D->GetPosition().print();*/
+
+	/*cout << "Position of camera: ";
+	camera->cameraPositionTracker.print();*/
 
 	// Update the bullets
-	for (Bullet* bullet : spawnedBullets) {
+	for (Bullet* bullet : spawnedBullets)
 		bullet->Update(deltaTime);
-	}
 
-	//	if (bullet->GetBulletDestroyIsCalled()) {
-	//		cout << "BulletDestroyIsCalled is true" << endl;
-
-	//		//spawnedBullets.erase()
-	//		//spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
-
-	//		bullet->OnDestroy();
-	//	}
-	//}
-
-
-	//spawnedBullets.erase(std::remove_if(spawnedBullets.begin(), spawnedBullets.end(), [](Bullet* const& p) { return p->GetBulletDestroyIsCalled() == 1; }), spawnedBullets.end());
-
+	// Check if the bullet needs to be destroyed
+	// If so, remove from the list and call OnDestroy for that bullet
 	if (spawnedBullets.empty() == false)
 	{
 		for (int i = spawnedBullets.size() - 1; i >= 0; i--)
@@ -130,7 +127,6 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
 	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);
-	//Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this, this);
 	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);
 	bulletLabel++;
 
@@ -138,11 +134,12 @@ void PlayerGun::SpawnBullet(Vec3 velocity_)
 	spawnedBullets.push_back(bullet);
 }
 
-void PlayerGun::DestroyBullet(int label)
+void PlayerGun::DestroyBullet(int pLabel)
 {
+	// Check for the whole list if the label is the same as the given label
 	for (int i = 0; i < spawnedBullets.size(); i++)
 	{
-		if (spawnedBullets[i]->GetLabel() == label) {
+		if (spawnedBullets[i]->GetLabel() == pLabel) {
 			spawnedBullets[i]->OnDestroy();
 
 			spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
