@@ -46,7 +46,7 @@ public:
 	void HandleEvents(const SDL_Event& sdlEvent);
 
 	void SpawnBullet(Vec3 velocity_);
-	void DestroyBullet(int label);
+	void HandleDestroyBullet();
 };
 
 #endif // !PLAYER_GUN_H

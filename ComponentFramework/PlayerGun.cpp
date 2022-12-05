@@ -15,6 +15,7 @@ bool PlayerGun::OnCreate()
 	// Create model
 	model_3D = new Actor(nullptr);
 	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
@@ -73,42 +74,12 @@ void PlayerGun::Update(float deltaTime)
 	model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 	position = model_3D->GetPosition();
 
-	/**
-	// Debug
-	std::cout << "Camera position tracker: ";
-	camera->cameraPositionTracker.print();
-
-	std::cout << "Camera rotation tracker: ";
-	camera->cameraRotationTracker.print();
-
-	std::cout << "Gun model matrix:\n";
-	model_3D->GetModelMatrix().print();
-	/**/
-
-	/*cout << "Position of gun: ";
-	model_3D->GetPosition().print();*/
-
-	/*cout << "Position of camera: ";
-	camera->cameraPositionTracker.print();*/
-
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
 		bullet->Update(deltaTime);
 
-	// Check if the bullet needs to be destroyed
-	// If so, remove from the list and call OnDestroy for that bullet
-	if (spawnedBullets.empty() == false)
-	{
-		for (int i = spawnedBullets.size() - 1; i >= 0; i--)
-		{
-			if (spawnedBullets.at(i)->GetBulletDestroyIsCalled())
-			{
-				spawnedBullets[i]->OnDestroy();
-				spawnedBullets.erase(spawnedBullets.begin() + i);
-				cout << "Bullet is destroyed!" << endl;
-			}
-		}
-	}
+	// Handle the destruction of bullets
+	HandleDestroyBullet();
 }
 
 void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
@@ -117,33 +88,40 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 	case SDL_MOUSEBUTTONDOWN:
 
 		// Left mouse button is down
-		if (SDL_BUTTON_LEFT == sdlEvent.button.button) {
-			//cout << "Left mouse button is down!" << endl;
+		if (SDL_BUTTON_LEFT == sdlEvent.button.button)
 			SpawnBullet(Vec3(0.0f, 0, -0.5f));
-		}
 	}
 }
 
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
-	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);
-	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);
-	bulletLabel++;
+	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);											// Spawn bullet with offset from gun
+	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);	// Create bullet
+	bulletLabel++;																	// Increase number for next bullet
 
-	bullet->OnCreate();
-	spawnedBullets.push_back(bullet);
+	bullet->OnCreate();					// Call OnCreate for bullet
+	spawnedBullets.push_back(bullet);	// Add bullet to list
 }
 
-void PlayerGun::DestroyBullet(int pLabel)
+void PlayerGun::HandleDestroyBullet()
 {
-	// Check for the whole list if the label is the same as the given label
-	for (int i = 0; i < spawnedBullets.size(); i++)
+	// Check if the bullet needs to be destroyed
+	// If so, remove from the list and call OnDestroy for that bullet
+	if (spawnedBullets.empty() == false)
 	{
-		if (spawnedBullets[i]->GetLabel() == pLabel) {
-			spawnedBullets[i]->OnDestroy();
+		for (int i = spawnedBullets.size() - 1; i >= 0; i--)
+		{
+			if (spawnedBullets.at(i)->GetBulletDestroyIsCalled())
+			{
+				cout << "Bullet " << spawnedBullets[i] << " is being destroyed in the PlayerGun!" << endl;
 
-			spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
-			return;
+				Bullet* bullet = spawnedBullets[i];
+
+				spawnedBullets[i]->OnDestroy();
+				spawnedBullets.erase(spawnedBullets.begin() + i);
+
+				delete(bullet);
+			}
 		}
 	}
 }

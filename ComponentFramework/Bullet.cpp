@@ -59,14 +59,13 @@ void Bullet::Render()
 	model_3D->Render();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//std::cout << this << " is Render" << std::endl;
 }
 
 void Bullet::Update(float deltaTime)
 {
 	cout << this << " || Timer: " << timer << endl;
 
+	// Lower the value of timer if is above zero and is not destroyed
 	if (timer > 0.0f && !bulletDestroyIsCalled)
 		timer -= deltaTime;
 	else if (timer <= 0.0f && !bulletDestroyIsCalled)
@@ -77,9 +76,6 @@ void Bullet::Update(float deltaTime)
 
 	position = model_3D->GetPosition() + velocity;
 	model_3D->SetModelMatrix(MMath::translate(position));
-
-	/*std::cout << this << " position: ";
-	position.print();*/
 }
 
 void Bullet::OnCollision()
