@@ -15,7 +15,7 @@ using namespace MATH;
                 distance += coord - theBox_.maxCoords[i];
             }
         }
-        if(distance < 1.0f) {
+        if(distance < 0.5f) {
             return 1;
         }else {
             return 0;

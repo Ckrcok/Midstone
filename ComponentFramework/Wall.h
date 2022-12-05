@@ -25,7 +25,7 @@ public:
 	//vector<std::variant<Vec3,float, Vec3, CameraActor, Component>> northWalls;
 	// Model
 	Actor* objFile;
-	Shader* shader;
+	Shader* objShader;
 public:
 	Wall(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_, char id);
 	Wall(float radius_, Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_, char id);
@@ -34,10 +34,11 @@ public:
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
-	void moveWall();
+	void moveWall(float toatlTime_, Wall* theObject_);
+	void rotateWall(float toatlTime_, Wall* theObject_);
 
 	Vec3 getPos() { return position; }
-	
+
 };
 
 #endif

@@ -83,6 +83,7 @@ public:
 
 	inline Mesh* GetMesh() { return mesh; }
 	inline void SetMesh(Mesh* mesh_) { mesh = mesh_; }
+
 	inline Texture* GetTexture() { return texture; }
 	inline void SetTexture(Texture* texture_) { texture = texture_; }
 	inline Matrix4 GetModelMatrix() { return modelMatrix; }

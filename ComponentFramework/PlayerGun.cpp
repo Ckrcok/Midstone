@@ -16,22 +16,22 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/gun8.obj"));
+	//model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	model_3D->GetMesh()->OnCreate();
+									// Spawn position
+	model_3D->SetModelMatrix(model_3D->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
 
-	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
-
-	if (rotation > 0)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	//if (rotation > 0)
+	//	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
+	model_3D->GetTexture()->LoadImage("textures/white_sphere.png");
 	model_3D->OnCreate();
 
 	// Create shader
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
@@ -68,16 +68,14 @@ void PlayerGun::Render()
 
 void PlayerGun::Update(float deltaTime)
 {
-	model_3D->SetModelMatrix(MMath::translate(-camera->cameraPositionTracker + offset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	static float totalTime = 0.0f;
+	totalTime += deltaTime;
 
-	std::cout << "Camera position tracker: ";
-	camera->cameraPositionTracker.print();
 
-	std::cout << "Camera rotation tracker: ";
-	camera->cameraRotationTracker.print();
-
-	std::cout << "Gun model matrix:\n";
-	model_3D->GetModelMatrix().print();
+		model_3D->SetModelMatrix(
+			MMath::translate((-(camera->cameraPositionTracker))) *
+			MMath::rotate(-camera->cameraRotationTracker.y, Vec3(0.0f, 1.0f, 0.0f))
+		);
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets) {
@@ -85,10 +83,7 @@ void PlayerGun::Update(float deltaTime)
 
 		if (bullet->GetBulletDestroyIsCalled()) {
 			cout << "BulletDestroyIsCalled is true" << endl;
-			//DestroyBullet(bullet->GetLabel());
 
-			//spawnedBullets.erase()
-			//spawnedBullets.erase(std::next(spawnedBullets.begin() + i - 1));
 		}
 	}
 }
@@ -101,7 +96,7 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 		// Left mouse button is down
 		if (SDL_BUTTON_LEFT == sdlEvent.button.button) {
 			//cout << "Left mouse button is down!" << endl;
-			SpawnBullet(Vec3(0.0f, 0, -0.5f));
+			//SpawnBullet(Vec3(0.0f, 0, -0.5f));
 		}
 	}
 }

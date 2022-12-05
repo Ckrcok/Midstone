@@ -22,6 +22,10 @@ class Scene3 : public Scene
 {
 private:
 	vector<EnemyActor*> enemies;
+	Actor* cube;
+	Shader* shaderCube;
+	Mesh* meshCube;
+
 
 	Shader* shader;
 

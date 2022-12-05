@@ -19,7 +19,7 @@ bool Bullet::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/GunBullet2.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/Mario.obj"));
 	model_3D->GetMesh()->OnCreate();
 
@@ -27,7 +27,7 @@ bool Bullet::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
+	model_3D->GetTexture()->LoadImage("textures/white_sphere.png");
 	model_3D->OnCreate();
 
 	// Create shader
