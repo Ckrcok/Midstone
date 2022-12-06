@@ -12,12 +12,19 @@
 #include "Trackball.h"
 #include "CameraActor.h"
 #include "Collision.h"
-#include "Wall.h"
 
 
 LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created LevelScene: ", __FILE__, __LINE__);
 	trackball = new Trackball();
+	int spawnPos = -2.0f;
+	for (int i = 0; i < 1; i++)
+	{
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		spawnPos += 2;
+
+		enemies.push_back(enemy);
+	}
 	char isDoor;
 	//NorthLimit
 	float northWallZStart = -30.0f;
@@ -238,11 +245,13 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	//health pickup
 	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'h');
 	//key pickup
-	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 90.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'k');
+	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL, 'k');
 
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
+
+
 }
 
 LevelScene::~LevelScene()
@@ -257,46 +266,60 @@ bool LevelScene::OnCreate()
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, -20.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, -10.0f, 0.0f), nullptr);
 	camera->OnCreate();
-
+	//PlayerCollider
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	sphere->GetMesh()->OnCreate();
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white_sphere.png");
 	sphere->OnCreate();
-
-	shaderCube = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
 	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
-
-	if (shaderCube->OnCreate() == false)
+	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
 	sphere->SetModelMatrix(sphere->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
 
-
-
-	for (Wall* wall : theWalls) {
-		wall->OnCreate();
-	}
-
-
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
 	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
 	lightPos[2] = Vec3(0.0f, 3.0f, -6.5f);
 	lightPos[3] = Vec3(0.0f, -3.0f, -6.5f);
-
 	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
 	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
 	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
 	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
-
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
+
+	for (Wall* wall : theWalls) {
+		wall->OnCreate();
+	}
+	playerGun = new PlayerGun(Vec3(1.0f, 0.0f, 0.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	playerGun->OnCreate();
+
+	for (EnemyActor* enemy : enemies) {
+		enemy->SetCamera(camera);
+		enemy->OnCreate();
+	}
+
+	cube = new Actor(nullptr);
+	cube->SetMesh(new Mesh(nullptr, "meshes/gun4.obj"));
+	cube->GetMesh()->OnCreate();
+	cube->SetTexture(new Texture());
+	cube->GetTexture()->LoadImage("textures/white_sphere.png");
+	cube->OnCreate();
+
+	shaderCube = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+	if (shaderCube->OnCreate() == false)
+	{
+		Debug::Error("Can't load shader", __FILE__, __LINE__);
+	}
+	cube->SetModelMatrix(cube->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
+
 
 	return true;
 
@@ -304,7 +327,6 @@ bool LevelScene::OnCreate()
 
 void LevelScene::OnDestroy() {
 	Debug::Info("Deleting assets Scene2: ", __FILE__, __LINE__);
-
 	if (camera)
 	{
 		camera->OnDestroy();
@@ -314,21 +336,25 @@ void LevelScene::OnDestroy() {
 	if (sphere)
 	{
 		sphere->OnDestroy();
-		delete sphere;
+		delete  sphere;
 	}
 
-
+	for (EnemyActor* enemy : enemies)
+	{
+		if (enemy)
+		{
+			enemy->OnDestroy();
+			delete enemy;
+		}
+	}
+	enemies.clear();
 	shader->OnDestroy();
 	delete shader;
-
-	shaderCube->OnDestroy();
-	delete shaderCube;
-
-
 	delete texture;
 
 }
 void LevelScene::HandleEvents(const SDL_Event& sdlEvent) {
+
 	camera->HandleEvents(sdlEvent);
 }
 
@@ -341,14 +367,17 @@ void LevelScene::Update(const float deltaTime) {
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
 	rotationVec = camera->cameraRotationTracker;
+	playerGun->Update(deltaTime);
+
+
 	//rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
 		wall->rotateWall(totalTime, wall);
-
-
 		resultB = wall->getPos();
+
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
+
 		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
 		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
@@ -357,73 +386,91 @@ void LevelScene::Update(const float deltaTime) {
 
 		if (playerWallorDorCollision && (wall->id == 'w')) {//Test if facing wall
 			printf("Collided with wall \n");
+			camera->isFacingWall = true;
 		}
 		else if (playerWallorDorCollision && ((wall->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
 			|| (wall->id == 'D') || (wall->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
 			printf("Collided with door \n");
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+			camera->isFacingWall = false;
+
 		}
 		else if (playerWallorDorCollision && (wall->id == 'd')) {//testing of colliding with locked door
 			printf("Collided with locked door \n");
+			camera->isFacingWall = true;
+			if (hasKey == true) {
+				theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+			}
+
 		}
 		else if (playerPickupCollision && (wall->id == 'o')) {//testing if collided with weapon pickup
 			printf("Collided with weapon \n");
 			hasWeapon = true;
+			camera->isFacingWall = false;
+
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (wall->id == 'h')) {//testing if collided with healthpack pickup
 			printf("Collided with healthpack \n");
 			hasHealth = true;
+			camera->isFacingWall = false;
+
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (wall->id == 'k')) {//testing if collided with key pickup
 			printf("Collided with key pickup \n");
 			hasKey = true;
+			camera->isFacingWall = false;
+
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 
 		}
 
+
 	}
 }
-
 void LevelScene::Render() const {
+
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
+
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	camera->Render();
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	//-----------------------
+	glUseProgram(shader->GetProgram());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	//glUseProgram(0);
 
 	//-----------------------
-	glUseProgram(shaderCube->GetProgram());
-	glUniformMatrix4fv(shaderCube->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shaderCube->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
-
-	//-----------------------
-	glUniformMatrix4fv(shaderCube->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
-	
-	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
-	sphere->GetMesh()->Render(GL_TRIANGLES);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glUseProgram(0);
-
-	//-----------------------
-
-	glUseProgram(theWalls[0]->objFile->GetShader()->GetProgram());
-	glUniformMatrix4fv(theWalls[0]->objFile->GetShader()->GetUniformID("modelMatrix"), 1, GL_FALSE, theWalls[0]->objFile->GetModelMatrix());
-	theWalls[0]->objFile->GetMesh()->Render(GL_TRIANGLES);
-	glUseProgram(0);
-
-	//theWalls[0]->Render();
 
 	for (Wall* wall : theWalls) {
 		wall->Render();
-
 	}
+	for (EnemyActor* enemy : enemies) {
+		enemy->Render();
+	}
+	if (hasKey == true) {
+		playerGun->Render();
+	}
+
+	//-----------------------
+	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
+	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
+	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+
+
+	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
+	sphere->GetMesh()->Render(GL_TRIANGLES);
+	//-----------------------
+
 	glUseProgram(0);
-	
 }
 
 

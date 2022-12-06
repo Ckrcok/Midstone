@@ -1,17 +1,22 @@
 #include "CameraActor.h"
 #include "MMath.h"
 #include "Debug.h"
+//#include "PlayerGun.h"
 
 using namespace MATH;
+
+//PlayerGun* playerGun;
 
 CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 {
 	trackball = new Trackball();
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
+	rotationMatrix = MMath::rotate(180.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
 	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 
 	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_)); // we should be careful with this!!!
+
+	//playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, NULL);
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -26,49 +31,89 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		// MOVE - STRAFE
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S)
 		{
-			if(isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
-			cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
+			if (isFacingWall == true) {
+				if (lastTypedKey != 's')
+				{
+					SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+					cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
+					lastTypedKey = 's';
+					isFacingWall = false;
+				}printf("Colliding in  the same direction");
 			}
-			// elapsed time 
-			// hookes law
-			// spring movement
+			else if (isFacingWall == false) {
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
+				cameraPositionTracker += Vec3(0.0f, 0.0f, -1.0f);
+				lastTypedKey = 's';
+			}
 		}
+
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W)
 		{
-			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
-			cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'w')
+				{
+					SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+					cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
+					lastTypedKey = 'w';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
+				cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
+				lastTypedKey = 'w';
 			}
 
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
-			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-			cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
-			}
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'a')
+				{
+					SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+					cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
+					lastTypedKey = 'a';
+					isFacingWall = false;
 
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
+				cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
+				lastTypedKey = 'a';
+			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
-			if (isFacingWall == false) {
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-			cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'd')
+				{
+					SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+					cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
+					lastTypedKey = 'd';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
 			}
+			else if (isFacingWall == false) {
+				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
+				cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
+				lastTypedKey = 'd';
 
+			}
 		}
-
 		// Elevate
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_R)
 		{
-			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));			
+			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, -1.0f, 0.0f)));
+			cameraPositionTracker += Vec3(0.0f, 1.0f, 0.0f);
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_F)
 		{
 			SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 1.0f, 0.0f)));
+			cameraPositionTracker -= Vec3(0.0f, -1.0f, 0.0f);
 		}
-
 
 
 		// LOOK AROUND --- solve the issue with tilting
@@ -109,31 +154,53 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 	}
 }
 
+void CameraActor::Update(float deltaTime)
+{
+	//playerGun->Update(deltaTime);
+}
+
 bool CameraActor::OnCreate()
 {
 	skybox = new Skybox("textures/skybox/tron_rt_px.png", "textures/skybox/tron_up_py.png", "textures/skybox/tron_ft_pz.png",
 		"textures/skybox/tron_lf_nx.png", "textures/skybox/tron_dn_ny.png", "textures/skybox/tron_bk_nz.png");
 	return skybox->OnCreate();
+
+	//playerGun->OnCreate();
 }
 
 void CameraActor::OnDestroy()
 {
-	skybox->OnDestroy();
-	delete skybox;
+	if (skybox)
+	{
+		skybox->OnDestroy();
+		delete skybox;
+	}
+
+	//if (playerGun)
+	//{
+	//	playerGun->OnDestroy();
+	//	delete playerGun;
+	//}
 }
 
 CameraActor::~CameraActor()
 {
-	if (trackball) delete trackball;
+	if (trackball)
+		delete trackball;
 }
 
 void CameraActor::Render() const
 {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
+
 	glUseProgram(skybox->GetShader()->GetProgram());
+
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("viewMatrix"), 1, GL_FALSE, rotationMatrix);
+
+	//playerGun->Render();
 	skybox->Render();
+
 	glUseProgram(0);
 }

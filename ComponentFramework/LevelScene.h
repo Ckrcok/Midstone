@@ -8,6 +8,8 @@
 #include "Skybox.h"
 #include "Collision.h"
 #include "Wall.h"
+#include "EnemyActor.h"
+#include "PlayerGun.h"
 
 using namespace MATH;
 
@@ -22,12 +24,14 @@ class LevelScene : public Scene
 {
 private:
 	vector<Wall*> theWalls;
+	vector<EnemyActor*> enemies;
 	Trackball* trackball;
 	CameraActor* camera;
-	
+
 	Actor* sphere;
 	Actor* cube;
-	Mesh* mesh; 
+	Mesh* mesh;
+	Mesh* meshCube;
 	Shader* shader;
 	Shader* shaderCube;
 	Texture* texture;
@@ -39,7 +43,7 @@ private:
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
-	
+
 
 	Vec3 rotationVec = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);
@@ -50,6 +54,7 @@ private:
 	Vec3 resultB = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 minCornerB = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 maxCornerB = Vec3(0.0f, 0.0f, 0.0f);
+	PlayerGun* playerGun;
 
 	Box* playerColliderBox = new Box(test, minCornerPlayer, maxCornerPlayer); //= Box(minCornerA, maxCornerA);
 	Box* blueBox = new Box(test, minCornerB, maxCornerB);//= Box(minCornerB, maxCornerB);
