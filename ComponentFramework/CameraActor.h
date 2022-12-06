@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL.h>
 
 #include "Actor.h"
@@ -6,14 +7,12 @@
 #include "MMath.h"
 #include "Matrix.h"
 #include "Skybox.h"
-//#include "PlayerGun.h"
 
 using namespace MATH;
 
 class CameraActor : public Actor
 {
 private:
-	//PlayerGun* playerGun;
 
 public:
 	Vec3 cameraPositionTracker = Vec3(0.0f, 0.0f, 0.0f);
@@ -46,35 +45,35 @@ public:
 
 		CameraActorPosition = Vec3(cameraActorPosX, cameraActorPosY, cameraActorPosZ);
 
-		// if all zero
+		// If all zero
 		if (cameraActorPosX == 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ == 0.0f)
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13], GetViewMatrix()[14]);
 
-		//if none zero
+		// If none zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ != 0.0f)
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14] * -1.0f);
 
-		// if cameraActorPosXis zero, cameraActorPosY & cameraActorPosZ not zero
+		// If cameraActorPosXis zero, cameraActorPosY & cameraActorPosZ not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ != 0.0f)
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14] * -1.0f);
 
-		// if cameraActorPosY is zero, cameraActorPosX & cameraActorPosZ not zero
+		// If cameraActorPosY is zero, cameraActorPosX & cameraActorPosZ not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ != 0.0f)
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13], GetViewMatrix()[14] * -1.0f);
 
-		// if cameraActorPosZ is zero, cameraActorPosX & cameraActorPosY not zero
+		// If cameraActorPosZ is zero, cameraActorPosX & cameraActorPosY not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ == 0.0f)
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14]);
 
-		// if cameraActorPosX & cameraActorPosY are zero, cameraActorPosZ not zero
+		// If cameraActorPosX & cameraActorPosY are zero, cameraActorPosZ not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ != 0.0f)
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13], GetViewMatrix()[14] * -1.0f);
 
-		// if cameraActorPosX & cameraActorPosZ are zero, cameraActorPosY not zero
+		// If cameraActorPosX & cameraActorPosZ are zero, cameraActorPosY not zero
 		else if (cameraActorPosX == 0.0f && cameraActorPosY != 0.0f && cameraActorPosZ == 0.0f)
 			return Vec3(GetViewMatrix()[12], GetViewMatrix()[13] * -1.0f, GetViewMatrix()[14]);
 
-		// if cameraActorPosY & cameraActorPosZ are zero, cameraActorPosX not zero
+		// If cameraActorPosY & cameraActorPosZ are zero, cameraActorPosX not zero
 		else if (cameraActorPosX != 0.0f && cameraActorPosY == 0.0f && cameraActorPosZ == 0.0f)
 			return Vec3(GetViewMatrix()[12] * -1.0f, GetViewMatrix()[13], GetViewMatrix()[14]);
 	}
