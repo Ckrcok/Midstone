@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SDL.h>
 //#include "Debug.h"
-#include "Scene2.h"
+#include "SceneCameraTest.h"
 #include "MMath.h"
 #include "Debug.h" // need to include Debug after Scene.h... why??
 #include "Actor.h"
@@ -10,21 +10,26 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 
 
-Scene2::Scene2() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
-	Debug::Info("Created Scene2: ", __FILE__, __LINE__);	
+SceneCameraTest::SceneCameraTest() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
+	Debug::Info("Created SceneCameraTest: ", __FILE__, __LINE__);	
 }
 
-Scene2::~Scene2() {
-	Debug::Info("Deleted Scene2: ", __FILE__, __LINE__);
+SceneCameraTest::~SceneCameraTest() {
+	Debug::Info("Deleted SceneCameraTest: ", __FILE__, __LINE__);
 }
 
-bool Scene2::OnCreate() {
-	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
+bool SceneCameraTest::OnCreate() {
+	Debug::Info("Loading assets SceneCameraTest: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
-	camera->OnCreate();
+	/*camera = new CameraActor(nullptr);
+	camera->OnCreate();*/
+
+	// CAMERA FPS
+	cameraFPS = new CameraActorFPS(nullptr);
+	cameraFPS->OnCreate();
 	
 	//modelMatrix.loadIdentity();
 
@@ -76,6 +81,14 @@ bool Scene2::OnCreate() {
 	objPosZ->GetTexture()->LoadImage("textures/grey.png");
 	objPosZ->OnCreate();
 
+	lightSource1 = new Actor(nullptr);
+	lightSource1->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	lightSource1->GetMesh()->OnCreate();
+	lightSource1->SetModelMatrix(MMath::translate(Vec3(0.0f, 5.0f, 0.0f)) * MMath::scale(Vec3(1.0f, 0.2f, 4.0f)));
+	lightSource1->SetTexture(new Texture());
+	lightSource1->GetTexture()->LoadImage("textures/white.png");
+	lightSource1->OnCreate();
+
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
@@ -94,6 +107,9 @@ bool Scene2::OnCreate() {
 	lightPos[6] = Vec3(0.0f, 4.0f, 10.0f);
 	lightPos[7] = Vec3(0.0f, 4.0f, -10.0f);
 
+	// GAME LEVEL LIGHT SOURCE POSITIONS
+	lightPos[8] = lightSource1->GetPosition();
+
 	// diffuse values
 	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
 	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
@@ -105,27 +121,41 @@ bool Scene2::OnCreate() {
 	diffuse[6] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[7] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 
+	// GAME LEVEL LIGHT SOURCE DIFFUSE VALUES
+	diffuse[8] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+
 	// specular values
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
 
-	specular[4] = 0.5 * diffuse[0];
-	specular[5] = 0.5 * diffuse[1];
-	specular[6] = 0.5 * diffuse[2];
-	specular[7] = 0.5 * diffuse[3];
+	specular[4] = 0.5 * diffuse[4];
+	specular[5] = 0.5 * diffuse[5];
+	specular[6] = 0.5 * diffuse[6];
+	specular[7] = 0.5 * diffuse[7];
+
+	// GAME LEVEL LIGHT SOURCE SPECULAR VALUES
+	specular[8] = 0.5 * diffuse[8];
 
 	return true;
 }
 
-void Scene2::OnDestroy() {
-	Debug::Info("Deleting assets Scene2: ", __FILE__, __LINE__);
+void SceneCameraTest::OnDestroy() {
+	Debug::Info("Deleting assets SceneCameraTest: ", __FILE__, __LINE__);
 
-	if (camera)
+	// LEGACY CAMERA
+	/*if (camera)
 	{
 		camera->OnDestroy();
 		delete camera;
+	}*/
+
+	// CAMERA FPS
+	if (cameraFPS)
+	{
+		cameraFPS->OnDestroy();
+		delete cameraFPS;
 	}
 
 	if (sphere)
@@ -164,14 +194,22 @@ void Scene2::OnDestroy() {
 		delete objPosZ;
 	}
 
+	if (lightSource1)
+	{
+		lightSource1->OnDestroy();
+		delete lightSource1;
+	}
 	
 	shader->OnDestroy();
 	delete shader;
 
 }
-void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
+void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 
-	camera->HandleEvents(sdlEvent);
+	//camera->HandleEvents(sdlEvent);
+
+	// CAMERA FPS
+	cameraFPS->HandleEvents(sdlEvent);
 
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
@@ -191,7 +229,7 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 	}
 }
 
-void Scene2::Update(const float deltaTime) {
+void SceneCameraTest::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
 	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
@@ -201,18 +239,30 @@ void Scene2::Update(const float deltaTime) {
 	printf("\n\n");
 	printf("objNegX: \t");
 	objNegX->GetPosition().print();
-	printf("\n\n");
+	/*printf("\n\n");
 	printf("\n\n");
 	printf("Camera1: \t");
 	camera->GetCamPos().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera Orientation: \t");
-	camera->GetCameraOrientation().print();
+	camera->GetCameraOrientation().print();*/
+
+
+	// CAMERA FPS
 	printf("\n\n");
+	printf("\n\n");
+	printf("CameraFPS: \t");
+	cameraFPS->GetCamFPSPos().print();
+	printf("\n\n");
+	printf("\n\n");
+	printf("Camera Orientation: \t");
+	cameraFPS->GetCameraFPSOrientation().print();
+
+	/*printf("\n\n");
 	printf("\n\n");
 	printf("viewMatrix: \t");
-	camera->GetViewMatrix().print();
+	camera->GetViewMatrix().print();*/
 	//printf("\n\n");
 	//printf("P: \t");
 	//camera->GetPlayerPosition().print();
@@ -223,7 +273,7 @@ void Scene2::Update(const float deltaTime) {
 
 }
 
-void Scene2::Render() const {
+void SceneCameraTest::Render() const {
 
 	//glCullFace(GL_BACK);
 	//glFrontFace(GL_CCW);
@@ -234,12 +284,20 @@ void Scene2::Render() const {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	camera->Render();		
+	// LEGACY CAMERA RENDER
+	//camera->Render();		
 
+	// FPS CAMERA RENDER
+	cameraFPS->Render();
+
+	// LEGACY CAMERA MATRIX CALLS 
 	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
-	//glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix() * camera->GetRotationMatrix());
+	/*glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());*/
+	
+	// FPS CAMERA MATRIX CALLS 
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
 
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
@@ -276,6 +334,11 @@ void Scene2::Render() const {
 	glBindTexture(GL_TEXTURE_2D, objPosZ->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objPosZ->GetModelMatrix());
 	objPosZ->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());
+	lightSource1->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 

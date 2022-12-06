@@ -1,10 +1,11 @@
-#ifndef SCENE2_H
-#define SCENE2_H
+#ifndef SCENECAMERATEST_H
+#define SCENECAMERATEST_H
 #include "Scene.h"
 #include "Vector.h"
 #include "Matrix.h"
 #include "Trackball.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Skybox.h"
 #include "Collision.h"
 #include "Wall.h"
@@ -18,13 +19,14 @@ class Shader;
 // class Texture; --> CameraActor handles this now
 
 
-class Scene2 : public Scene {
+class SceneCameraTest : public Scene {
 private:
 
 	//vector<Wall*> theWalls;
 
 	Trackball* trackball;
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
 	Matrix4 rotationMatrix;
 	Matrix4 translationMatrix;
 
@@ -35,6 +37,7 @@ private:
 	Actor* objPosY;
 	Actor* objNegZ;
 	Actor* objPosZ;
+	Actor* lightSource1;
 	Actor* cube;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
@@ -49,8 +52,8 @@ private:
 	Matrix4 modelMatrix;
 	
 public:
-	explicit Scene2();
-	virtual ~Scene2();
+	explicit SceneCameraTest();
+	virtual ~SceneCameraTest();
 
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
@@ -60,4 +63,4 @@ public:
 };
 
 
-#endif // SCENE2_H
+#endif // SCENECAMERATEST_H

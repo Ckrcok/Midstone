@@ -3,10 +3,9 @@
 #include "SceneManager.h"
 #include "Timer.h"
 #include "Window.h"
-
 #include "Scene0.h"
 #include "Scene1.h"
-#include "Scene2.h"
+#include "SceneCameraTest.h"
 #include "Scene3.h"
 #include "Scene4.h"
 
@@ -162,7 +161,7 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		break;
 
 	case SCENE_NUMBER::SCENE2:
-		currentScene = new Scene2();
+		currentScene = new SceneCameraTest();
 		status = currentScene->OnCreate();
 		break;
 

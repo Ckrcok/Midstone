@@ -16,9 +16,9 @@ uniform vec4 specular[8];
 layout(location = 0) out vec3 vertNormal;
 layout(location = 1) out vec3 eyeDir;
 layout(location = 2) out vec2 texCoord;
-layout(location = 3) out vec3 lightDir[8];
-layout(location = 13) out vec4 diffuseFrag[8];
-layout(location = 23) out vec4 specularFrag[8];
+layout(location = 3) out vec3 lightDir[9];
+layout(location = 13) out vec4 diffuseFrag[9];
+layout(location = 23) out vec4 specularFrag[9];
 
 void main() {
     
