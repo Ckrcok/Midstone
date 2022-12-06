@@ -79,12 +79,12 @@ void Wall::rotateWall(float toatlTime_, Wall* theObject_)
 void Wall::Render()
 {
 
-	glUseProgram(objFile->GetShader()->GetProgram());
+	//glUseProgram(objFile->GetShader()->GetProgram());
 	glUniformMatrix4fv(objFile->GetShader()->GetUniformID("modelMatrix"), 1, GL_FALSE, objFile->GetModelMatrix());
 	glBindTexture(GL_TEXTURE_2D, objFile->GetTexture()->getTextureID());
 	objFile->GetMesh()->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glUseProgram(0);
+	//glUseProgram(0);
 
 }
 

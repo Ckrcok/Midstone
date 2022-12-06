@@ -455,7 +455,7 @@ void LevelScene::Render() const {
 	for (EnemyActor* enemy : enemies) {
 		enemy->Render();
 	}
-	if (hasKey == true) {
+	if (hasWeapon == true) {
 		playerGun->Render();
 	}
 
