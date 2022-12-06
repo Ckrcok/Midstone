@@ -1,11 +1,14 @@
 #pragma once
+
 #include <iostream>
 #include <vector> 
+
 #include "Component.h"
 #include "Matrix.h"
-using namespace MATH;
 #include "Mesh.h"
 #include "Texture.h"
+
+using namespace MATH;
 
 class Actor : public Component {
 private:
@@ -13,9 +16,8 @@ private:
 	class Mesh* mesh;
 	class Texture* texture;
 	Matrix4 modelMatrix;
+
 public:
-
-
 	// C11 safeguards
 	Actor(const Actor&) = delete;
 	Actor(Actor&&) = delete;
@@ -24,6 +26,7 @@ public:
 
 	Actor(Component* parent_);
 	~Actor();
+
 	bool OnCreate();
 	void OnDestroy();
 	void Update(const float deltaTime_);
@@ -85,6 +88,4 @@ public:
 	inline Matrix4 GetModelMatrix() { return modelMatrix; }
 	inline void SetModelMatrix(const Matrix4& modelMatrix_) { modelMatrix = modelMatrix_; }
 	inline Vec3 GetPosition() { return Vec3(GetModelMatrix()[12], GetModelMatrix()[13], GetModelMatrix()[14]); }
-	
-		
 };

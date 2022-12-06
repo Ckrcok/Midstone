@@ -1,86 +1,71 @@
-#include "Scene3.h"
+// Basic include
+#include "SceneCombination.h"
 
-Scene3::Scene3() : shader(nullptr)
+SceneCombination::SceneCombination()
 {
-	Debug::Info("Created Scene3: ", __FILE__, __LINE__);
-	trackball = new Trackball();
-
-	int spawnPos = -2.0f;
-	for (int i = 0; i < 1; i++)
-	{
-		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		spawnPos += 2;
-
-		enemies.push_back(enemy);
-	}
+	// Debug information
+	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
 }
 
-Scene3::~Scene3()
+SceneCombination::~SceneCombination()
 {
-	Debug::Info("Deleted Scene3: ", __FILE__, __LINE__);
-
-	if (trackball)
-		delete trackball;
+	// Debug information
+	Debug::Info("Deleted SceneÇombination: ", __FILE__, __LINE__);
 }
 
-bool Scene3::OnCreate()
+bool SceneCombination::OnCreate()
 {
-	Debug::Info("Loading assets Scene3: ", __FILE__, __LINE__);
+	// Debug information
+	Debug::Info("Loading assets SceneCombination: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
+	// Create camera and call OnCreate
+	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
 
-	//playerGun = new PlayerGun(Vec3(1.0f, -0.5f, -2.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	// Create the player gun and call OnCreate
 	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
 	playerGun->OnCreate();
 
-	for (EnemyActor* enemy : enemies) {
-		enemy->SetCamera(camera);
-		enemy->OnCreate();
-	}
-
+	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
-	if (shader->OnCreate() == false)
-		Debug::Error("Can't load shader", __FILE__, __LINE__);
+	if (shader->OnCreate() == false)	// Debug information
+		Debug::Error("Can't load shader in SceneCombination", __FILE__, __LINE__);
 
+	// Set light positions
 	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
 	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
 	lightPos[2] = Vec3(0.0f, 3.0f, -6.5f);
 	lightPos[3] = Vec3(0.0f, -3.0f, -6.5f);
 
+	// Set diffuse values
 	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
 	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
 	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
 	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 
+	// Set specular values
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
 
+	// Return true so program can run
 	return true;
 }
 
-void Scene3::OnDestroy()
+void SceneCombination::OnDestroy()
 {
-	Debug::Info("Deleting assets Scene3: ", __FILE__, __LINE__);
+	// Debug information
+	Debug::Info("Deleting assets SceneCombination: ", __FILE__, __LINE__);
 
+	// If camera exists, call OnDestroy and delete
 	if (camera)
 	{
 		camera->OnDestroy();
 		delete camera;
 	}
 
-	for (EnemyActor* enemy : enemies)
-	{
-		if (enemy)
-		{
-			enemy->OnDestroy();
-			delete enemy;
-		}
-	}
-	enemies.clear();
-
+	// If shader exists, call OnDestroy and delete
 	if (shader)
 	{
 		shader->OnDestroy();
@@ -94,8 +79,9 @@ void Scene3::OnDestroy()
 	}
 }
 
-void Scene3::Render() const
+void SceneCombination::Render() const
 {
+	// Set the culling and front face variables
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
@@ -103,46 +89,44 @@ void Scene3::Render() const
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Render the camera
 	camera->Render();
 
+	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+	// Set matrices
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
 
+	// Set uniforms
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
-	for (EnemyActor* enemy : enemies)
-		enemy->Render();
-
+	// Render the gun of the player
 	playerGun->Render();
 
+	// Use program 0
 	glUseProgram(0);
 }
 
-void Scene3::Update(const float deltaTime)
+void SceneCombination::Update(const float deltaTime)
 {
+	// Update the camera
 	camera->Update(deltaTime);
 
-	for (EnemyActor* enemy : enemies)
-		enemy->Update(deltaTime);
-
+	// Update the gun of the player
 	playerGun->Update(deltaTime);
-
-	//cout << "CameraPos Scene: ";
-	//camera->GetPosition().print();
 }
 
-void Scene3::HandleEvents(const SDL_Event& sdlEvent)
+void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 {
+	// Handle events of camera
 	camera->HandleEvents(sdlEvent);
 
-	for (EnemyActor* enemy : enemies)
-		enemy->HandleEvents(sdlEvent);
-
+	// Handle events of the player gun
 	playerGun->HandleEvents(sdlEvent);
 }

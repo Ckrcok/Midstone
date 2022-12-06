@@ -1,15 +1,19 @@
-#ifndef SCENE3_H
-#define SCENE3_H
+#ifndef SCENE_COMBINATION_H
+#define SCENE_COMBINATION_H
 
+// Basic include
 #include "Scene.h"
 #include "Vector.h"
 #include "Matrix.h"
 #include "Trackball.h"
 #include "CameraActor.h"
 #include "Skybox.h"
+
+// Extra include
 #include "EnemyActor.h"
 #include "PlayerGun.h"
 
+// Namespaces
 using namespace MATH;
 using namespace std;
 
@@ -18,25 +22,29 @@ union SDL_Event;
 class Actor;
 class Shader;
 
-class Scene3 : public Scene
+class SceneCombination : public Scene
 {
 private:
-	vector<EnemyActor*> enemies;
+	// Camera
+	CameraActor* camera;
 
+	// Shader
 	Shader* shader;
 
-	Trackball* trackball;
-	CameraActor* camera;
-	PlayerGun* playerGun;
-
+	// Render variables
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
 
-public:
-	explicit Scene3();
-	virtual ~Scene3();
+	// Gun of the player
+	PlayerGun* playerGun;
 
+public:
+	// Scene creation and destroy functions
+	explicit SceneCombination();
+	virtual ~SceneCombination();
+
+	// Scene basic functions
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
 	virtual void Render() const override;
@@ -44,4 +52,4 @@ public:
 	virtual void HandleEvents(const SDL_Event& sdlEvent) override;
 };
 
-#endif // SCENE3_H
+#endif // SCENE_COMBINATION_H

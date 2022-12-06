@@ -32,7 +32,7 @@ bool EnemyActor::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/ZombieTexture.png");
+	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
 	model_3D->OnCreate();
 
 	// Create shader
@@ -71,11 +71,14 @@ void EnemyActor::Update(float deltaTime)
 {
 	position = model_3D->GetPosition();
 
+	/**
 	cout << "Enemy pos: ";
 	model_3D->GetPosition().print();
 
 	cout << "Cam pos: ";
 	camera->GetPlayerPosition().print();
+	/**/
+
 
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, camera->GetPlayerPosition());
@@ -120,15 +123,16 @@ void EnemyActor::Update(float deltaTime)
 			currentTimeBetweenTargets = timeBetweenTargets;
 		}
 	}
-	else if (attackTarget == nullptr)
+	else if (attackTarget == nullptr && distanceToTarget > 0.5f)
 	{
 		MoveToTarget(deltaTime);
-		//FaceTarget(deltaTime);
+		FaceTarget(deltaTime);
 	}
+	else
+		return;
 
-
-	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
-	cout << "\n";
+	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
+	//cout << "\n";
 
 	/**/ // If player is in range, attack
 	if (distanceToPlayer < 0.05f)
