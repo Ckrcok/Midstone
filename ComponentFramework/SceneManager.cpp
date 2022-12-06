@@ -9,6 +9,7 @@
 #include "Scene2.h"
 #include "Scene3.h"
 #include "Scene4.h"
+#include "SceneCombination.h"
 
 SceneManager::SceneManager() :
 	currentScene(nullptr), window(nullptr), timer(nullptr),
@@ -58,7 +59,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 
 	/********************************   Default first scene   ***********************/
 	//BuildNewScene(SCENE_NUMBER::LEVELSCENE);
-	BuildNewScene(SCENE_NUMBER::SCENE3);
+	BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
 
 	return true;
 }
@@ -123,6 +124,14 @@ void SceneManager::HandleEvents()
 				BuildNewScene(SCENE_NUMBER::SCENE4);
 				break;
 
+			case SDL_SCANCODE_F5:
+				BuildNewScene(SCENE_NUMBER::LEVELSCENE);
+				break;
+
+			case SDL_SCANCODE_F6:
+				BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
+				break;
+
 			default:
 				break;
 			}
@@ -152,11 +161,6 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 
 	switch (scene)
 	{
-	case SCENE_NUMBER::LEVELSCENE:
-		currentScene = new LevelScene();
-		status = currentScene->OnCreate();
-		break;
-
 	case SCENE_NUMBER::SCENE1:
 		currentScene = new Scene1();
 		status = currentScene->OnCreate();
@@ -176,6 +180,16 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 	case SCENE_NUMBER::SCENE4:
 		cout << "Window: " << window->getWindow() << endl;
 		currentScene = new Scene4(window->getWindow());
+		status = currentScene->OnCreate();
+		break;
+
+	case SCENE_NUMBER::LEVELSCENE:
+		currentScene = new LevelScene();
+		status = currentScene->OnCreate();
+		break;
+
+	case SCENE_NUMBER::SCENE_COMBINATION:
+		currentScene = new SceneCombination();
 		status = currentScene->OnCreate();
 		break;
 

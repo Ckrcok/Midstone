@@ -51,9 +51,6 @@
     <ClCompile Include="VMath.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Scene0.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,6 +120,12 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Gun</Filter>
     </ClCompile>
+    <ClCompile Include="LevelScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneCombination.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -153,9 +156,6 @@
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene0.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -241,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCombination.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
