@@ -366,9 +366,13 @@ void LevelScene::Update(const float deltaTime) {
 
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
+
+	Vec3 rotationPlayer = camera->cameraRotationTracker;
 	rotationVec = camera->cameraRotationTracker;
 	playerGun->Update(deltaTime);
 
+	resultPlayer.print("Position");
+	rotationPlayer.print("Rotation");
 
 	//rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
