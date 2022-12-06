@@ -167,8 +167,8 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 			cameraPitch -= mouseRelY * 0.15f;
 
 			// clamp upwards-downwards look
-			if (cameraPitch >  75.0f) cameraPitch =  74.0f;
-			if (cameraPitch < -75.0f) cameraPitch = -74.0f;
+			if (cameraPitch >  75.0f) cameraPitch =  75.0f;
+			if (cameraPitch < -75.0f) cameraPitch = -75.0f;
 			
 			std::cout << "Mouse X relative: " << mouseRelX << " Mouse Y relative : " << mouseRelY << std::endl;
 		}

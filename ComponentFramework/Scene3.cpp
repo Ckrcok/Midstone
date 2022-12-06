@@ -27,7 +27,7 @@ bool Scene3::OnCreate()
 {
 	Debug::Info("Loading assets Scene3: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
 	camera->OnCreate();
 
 	//playerGun = new PlayerGun(Vec3(1.0f, -0.5f, -2.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);

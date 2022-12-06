@@ -84,9 +84,6 @@
     <ClCompile Include="Trackball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene2.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -120,10 +117,16 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Gun</Filter>
     </ClCompile>
-    <ClCompile Include="LevelScene.cpp">
+    <ClCompile Include="SceneCombination.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneCameraTest.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraActorFPS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCombination.cpp">
+    <ClCompile Include="LevelScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -206,9 +209,6 @@
     <ClInclude Include="Trackball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene2.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -242,10 +242,16 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Gun</Filter>
     </ClInclude>
-    <ClInclude Include="LevelScene.h">
+    <ClInclude Include="SceneCombination.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCameraTest.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraActorFPS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCombination.h">
+    <ClInclude Include="LevelScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

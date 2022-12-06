@@ -7,6 +7,7 @@
 #include "Matrix.h"
 #include "Trackball.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Skybox.h"
 
 // Extra include

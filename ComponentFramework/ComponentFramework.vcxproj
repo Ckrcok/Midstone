@@ -89,6 +89,7 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraActor.cpp" />
+    <ClCompile Include="CameraActorFPS.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -101,9 +102,9 @@
     <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="Scene1.cpp" />
-    <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="Scene4.cpp" />
+    <ClCompile Include="SceneCameraTest.cpp" />
     <ClCompile Include="SceneCombination.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraActor.h" />
+    <ClInclude Include="CameraActorFPS.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
@@ -138,9 +140,9 @@
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene1.h" />
-    <ClInclude Include="Scene2.h" />
     <ClInclude Include="Scene3.h" />
     <ClInclude Include="Scene4.h" />
+    <ClInclude Include="SceneCameraTest.h" />
     <ClInclude Include="SceneCombination.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Matrix.h" />

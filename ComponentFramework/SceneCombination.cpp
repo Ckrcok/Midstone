@@ -82,19 +82,20 @@ void SceneCombination::OnDestroy()
 void SceneCombination::Render() const
 {
 	// Set the culling and front face variables
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
+	/*glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);*/
 
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render the camera
-	camera->Render();
+	
 
 	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	camera->Render();
 
 	// Set matrices
 	glUseProgram(shader->GetProgram());
