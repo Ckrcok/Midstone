@@ -153,7 +153,8 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_I)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_J)
+
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_J)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_L)
 			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
