@@ -39,6 +39,9 @@ private:
 	// Gun of the player
 	PlayerGun* playerGun;
 
+	// List of enemies
+	vector<EnemyActor*> enemies;
+
 public:
 	// Scene creation and destroy functions
 	explicit SceneCombination();

@@ -5,6 +5,16 @@ SceneCombination::SceneCombination()
 {
 	// Debug information
 	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
+
+	int spawnPosXOfEnemies = -2.0f;	// Start X position of the enemies 
+	for (int i = 0; i < 1; i++)
+	{
+		// Create enemy
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPosXOfEnemies, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+
+		spawnPosXOfEnemies += 2;		// Up the x position of the spawn position
+		enemies.push_back(enemy);	// Add to the list of enemies
+	}
 }
 
 SceneCombination::~SceneCombination()
@@ -25,6 +35,12 @@ bool SceneCombination::OnCreate()
 	// Create the player gun and call OnCreate
 	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
 	playerGun->OnCreate();
+
+	// Set the camera and call OnCreate for every enemy in the list with enemies
+	for (EnemyActor* enemy : enemies) {
+		enemy->SetCamera(camera);
+		enemy->OnCreate();
+	}
 
 	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
@@ -72,11 +88,25 @@ void SceneCombination::OnDestroy()
 		delete shader;
 	}
 
+	// If player gun exists, call OnDestroy and delete
 	if (playerGun)
 	{
 		playerGun->OnDestroy();
 		delete playerGun;
 	}
+
+	// Check for every enemy in the list if it exists
+	// If so, call OnDestroy and delete
+	// After that, clear the list with enemies
+	for (EnemyActor* enemy : enemies)
+	{
+		if (enemy)
+		{
+			enemy->OnDestroy();
+			delete enemy;
+		}
+	}
+	enemies.clear();
 }
 
 void SceneCombination::Render() const
@@ -109,6 +139,10 @@ void SceneCombination::Render() const
 	// Render the gun of the player
 	playerGun->Render();
 
+	// Render every enemy in the list
+	for (EnemyActor* enemy : enemies)
+		enemy->Render();
+
 	// Use program 0
 	glUseProgram(0);
 }
@@ -120,6 +154,10 @@ void SceneCombination::Update(const float deltaTime)
 
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
+
+	// Update every enemy in the list
+	for (EnemyActor* enemy : enemies)
+		enemy->Update(deltaTime);
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
@@ -129,4 +167,8 @@ void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 
 	// Handle events of the player gun
 	playerGun->HandleEvents(sdlEvent);
+
+	// Handle events of every enemy
+	for (EnemyActor* enemy : enemies)
+		enemy->HandleEvents(sdlEvent);
 }
