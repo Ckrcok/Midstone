@@ -23,10 +23,10 @@ Skybox::~Skybox() {}
 
 bool Skybox::OnCreate()
 {
-	mesh = new Mesh(nullptr, "meshes/Cube.obj");
-	if (mesh->OnCreate() == false)
+	skyboxMesh = new Mesh(nullptr, "meshes/Cube.obj");
+	if (skyboxMesh->OnCreate() == false)
 	{
-		Debug::Error("Can't load mesh", __FILE__, __LINE__);
+		Debug::Error("Can't load skyboxMesh", __FILE__, __LINE__);
 	}
 
 	shader = new Shader(nullptr, "shaders/skyboxVert.glsl", "shaders/skyboxFrag.glsl");
@@ -118,20 +118,13 @@ void Skybox::Update(const float deltaTime_) {}
 
 void Skybox::Render() const
 {
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_CULL_FACE);
-	//// clear the screen
-	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	/*glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());*/
-
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
-	mesh->Render(GL_TRIANGLES);
+	skyboxMesh->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 }
 

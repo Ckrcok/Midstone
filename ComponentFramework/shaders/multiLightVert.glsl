@@ -9,16 +9,16 @@ layout(location = 2) in vec2 uvCoord;
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
-uniform vec3 lightPos[4];
-uniform vec4 diffuse[4];
-uniform vec4 specular[4];
+uniform vec3 lightPos[8];
+uniform vec4 diffuse[8];
+uniform vec4 specular[8];
 
 layout(location = 0) out vec3 vertNormal;
 layout(location = 1) out vec3 eyeDir;
 layout(location = 2) out vec2 texCoord;
-layout(location = 3) out vec3 lightDir[4];
-layout(location = 13) out vec4 diffuseFrag[4];
-layout(location = 23) out vec4 specularFrag[4];
+layout(location = 3) out vec3 lightDir[8];
+layout(location = 13) out vec4 diffuseFrag[8];
+layout(location = 23) out vec4 specularFrag[8];
 
 void main() {
     

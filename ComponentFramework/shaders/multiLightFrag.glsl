@@ -16,9 +16,9 @@ void main() {
 	vec4 kTexture = texture(myTexture, texCoord);
 	vec4 ka = 0.01 * kTexture;
 
-	float diff[4];
-	vec3 reflection[4];
-	float spec[4];
+	float diff[8];
+	vec3 reflection[8];
+	float spec[8];
 
 	for(int i = 0; i <= lightDir.length - 1; i++)
 	{

@@ -25,8 +25,16 @@ private:
 
 	Trackball* trackball;
 	CameraActor* camera;
+	Matrix4 rotationMatrix;
+	Matrix4 translationMatrix;
 
 	Actor* sphere;
+	Actor* objNegX;
+	Actor* objPosX;
+	Actor* objNegY;
+	Actor* objPosY;
+	Actor* objNegZ;
+	Actor* objPosZ;
 	Actor* cube;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
@@ -38,6 +46,7 @@ private:
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
+	Matrix4 modelMatrix;
 	
 public:
 	explicit Scene2();

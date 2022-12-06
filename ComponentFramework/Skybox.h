@@ -8,7 +8,7 @@ class Skybox : public Component
 {
 private:
 	GLuint skyboxTextureID;
-	Mesh* mesh;
+	Mesh* skyboxMesh;
 	Shader* shader;
 	const char* posXfilename, * posYfilename, * posZfilename, * negXfilename, * negYfilename, * negZfilename;
 public:
@@ -16,7 +16,6 @@ public:
 	~Skybox();
 
 	Shader* GetShader() { return shader; }
-
 	GLuint GetSkyboxTextureID() { return skyboxTextureID; }
 
 	bool OnCreate() override;
