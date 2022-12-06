@@ -62,6 +62,7 @@ public:
 	inline void SetRotationMatrix(const Matrix4& rotationMatrix_) { rotationMatrix = rotationMatrix_; }
 	Skybox* GetSkyBox() { return skybox; }
 	inline Vec3 GetCameraOrientation() { return cameraOrientationVec; }
+	inline Vec3 GetCamPos() { return cameraPositionVec; }
 	//inline Matrix4 GetFPSviewMatrix() { return FPSViewMatrix; }
 
 	inline Vec3 GetCameraActorPosition()

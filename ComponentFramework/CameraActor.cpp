@@ -19,39 +19,7 @@ CameraActor::CameraActor(Component* parent_) :Actor(parent_)
 	//viewMatrix = rotationMatrix * translationMatrix;
 }
 
-//Matrix4 CameraActor::FPScamera(Vec3 CameraActorPosition_, float cameraPitch, float cameraYaw)
-//{
-//	if (cameraPitch <= -90.0f) cameraPitch = -85.0f;
-//	if (cameraPitch >= 90.0f) cameraPitch = 85.0f;
-//
-//	if (cameraYaw <= 0.0f) cameraYaw = 1.0f;
-//	if (cameraYaw >= 360.0f) cameraYaw = 355.0f;
-//
-//	float cameraPitchR	= cameraPitch	* DEGREES_TO_RADIANS;
-//	float cameraYawR	= cameraYaw		* DEGREES_TO_RADIANS;
-//
-//	float cosCameraPitch	= cos(cameraPitchR);
-//	float sinCameraPitch	= sin(cameraPitchR);
-//	float cosCameraYaw		= cos(cameraYawR);
-//	float sinCameraYaw		= sin(cameraYawR);
-//
-//	Vec3 side =		{ cosCameraYaw, 0, -sinCameraYaw };
-//	Vec3 up =		{ sinCameraYaw * sinCameraPitch, cosCameraPitch, cosCameraYaw * sinCameraPitch };
-//	Vec3 front =	{ sinCameraYaw * cosCameraPitch, -sinCameraPitch, cosCameraPitch * cosCameraYaw };
-//
-//	Matrix4 FPSViewMatrix =
-//	{
-//						side.x,										up.x,									front.x,						0,
-//						side.y,										up.y,									front.y,						0,
-//						side.z,										up.z,									front.z,						0,
-//			-VMath::dot(side, CameraActorPosition_),	-VMath::dot(up, CameraActorPosition_),	-VMath::dot(front, CameraActorPosition_),	1
-//	};
-//
-//	return FPSViewMatrix;
-//}
-
-
-// Create the view frustum with a First Person LookAt function - float constructor
+ //Create the view frustum with a First Person LookAt function - float constructor
 Matrix4 CameraActor::LookAtFPS(const float positionX, const float positionY, const float positionZ,
 	const float targetX, const float targetY, const float targetZ,
 	const float worldUpX, const float worldUpY, const float worldUpZ)
@@ -119,23 +87,26 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 	SDL_PumpEvents();  // make sure we have the latest mouse & keyboard state.
 	SDL_SetRelativeMouseMode(SDL_TRUE); // Set relative mouse mode for First Person view
 	bool MouseMotion = false;
-	
+
 	// Camera Orientation Vector (camera is looking at:)
 	Vec3 cameraFront;
 	cameraFront.x = cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
 	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS);
 	cameraFront.z = cos(cameraPitch * DEGREES_TO_RADIANS) * sin(cameraYaw * DEGREES_TO_RADIANS);
+	/*cameraFront.x = -sin(cameraYaw * DEGREES_TO_RADIANS);
+	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
+	cameraFront.z = -cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);*/
 	cameraOrientationVec = VMath::normalize(cameraFront);
-	
 
 	// Create the view matrix with First Person LookAt function
 	viewMatrix = LookAtFPS(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec);
+	//viewMatrix = MMath::lookAt(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec); // --- Scott's method
 
 	// CAMERA MOVEMENT on XY Plane (45-90 degree movement)
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
 	if (sdlEvent.type == SDL_KEYDOWN || sdlEvent.type == SDL_KEYUP)
 	{
-		// Move forward & backwards
+		// Move forward & backwards -- updated method
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
 		{
 			cameraPositionVec += cameraSpeed * cameraOrientationVec;
@@ -159,7 +130,7 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		}
 	}
 	
-
+	// CAMERA MOVEMENT - legacy method
 	//switch (sdlEvent.type) {
 	//case SDL_KEYDOWN:
 
@@ -271,8 +242,8 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 			cameraYaw += mouseRelX;
 			cameraPitch -= mouseRelY;
 
-			if (cameraPitch >  89.0f) cameraPitch =  89.0f;
-			if (cameraPitch < -89.0f) cameraPitch = -89.0f;
+			if (cameraPitch >  75.0f) cameraPitch =  74.0f;
+			if (cameraPitch < -75.0f) cameraPitch = -74.0f;
 			/*if (cameraYaw <= 0.0f) cameraYaw = 1.0f;
 			if (cameraYaw >= 360.0f) cameraYaw = 355.0f;*/
 			

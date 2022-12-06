@@ -204,7 +204,7 @@ void Scene2::Update(const float deltaTime) {
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera1: \t");
-	camera->GetCameraActorPosition().print();
+	camera->GetCamPos().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera Orientation: \t");
