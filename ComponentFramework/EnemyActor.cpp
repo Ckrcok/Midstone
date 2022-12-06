@@ -24,7 +24,7 @@ bool EnemyActor::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/spikySphere.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
@@ -32,11 +32,11 @@ bool EnemyActor::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/ZombieTexture.png");
+	model_3D->GetTexture()->LoadImage("textures/white_sphere.png");
 	model_3D->OnCreate();
 
 	// Create shader
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
@@ -63,7 +63,6 @@ void EnemyActor::Render()
 	glBindTexture(GL_TEXTURE_2D, model_3D->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, model_3D->GetModelMatrix());
 	model_3D->Render();
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -71,11 +70,14 @@ void EnemyActor::Update(float deltaTime)
 {
 	position = model_3D->GetPosition();
 
+	/**
 	cout << "Enemy pos: ";
 	model_3D->GetPosition().print();
 
 	cout << "Cam pos: ";
 	camera->GetPlayerPosition().print();
+	/**/
+
 
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, camera->GetPlayerPosition());
@@ -120,15 +122,16 @@ void EnemyActor::Update(float deltaTime)
 			currentTimeBetweenTargets = timeBetweenTargets;
 		}
 	}
-	else if (attackTarget == nullptr)
+	else if (attackTarget == nullptr && distanceToTarget > 0.5f)
 	{
 		MoveToTarget(deltaTime);
-		//FaceTarget(deltaTime);
+		FaceTarget(deltaTime);
 	}
+	else
+		return;
 
-
-	cout << "DistanceToPlayer: " << distanceToPlayer << endl;
-	cout << "\n";
+	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
+	//cout << "\n";
 
 	/**/ // If player is in range, attack
 	if (distanceToPlayer < 0.05f)

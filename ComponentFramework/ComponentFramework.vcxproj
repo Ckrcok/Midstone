@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="EnemyActor.cpp" />
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="PlayerGun.cpp" />
     <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
     <ClCompile Include="Scene1.cpp" />
@@ -118,6 +120,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AxisAngle.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraActor.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
@@ -129,6 +132,7 @@
     <ClInclude Include="Euler.h" />
     <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="PlayerGun.h" />
     <ClInclude Include="PuzzleButton.h" />
     <ClInclude Include="QMath.h" />
     <ClInclude Include="Quaternion.h" />

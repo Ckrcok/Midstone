@@ -8,6 +8,7 @@
 #include "CameraActor.h"
 #include "Skybox.h"
 #include "EnemyActor.h"
+#include "PlayerGun.h"
 
 using namespace MATH;
 using namespace std;
@@ -21,11 +22,16 @@ class Scene3 : public Scene
 {
 private:
 	vector<EnemyActor*> enemies;
+	Actor* cube;
+	Shader* shaderCube;
+	Mesh* meshCube;
+
 
 	Shader* shader;
 
 	Trackball* trackball;
 	CameraActor* camera;
+	PlayerGun* playerGun;
 
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];

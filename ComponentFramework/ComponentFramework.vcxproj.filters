@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{e8c82a08-d757-47ee-b6fe-eee59a99570f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Gun">
+      <UniqueIdentifier>{3e9107c8-d6cc-4ef1-a8f1-4fd81faae898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gun">
+      <UniqueIdentifier>{d5c47b74-ada4-4f0e-b54c-b61fd48fa46c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -44,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="VMath.cpp">
       <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene0.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files</Filter>
@@ -108,8 +117,11 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
+    <ClCompile Include="PlayerGun.cpp">
+      <Filter>Source Files\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Gun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +153,9 @@
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene0.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -221,8 +236,11 @@
     <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LevelScene.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="PlayerGun.h">
+      <Filter>Header Files\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Gun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
