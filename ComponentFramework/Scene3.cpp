@@ -1,5 +1,4 @@
 #include "Scene3.h"
-
 #include "Debug.h"
 
 Scene3::Scene3() : shader(nullptr)
@@ -20,6 +19,7 @@ Scene3::Scene3() : shader(nullptr)
 Scene3::~Scene3()
 {
 	Debug::Info("Deleted Scene3: ", __FILE__, __LINE__);
+
 	if (trackball)
 		delete trackball;
 }
@@ -30,6 +30,10 @@ bool Scene3::OnCreate()
 
 	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
 	camera->OnCreate();
+
+	//playerGun = new PlayerGun(Vec3(1.0f, -0.5f, -2.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	playerGun->OnCreate();
 
 	for (EnemyActor* enemy : enemies) {
 		enemy->SetCamera(camera);
@@ -78,8 +82,11 @@ void Scene3::OnDestroy()
 	}
 	enemies.clear();
 
-	shader->OnDestroy();
-	delete shader;
+	if (shader)
+	{
+		shader->OnDestroy();
+		delete shader;
+	}
 }
 
 void Scene3::Render() const
@@ -107,13 +114,19 @@ void Scene3::Render() const
 	for (EnemyActor* enemy : enemies)
 		enemy->Render();
 
+	playerGun->Render();
+
 	glUseProgram(0);
 }
 
 void Scene3::Update(const float deltaTime)
 {
+	camera->Update(deltaTime);
+
 	for (EnemyActor* enemy : enemies)
 		enemy->Update(deltaTime);
+
+	playerGun->Update(deltaTime);
 
 	//cout << "CameraPos Scene: ";
 	//camera->GetPosition().print();
@@ -125,4 +138,6 @@ void Scene3::HandleEvents(const SDL_Event& sdlEvent)
 
 	for (EnemyActor* enemy : enemies)
 		enemy->HandleEvents(sdlEvent);
+
+	playerGun->HandleEvents(sdlEvent);
 }

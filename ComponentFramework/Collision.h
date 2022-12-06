@@ -9,5 +9,6 @@ using namespace MATH;
 struct Collision
 {
     static int boxBoxCollision( Box& a,  Box& b);
-    static float distancePointBox(Vec3 point_, const Box theBox_);
+    static int distancePointBox(Vec3 point_, const Box theBox_);
+    static int TestSphereSphere(Box& a_, Box& b_);
 };
