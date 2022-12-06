@@ -24,7 +24,7 @@ bool EnemyActor::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/spikySphere.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
@@ -36,7 +36,7 @@ bool EnemyActor::OnCreate()
 	model_3D->OnCreate();
 
 	// Create shader
-	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 

@@ -16,10 +16,10 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/gun8.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun.obj"));
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/sphere60.obj"));
 	model_3D->GetMesh()->OnCreate();
-									// Spawn position
+	// Spawn position
 	model_3D->SetModelMatrix(model_3D->GetModelMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 0.0f)));
 
 	//if (rotation > 0)
@@ -31,7 +31,7 @@ bool PlayerGun::OnCreate()
 	model_3D->OnCreate();
 
 	// Create shader
-	shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
@@ -72,10 +72,10 @@ void PlayerGun::Update(float deltaTime)
 	totalTime += deltaTime;
 
 
-		model_3D->SetModelMatrix(
-			MMath::translate((-(camera->cameraPositionTracker))) *
-			MMath::rotate(-camera->cameraRotationTracker.y, Vec3(0.0f, 1.0f, 0.0f))
-		);
+	model_3D->SetModelMatrix(
+		MMath::translate((-(camera->cameraPositionTracker))) *
+		MMath::rotate(-camera->cameraRotationTracker.y, Vec3(0.0f, 1.0f, 0.0f))
+	);
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets) {

@@ -266,7 +266,7 @@ bool LevelScene::OnCreate()
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
 
 
-	camera = new CameraActor(Vec3(0.0f, -10.0f, 0.0f), nullptr);
+	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
 	camera->OnCreate();
 	//PlayerCollider
 	sphere = new Actor(nullptr);
@@ -307,7 +307,7 @@ bool LevelScene::OnCreate()
 	}
 
 	cube = new Actor(nullptr);
-	cube->SetMesh(new Mesh(nullptr, "meshes/gun4.obj"));
+	cube->SetMesh(new Mesh(nullptr, "meshes/PlayerGun.obj"));
 	cube->GetMesh()->OnCreate();
 	cube->SetTexture(new Texture());
 	cube->GetTexture()->LoadImage("textures/white_sphere.png");
