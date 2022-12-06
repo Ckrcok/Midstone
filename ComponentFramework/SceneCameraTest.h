@@ -1,11 +1,14 @@
-#ifndef SCENE2_H
-#define SCENE2_H
+#ifndef SCENECAMERATEST_H
+#define SCENECAMERATEST_H
 #include "Scene.h"
 #include "Vector.h"
 #include "Matrix.h"
 #include "Trackball.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Skybox.h"
+#include "Collision.h"
+#include "Wall.h"
 using namespace MATH;
 
 /// Forward declarations 
@@ -16,15 +19,29 @@ class Shader;
 // class Texture; --> CameraActor handles this now
 
 
-class Scene2 : public Scene {
+class SceneCameraTest : public Scene {
 private:
 
+	//vector<Wall*> theWalls;
+
 	Trackball* trackball;
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
+	Matrix4 rotationMatrix;
+	Matrix4 translationMatrix;
 
 	Actor* sphere;
+	Actor* objNegX;
+	Actor* objPosX;
+	Actor* objNegY;
+	Actor* objPosY;
+	Actor* objNegZ;
+	Actor* objPosZ;
+	Actor* lightSource1;
+	Actor* cube;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
+	Shader* shaderCube;
 	/*Texture* texture; --> CameraActor handles these now
 	Matrix4 projectionMatrix; 
 	Matrix4 viewMatrix;
@@ -32,10 +49,11 @@ private:
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
+	Matrix4 modelMatrix;
 	
 public:
-	explicit Scene2();
-	virtual ~Scene2();
+	explicit SceneCameraTest();
+	virtual ~SceneCameraTest();
 
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
@@ -45,4 +63,4 @@ public:
 };
 
 
-#endif // SCENE2_H
+#endif // SCENECAMERATEST_H

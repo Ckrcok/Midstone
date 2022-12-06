@@ -31,22 +31,22 @@ namespace  MATH {
 	public:
 
 		inline Matrix4& operator = (const Matrix4& m_) {
-			this->m[0] = m_[0]; this->m[1] = m_[1]; this->m[2] = m_[2]; this->m[3] = m_[3];
-			this->m[4] = m_[4]; this->m[5] = m_[5]; this->m[6] = m_[6]; this->m[7] = m_[7];
-			this->m[8] = m_[8]; this->m[9] = m_[9]; this->m[10] = m_[10]; this->m[11] = m_[11];
-			this->m[12] = m_[12]; this->m[13] = m_[13]; this->m[14] = m_[14]; this->m[15] = m_[15];
+			this->m[0] = m_[0];		this->m[1] = m_[1];		this->m[2] = m_[2];		this->m[3] = m_[3];
+			this->m[4] = m_[4];		this->m[5] = m_[5];		this->m[6] = m_[6];		this->m[7] = m_[7];
+			this->m[8] = m_[8];		this->m[9] = m_[9];		this->m[10] = m_[10];	this->m[11] = m_[11];
+			this->m[12] = m_[12];	this->m[13] = m_[13];	this->m[14] = m_[14];	this->m[15] = m_[15];
 			return *this;
 		}
 
 
-		inline Matrix4(float x0, float x1, float x2, float x3,
-			float y0, float y1, float y2, float y3,
-			float z0, float z1, float z2, float z3,
-			float w0, float w1, float w2, float w3) {
-			m[0] = x0;   m[4] = y0;   m[8] = z0; m[12] = w0;
-			m[1] = x1;   m[5] = y1;   m[9] = z1; m[13] = w1;
-			m[2] = x2;   m[6] = y2;   m[10] = z2; m[14] = w2;
-			m[3] = x3;   m[7] = y3;   m[11] = z3; m[15] = w3;
+		inline Matrix4(	float x0,		float x1,		float x2,		float x3,
+						float y0,		float y1,		float y2,		float y3,
+						float z0,		float z1,		float z2,		float z3,
+						float w0,		float w1,		float w2,		float w3) {
+						m[0] = x0;		m[4] = y0;		m[8] = z0;		m[12] = w0;
+						m[1] = x1;		m[5] = y1;		m[9] = z1;		m[13] = w1;
+						m[2] = x2;		m[6] = y2;		m[10] = z2;		m[14] = w2;
+						m[3] = x3;		m[7] = y3;		m[11] = z3;		m[15] = w3;
 		}
 
 		/// Create the unit matrix probably the most common way of initializing a matrix

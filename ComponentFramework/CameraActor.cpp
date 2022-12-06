@@ -1,11 +1,8 @@
 #include "CameraActor.h"
 #include "MMath.h"
 #include "Debug.h"
-//#include "PlayerGun.h"
 
 using namespace MATH;
-
-//PlayerGun* playerGun;
 
 CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 {
@@ -14,15 +11,13 @@ CameraActor::CameraActor(Vec3 spawnPos_, Component* parent_) :Actor(parent_)
 	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
 	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 
-	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_)); // we should be careful with this!!!
-
-	//playerGun = new PlayerGun(Vec3(1, -1, 1), 0.0f, Vec3(0, 0, 0), this, NULL);
+	// We should be careful with this!!!
+	SetTranslationMatrix(translationMatrix *= MMath::translate(spawnPos_));
 }
 
 void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 {
 	trackball->HandleEvents(sdlEvent);
-	//rotationMatrix = trackball->getMatrix4();
 	viewMatrix = rotationMatrix * translationMatrix;
 
 	switch (sdlEvent.type) {
@@ -45,7 +40,6 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
 				cameraPositionTracker += Vec3(0.0f, 0.0f, 1.0f);
 			}
-
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A)
 		{
@@ -53,7 +47,6 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
 				cameraPositionTracker += Vec3(1.0f, 0.0f, 0.0f);
 			}
-
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D)
 		{
@@ -61,7 +54,6 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 				SetTranslationMatrix(GetTranslationMatrix() *= MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
 				cameraPositionTracker += Vec3(-1.0f, 0.0f, 0.0f);
 			}
-
 		}
 
 		// Elevate
@@ -89,44 +81,29 @@ void CameraActor::HandleEvents(const SDL_Event& sdlEvent)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(1.0f, 0.0f, 0.0f)));
 			cameraRotationTracker += Vec3(10.0f, 0.0f, 0.0f);
-
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, -1.0f, 0.0f)));
 			cameraRotationTracker -= Vec3(0.0f, 10.0f, 0.0f);
-
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT)
 		{
 			SetRotationMatrix(GetRotationMatrix() *= MMath::rotate(rotateConstant, Vec3(0.0f, 1.0f, 0.0f)));
 			cameraRotationTracker += Vec3(0.0f, 10.0f, 0.0f);
-
 		}
 
-		/*else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E)
-		{
-			SetRotationMatrix(GetTranslationMatrix());
-			std::cout << "Reset Rotation!" << std::endl;
-		}*/
-
 		break;
-
 	}
 }
 
-void CameraActor::Update(float deltaTime)
-{
-	//playerGun->Update(deltaTime);
-}
+void CameraActor::Update(float deltaTime) {}
 
 bool CameraActor::OnCreate()
 {
 	skybox = new Skybox("textures/skybox/tron_rt_px.png", "textures/skybox/tron_up_py.png", "textures/skybox/tron_ft_pz.png",
 		"textures/skybox/tron_lf_nx.png", "textures/skybox/tron_dn_ny.png", "textures/skybox/tron_bk_nz.png");
 	return skybox->OnCreate();
-
-	//playerGun->OnCreate();
 }
 
 void CameraActor::OnDestroy()
@@ -136,12 +113,6 @@ void CameraActor::OnDestroy()
 		skybox->OnDestroy();
 		delete skybox;
 	}
-
-	//if (playerGun)
-	//{
-	//	playerGun->OnDestroy();
-	//	delete playerGun;
-	//}
 }
 
 CameraActor::~CameraActor()
@@ -160,7 +131,6 @@ void CameraActor::Render() const
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
 	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("viewMatrix"), 1, GL_FALSE, rotationMatrix);
 
-	//playerGun->Render();
 	skybox->Render();
 
 	glUseProgram(0);

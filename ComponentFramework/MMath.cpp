@@ -50,10 +50,10 @@ Matrix4 MMath::rotate(const AxisAngle& axisAngle_){
 Matrix4 MMath::perspective(const float fovy_, const float aspect_, const float zNear_, const float zFar_){
 	float cot = 1.0f / tan(fovy_* 0.5f * DEGREES_TO_RADIANS);
 	/// Don't forget, this looks row centric but it really is a column matrix - right-hand rule rules
-	Matrix4 result(cot/aspect_, 0.0f,   0.0f, 0.0f,
-			      0.0f,	cot, 0.0f, 	0.0f,
-			      0.0f, 0.0f,   (zNear_ + zFar_)/(zNear_ - zFar_),  -1.0f,
-			      0.0f,        0.0f,    (2.0f*zNear_*zFar_)/(zNear_-zFar_),   0.0f);
+	Matrix4 result(cot/aspect_, 0.0f,   0.0f,								0.0f,
+			       0.0f,		cot,	0.0f, 								0.0f,
+			       0.0f,		0.0f,   (zNear_ + zFar_)/(zNear_ - zFar_),  -1.0f,
+			       0.0f,        0.0f,   (2.0f*zNear_*zFar_)/(zNear_-zFar_), 0.0f);
 	return result;
 }
 
@@ -155,9 +155,9 @@ Matrix4 MMath::unOrtho(const Matrix4 & ortho){
 /// Tested Feb 1 2013 SSF  
 Matrix4 MMath::translate(float x_, float y_, float z_){
 	return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f, 0.0f,
-				  0.0f, 0.0f, 1.0f, 0.0f,
-				  x_,   y_,   z_,	1.0f);  
+				   0.0f, 1.0f, 0.0f, 0.0f,
+				   0.0f, 0.0f, 1.0f, 0.0f,
+				   x_,   y_,   z_,	1.0f);  
 }
 Matrix4 MMath::translate(const Vec3 &translate_) {
 	return MMath::translate(translate_.x, translate_.y, translate_.z);
