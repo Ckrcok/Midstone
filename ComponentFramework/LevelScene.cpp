@@ -12,19 +12,13 @@
 #include "Trackball.h"
 #include "CameraActor.h"
 #include "Collision.h"
+#include "EnemyActor.h"
 
 
 LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
 	Debug::Info("Created LevelScene: ", __FILE__, __LINE__);
 	trackball = new Trackball();
-	int spawnPos = -2.0f;
-	for (int i = 0; i < 1; i++)
-	{
-		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
-		spawnPos += 2;
-
-		enemies.push_back(enemy);
-	}
+	
 	char isDoor;
 	//NorthLimit
 	float northWallZStart = -30.0f;
@@ -251,6 +245,17 @@ LevelScene::LevelScene() :sphere(nullptr), cube(nullptr), shader(nullptr), shade
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
 
+	//START CREATING ENEMIES
+
+	enemiesInRooms.push_back(enemyA);
+	enemiesInRooms.push_back(enemyB);
+	enemiesInRooms.push_back(enemyC);
+	enemiesInRooms.push_back(enemyD);
+	enemiesInRooms.push_back(enemyE);
+	enemiesInRooms.push_back(enemyF);
+	
+
+
 
 }
 
@@ -264,6 +269,12 @@ bool LevelScene::OnCreate()
 {
 
 	Debug::Info("Loading assets LevelScene: ", __FILE__, __LINE__);
+	roomTriggers.push_back(triggerRoomA);
+	roomTriggers.push_back(triggerRoomB);
+	roomTriggers.push_back(triggerRoomC);
+	roomTriggers.push_back(triggerRoomD);
+	roomTriggers.push_back(triggerRoomE);
+	roomTriggers.push_back(triggerRoomF);
 
 
 	camera = new CameraActor(Vec3(0.0f, -10.0f, 0.0f), nullptr);
@@ -367,8 +378,26 @@ void LevelScene::Update(const float deltaTime) {
 	//Updating player collider position.
 	resultPlayer = -camera->cameraPositionTracker;
 	rotationVec = camera->cameraRotationTracker;
+	playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
+
 	playerGun->Update(deltaTime);
 	
+	for (Box* roomTriggerBox : roomTriggers) {
+		//Check if the player has triggered/collided with room box
+		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
+		if (playerPickupCollision == true) {
+			//get enemy closer to player																						//enemy speed
+			Vec3 enemyMove2Player = VMath::normalize(cameraFPS->GetCameraFPSPos() - roomTriggerBox->enemyRoom->GetPosition());
+			Vec3 enemyTranslation = enemyMove2Player * 2.0f;
+			roomTriggerBox->enemyRoom->setPositionEnemy(enemyTranslation);
+		}
+		else {
+			//enemy is static or returns to enemy
+			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
+
+		}
+	}
+
 
 	//rotationVec.print("ROTATION TRACKER");
 	for (Wall* wall : theWalls) {
@@ -379,7 +408,6 @@ void LevelScene::Update(const float deltaTime) {
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
 
 		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
-		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
 		int playerWallorDorCollision = Collision::distancePointBox(resultPlayer, *blueBox);
 		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *blueBox);
@@ -455,7 +483,7 @@ void LevelScene::Render() const {
 	for (EnemyActor* enemy : enemies) {
 		enemy->Render();
 	}
-	if (hasKey == true) {
+	if (hasWeapon == true) {
 	playerGun->Render();
 	}
 

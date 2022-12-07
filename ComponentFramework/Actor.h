@@ -89,4 +89,6 @@ public:
 	inline Matrix4 GetModelMatrix() { return modelMatrix; }
 	inline void SetModelMatrix(const Matrix4& modelMatrix_) { modelMatrix = modelMatrix_; }
 	inline Vec3 GetPosition() { return Vec3(GetModelMatrix()[12], GetModelMatrix()[13], GetModelMatrix()[14]); }
+	
+
 };
