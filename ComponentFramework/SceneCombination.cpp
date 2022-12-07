@@ -5,8 +5,10 @@ SceneCombination::SceneCombination()
 {
 	// Debug information
 	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
-	//Wall and pickups creation
-//NorthLimit
+
+	// Wall and pickups creation
+
+	// NorthLimit
 	float northWallZStart = -30.0f;
 	for (int a = 0; a < 25; a++) //Until northWallZEnd
 	{
@@ -244,9 +246,6 @@ bool SceneCombination::OnCreate()
 	Debug::Info("Loading assets SceneCombination: ", __FILE__, __LINE__);
 
 	// Create camera and call OnCreate
-	/*camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
-	camera->OnCreate();*/
-
 	cameraFPS = new CameraActorFPS(nullptr);
 	cameraFPS->OnCreate();
 
@@ -290,12 +289,6 @@ void SceneCombination::OnDestroy()
 	Debug::Info("Deleting assets SceneCombination: ", __FILE__, __LINE__);
 
 	// If camera exists, call OnDestroy and delete
-	/*if (camera)
-	{
-		camera->OnDestroy();
-		delete camera;
-	}*/
-
 	if (cameraFPS)
 	{
 		cameraFPS->OnDestroy();
@@ -318,20 +311,15 @@ void SceneCombination::OnDestroy()
 
 void SceneCombination::Render() const
 {
-	// Set the culling and front face variables
-	/*glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);*/
-
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Render the camera
-	
-
 	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+	// Render the camera
 	cameraFPS->Render();
 
 	// Set matrices
@@ -347,10 +335,9 @@ void SceneCombination::Render() const
 	// Render the gun of the player
 	playerGun->Render();
 
-
-	for (Wall* wall : theWalls) {
+	// Render all the walls
+	for (Wall* wall : theWalls)
 		wall->Render();
-	}
 
 	// Use program 0
 	glUseProgram(0);
@@ -364,24 +351,21 @@ void SceneCombination::Update(const float deltaTime)
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
 
-
-
-	for (Box* roomTriggerBox : roomTriggers) {
-		//Check if the player has triggered/collided with room box
+	// Update all the colliders
+	for (Box* roomTriggerBox : roomTriggers)
+	{
+		// Check if the player has triggered/collided with room box
 		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
-		if (playerPickupCollision == true) {
-			//get enemy closer to player																						//enemy speed
+		if (playerPickupCollision == true)
+		{
+			// Get enemy closer to player																					
 			Vec3 enemyMove2Player = VMath::normalize(cameraFPS->GetCameraFPSPos() - roomTriggerBox->enemyRoom->GetPosition());
 			Vec3 enemyTranslation = enemyMove2Player * 2.0f;
 			roomTriggerBox->enemyRoom->setPositionEnemy(enemyTranslation);
 		}
-		else {
-			//enemy is static or returns to enemy
+		else  // Enemy is static or returns to enemy	
 			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
-
-		}
 	}
-
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
