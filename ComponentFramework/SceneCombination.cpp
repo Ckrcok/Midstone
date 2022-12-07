@@ -363,6 +363,25 @@ void SceneCombination::Update(const float deltaTime)
 
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
+
+
+
+	for (Box* roomTriggerBox : roomTriggers) {
+		//Check if the player has triggered/collided with room box
+		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
+		if (playerPickupCollision == true) {
+			//get enemy closer to player																						//enemy speed
+			Vec3 enemyMove2Player = VMath::normalize(cameraFPS->GetCameraFPSPos() - roomTriggerBox->enemyRoom->GetPosition());
+			Vec3 enemyTranslation = enemyMove2Player * 2.0f;
+			roomTriggerBox->enemyRoom->setPositionEnemy(enemyTranslation);
+		}
+		else {
+			//enemy is static or returns to enemy
+			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
+
+		}
+	}
+
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
