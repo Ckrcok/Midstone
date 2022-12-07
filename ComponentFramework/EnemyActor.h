@@ -79,6 +79,12 @@ public:
 		cameraFPS = nullptr;
 		cameraFPS = camera_;
 	}
+	Vec3 getPositionEnemy() {
+		return position;//because safak made me do the right thing
+	}
+	Vec3 setPositionEnemy(Vec3 newPos_) {
+		position = newPos_;//because safak made me do the right thing x2
+	}
 };
 
 #endif
