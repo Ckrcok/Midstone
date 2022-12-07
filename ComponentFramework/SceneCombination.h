@@ -13,7 +13,8 @@
 // Extra include
 #include "EnemyActor.h"
 #include "PlayerGun.h"
-
+#include "Collision.h"
+#include "Wall.h"
 // Namespaces
 using namespace MATH;
 using namespace std;
@@ -40,6 +41,7 @@ private:
 
 	// Gun of the player
 	PlayerGun* playerGun;
+	vector<Wall*> theWalls;
 
 public:
 	// Scene creation and destroy functions

@@ -4,7 +4,7 @@
 #include "Timer.h"
 #include "Window.h"
 
-#include "LevelScene.h"
+//#include "LevelScene.h"
 #include "Scene1.h"
 #include "SceneCameraTest.h"
 #include "Scene3.h"
@@ -125,7 +125,7 @@ void SceneManager::HandleEvents()
 				break;
 
 			case SDL_SCANCODE_F5:
-				BuildNewScene(SCENE_NUMBER::LEVELSCENE);
+				BuildNewScene(SCENE_NUMBER::SCENE4);
 				break;
 
 			case SDL_SCANCODE_F6:
@@ -183,10 +183,7 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		status = currentScene->OnCreate();
 		break;
 
-	case SCENE_NUMBER::LEVELSCENE:
-		currentScene = new LevelScene();
-		status = currentScene->OnCreate();
-		break;
+	
 
 	case SCENE_NUMBER::SCENE_COMBINATION:
 		currentScene = new SceneCombination();
