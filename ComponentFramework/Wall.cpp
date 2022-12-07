@@ -37,9 +37,9 @@ bool Wall::OnCreate()
 	objFile->GetTexture()->LoadImage("textures/white_sphere.png");
 	objFile->OnCreate();
 	if (id == 'w') {
-		shader = new Shader(nullptr, "shaders/defaultBlueVert.glsl", "shaders/defaultBlueFrag.glsl");
+		shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	}else {
-	shader = new Shader(nullptr, "shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
+		shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	}
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
@@ -74,3 +74,4 @@ void Wall::Render()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
+

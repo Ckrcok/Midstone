@@ -13,7 +13,8 @@
 // Extra include
 #include "EnemyActor.h"
 #include "PlayerGun.h"
-
+#include "Collision.h"
+#include "Wall.h"
 // Namespaces
 using namespace MATH;
 using namespace std;
@@ -31,6 +32,7 @@ private:
 
 	// Shader
 	Shader* shader;
+	vector<Wall*> theWalls;
 
 	// Render variables
 	Vec3 lightPos[10];
