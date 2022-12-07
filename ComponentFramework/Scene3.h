@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "Trackball.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Skybox.h"
 #include "EnemyActor.h"
 #include "PlayerGun.h"
@@ -26,7 +27,8 @@ private:
 	Shader* shader;
 
 	Trackball* trackball;
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
 	PlayerGun* playerGun;
 
 	Vec3 lightPos[10];

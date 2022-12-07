@@ -33,6 +33,15 @@ bool SceneCameraTest::OnCreate() {
 	
 	//modelMatrix.loadIdentity();
 
+	// Create the player gun and call OnCreate
+	playerGun = new PlayerGun(Vec3(0.0f, 0.0f, 0.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
+	playerGun->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	playerGun->GetMesh()->OnCreate();
+	playerGun->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, -1.0f)));
+	playerGun->SetTexture(new Texture());
+	playerGun->GetTexture()->LoadImage("textures/Texture_Gray.png");
+	playerGun->OnCreate();
+
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	sphere->GetMesh()->OnCreate();
@@ -194,6 +203,12 @@ void SceneCameraTest::OnDestroy() {
 		delete objPosZ;
 	}
 
+	if (playerGun)
+	{
+		playerGun->OnDestroy();
+		delete playerGun;
+	}
+
 	if (lightSource1)
 	{
 		lightSource1->OnDestroy();
@@ -210,6 +225,8 @@ void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 
 	// CAMERA FPS
 	cameraFPS->HandleEvents(sdlEvent);
+
+	playerGun->HandleEvents(sdlEvent);
 
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
@@ -232,6 +249,10 @@ void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 void SceneCameraTest::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
+
+
+	playerGun->Update(deltaTime);
+
 	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
 	printf("Sphere: \t");	
 	sphere->GetPosition().print();
@@ -253,7 +274,7 @@ void SceneCameraTest::Update(const float deltaTime) {
 	printf("\n\n");
 	printf("\n\n");
 	printf("CameraFPS: \t");
-	cameraFPS->GetCamFPSPos().print();
+	cameraFPS->GetCameraFPSPos().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera Orientation: \t");
@@ -335,6 +356,13 @@ void SceneCameraTest::Render() const {
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objPosZ->GetModelMatrix());
 	objPosZ->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// PLAYER GUN
+	glBindTexture(GL_TEXTURE_2D, playerGun->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, playerGun->GetModelMatrix());
+	playerGun->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 
 	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());

@@ -9,6 +9,7 @@
 #include "Debug.h"
 #include "MMAth.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 
 using namespace MATH;
 using namespace std;
@@ -32,7 +33,8 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
 
 	// Stun variables
 	bool isStunned = false;
@@ -49,7 +51,7 @@ private:
 	float currentAttackValue;
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
 
 	bool OnCreate();
@@ -70,12 +72,12 @@ public:
 		isStunned = true;
 	};
 
-	void SetCamera(CameraActor* camera_)
+	void SetCamera(CameraActorFPS* camera_)
 	{
-		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
+		cout << "New camera set! || Old camera: " << cameraFPS << " || New camera: " << camera_ << endl;
 
-		camera = nullptr;
-		camera = camera_;
+		cameraFPS = nullptr;
+		cameraFPS = camera_;
 	}
 };
 

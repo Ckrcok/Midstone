@@ -1,11 +1,11 @@
 #include "PlayerGun.h"
 
-PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_) : Actor(parent_)
 {
 	offset = offset_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	camera = camera_;
+	cameraFPS = camera_;
 }
 
 PlayerGun::~PlayerGun() {}
@@ -18,11 +18,11 @@ bool PlayerGun::OnCreate()
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
+	model_3D->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f)));	// Spawn position
 
 	// Only rotate if a rotation value is given
-	if (rotation > 0)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	//if (rotation > 0)
+	//	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -68,11 +68,19 @@ void PlayerGun::Render()
 void PlayerGun::Update(float deltaTime)
 {
 	// Position with correct camera position matrix
-	Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+	//Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+
+	//Vec3 gunPos = cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f);
 
 	// Set the model matrix and the position value
-	model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
-	position = model_3D->GetPosition();
+	//model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	//model_3D->SetModelMatrix(MMath::translate(gunPos));
+	//model_3D->SetModelMatrix(MMath::rotate(90, Vec3 (0.0f, 1.0f, 0.0f))
+								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
+	
+	Vec3 gunOrientation = cameraFPS->GetCameraFPSOrientation();
+	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + cameraFPS->GetCameraFPSOrientation();
+	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)));
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)

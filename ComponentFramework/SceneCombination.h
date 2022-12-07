@@ -27,7 +27,8 @@ class SceneCombination : public Scene
 {
 private:
 	// Camera
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
 
 	// Shader
 	Shader* shader;

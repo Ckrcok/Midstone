@@ -1,11 +1,11 @@
 #include "EnemyActor.h"
 
-EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_) : Actor(parent_)
 {
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	camera = camera_;
+	cameraFPS = camera_;
 
 	Vec3 target = Vec3(10.0f, 0.0f, 10.0f);
 	Vec3 target2 = Vec3(0, 0, 0);
@@ -81,7 +81,7 @@ void EnemyActor::Update(float deltaTime)
 
 
 	// Calculate distance between enemy and player
-	float distanceToPlayer = GetDistance(position, camera->GetPlayerPosition());
+	float distanceToPlayer = GetDistance(position, cameraFPS->GetCameraFPSPos());
 
 	//cout << "Postion: ";
 	//position.print();

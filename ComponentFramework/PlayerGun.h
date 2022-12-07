@@ -9,6 +9,7 @@
 #include "Debug.h"
 #include "MMAth.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Bullet.h"
 
 using namespace MATH;
@@ -28,7 +29,8 @@ private:
 	Shader* shader;
 
 	// Player
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
 
 	// Bullets
 	vector<Bullet*> spawnedBullets;
@@ -36,7 +38,7 @@ private:
 
 public:
 	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
-	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
+	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_);
 	~PlayerGun();
 
 	bool OnCreate();

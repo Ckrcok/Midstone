@@ -19,11 +19,14 @@ bool SceneCombination::OnCreate()
 	Debug::Info("Loading assets SceneCombination: ", __FILE__, __LINE__);
 
 	// Create camera and call OnCreate
-	camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
-	camera->OnCreate();
+	/*camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
+	camera->OnCreate();*/
+
+	cameraFPS = new CameraActorFPS(nullptr);
+	cameraFPS->OnCreate();
 
 	// Create the player gun and call OnCreate
-	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
 	playerGun->OnCreate();
 
 	// Create shader
@@ -59,10 +62,16 @@ void SceneCombination::OnDestroy()
 	Debug::Info("Deleting assets SceneCombination: ", __FILE__, __LINE__);
 
 	// If camera exists, call OnDestroy and delete
-	if (camera)
+	/*if (camera)
 	{
 		camera->OnDestroy();
 		delete camera;
+	}*/
+
+	if (cameraFPS)
+	{
+		cameraFPS->OnDestroy();
+		delete cameraFPS;
 	}
 
 	// If shader exists, call OnDestroy and delete
@@ -95,12 +104,12 @@ void SceneCombination::Render() const
 	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	camera->Render();
+	cameraFPS->Render();
 
 	// Set matrices
 	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
 
 	// Set uniforms
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
@@ -117,7 +126,7 @@ void SceneCombination::Render() const
 void SceneCombination::Update(const float deltaTime)
 {
 	// Update the camera
-	camera->Update(deltaTime);
+	cameraFPS->Update(deltaTime);
 
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
@@ -126,7 +135,7 @@ void SceneCombination::Update(const float deltaTime)
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 {
 	// Handle events of camera
-	camera->HandleEvents(sdlEvent);
+	cameraFPS->HandleEvents(sdlEvent);
 
 	// Handle events of the player gun
 	playerGun->HandleEvents(sdlEvent);

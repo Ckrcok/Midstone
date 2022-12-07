@@ -9,6 +9,8 @@
 #include "Skybox.h"
 #include "Collision.h"
 #include "Wall.h"
+#include "EnemyActor.h"
+#include "PlayerGun.h"
 using namespace MATH;
 
 /// Forward declarations 
@@ -39,6 +41,8 @@ private:
 	Actor* objPosZ;
 	Actor* lightSource1;
 	Actor* cube;
+
+	PlayerGun* playerGun;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
 	Shader* shaderCube;
