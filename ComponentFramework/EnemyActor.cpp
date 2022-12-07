@@ -5,7 +5,7 @@ EnemyActor::EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRota
 	position = spawnPosition_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	cameraFPS = camera_;
+	camera = camera_;
 
 	Vec3 target = Vec3(10.0f, 0.0f, 10.0f);
 	Vec3 target2 = Vec3(0, 0, 0);
@@ -81,7 +81,7 @@ void EnemyActor::Update(float deltaTime)
 
 
 	// Calculate distance between enemy and player
-	float distanceToPlayer = GetDistance(position, cameraFPS->GetCameraFPSPos());
+	float distanceToPlayer = GetDistance(position, camera->GetCameraFPSPos());
 
 	//cout << "Postion: ";
 	//position.print();

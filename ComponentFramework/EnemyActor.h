@@ -8,7 +8,6 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
-#include "CameraActor.h"
 #include "CameraActorFPS.h"
 
 using namespace MATH;
@@ -21,7 +20,6 @@ private:
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
-
 	// Model
 	Actor* model_3D;
 	Shader* shader;
@@ -33,8 +31,7 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	//CameraActor* camera;
-	CameraActorFPS* cameraFPS;
+	CameraActorFPS* camera;
 
 	// Stun variables
 	bool isStunned = false;
@@ -53,6 +50,7 @@ private:
 public:
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
+	Vec3 originalPos = position;
 
 	bool OnCreate();
 	void OnDestroy();
@@ -74,15 +72,15 @@ public:
 
 	void SetCamera(CameraActorFPS* camera_)
 	{
-		cout << "New camera set! || Old camera: " << cameraFPS << " || New camera: " << camera_ << endl;
+		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
 
-		cameraFPS = nullptr;
-		cameraFPS = camera_;
+		camera = nullptr;
+		camera = camera_;
 	}
 	Vec3 getPositionEnemy() {
 		return position;//because safak made me do the right thing
 	}
-	Vec3 setPositionEnemy(Vec3 newPos_) {
+	void setPositionEnemy(Vec3 newPos_) {
 		position = newPos_;//because safak made me do the right thing x2
 	}
 };
