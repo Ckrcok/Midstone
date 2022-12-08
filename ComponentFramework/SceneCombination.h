@@ -15,6 +15,7 @@
 #include "PlayerGun.h"
 #include "Collision.h"
 #include "Wall.h"
+#include "Graph.h"
 
 // Namespaces
 using namespace MATH;
@@ -36,6 +37,12 @@ private:
 
 	// Shader
 	Shader* shader;
+
+	// Graph
+	Graph* graph;
+	vector<Node*> nodes;
+	int gridWidth = 30;
+	int gridHeight = 15;
 
 	// Render variables
 	Vec3 lightPos[10];
@@ -96,6 +103,9 @@ private:
 	Box* triggerRoomD = new Box(Vec3(10.0f, 0.0f, -6.0f), minValueTriggerD, maxValueTriggerD, enemyD);		//= Box(minCornerB, maxCornerB);
 	Box* triggerRoomE = new Box(Vec3(15.0f, 0.0f, 16.0f), minValueTriggerE, maxValueTriggerE, enemyE);		//= Box(minCornerB, maxCornerB);
 	Box* triggerRoomF = new Box(Vec3(16.0f, 0.0f, -4.0f), minValueTriggerF, maxValueTriggerF, enemyF);		//= Box(minCornerB, maxCornerB);
+
+	// Functions
+	void CreateNodeLayout(int _gridHeight, int _gridWidth, int _tileHeight, int _tileWidth);
 
 public:
 	// Scene creation and destroy functions

@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Gun">
       <UniqueIdentifier>{d5c47b74-ada4-4f0e-b54c-b61fd48fa46c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Dijkstra">
+      <UniqueIdentifier>{490e7228-4207-4e6a-a2b5-4bdeaedaf47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dijkstra">
+      <UniqueIdentifier>{56b4fb6b-9d58-407b-886c-2867aaec767d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -128,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="LevelScene.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Source Files\Dijkstra</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Source Files\Dijkstra</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +265,12 @@
     </ClInclude>
     <ClInclude Include="LevelScene.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files\Dijkstra</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Dijkstra</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

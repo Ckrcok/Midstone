@@ -292,6 +292,14 @@ bool SceneCombination::OnCreate()
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
 
+	CreateNodeLayout(15, 30, 5, 5);
+
+	// Create the graph, an empty graph
+	graph = new Graph();
+	if (!graph->OnCreate(nodes)) {
+		cout << "Graph OnCreate false!" << endl;
+		return false;
+	}
 	// Return true so program can run
 	return true;
 }
@@ -388,4 +396,70 @@ void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 
 	// Handle events of the player gun
 	playerGun->HandleEvents(sdlEvent);
+}
+
+void SceneCombination::CreateNodeLayout(int _gridHeight, int _gridWidth, int _tileHeight, int _tileWidth)
+{
+	// Level layout (x value = gridWidth and y value = gridHeight) (first number = y, second number = x)
+	// rows = x & columns = y
+	int levelData[15][30] = {
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, }
+	};
+
+	Node* n;
+	int i, j, label;
+	i = 0;
+	j = 0;
+	label = 0;
+
+	for (int row = 0; row < _gridHeight; row++)
+	{
+		for (int column = 0; column < _gridWidth; column++)
+		{
+			int id = levelData[row][column];
+
+			// Position in pixels
+			Vec3 startPos = Vec3(0.0f, 0.0f, 0.0f);
+			Vec3 endPos = Vec3(0.0f, 0.0f, 0.0f);
+
+			// Set the position to have the origin top left
+			endPos.x = (startPos.x + column * _tileWidth + (_tileWidth * 0.5f));
+			endPos.y = 0.0f;
+			endPos.z = (startPos.z + row * _tileHeight + (_tileHeight * 0.5f));
+
+			// Transverse the position from viewport to game
+			Vec3 position = Vec3(endPos.x, endPos.y, endPos.z);
+			//position = MMath::inverse(projectionMatrix) * position;
+
+			// Set the position to the game coordinates
+			endPos.x = (position.x);
+			endPos.y = (position.y);
+
+			// Set node
+			if (id == 0)
+				n = new Node(label, endPos, false);
+			else if (id == 1)
+				n = new Node(label, endPos, true);
+
+			// Add to the list with nodes
+			nodes.push_back(n);
+
+			// Increase the node label
+			label++;
+		}
+	}
 }

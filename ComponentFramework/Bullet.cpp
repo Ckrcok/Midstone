@@ -32,7 +32,7 @@ bool Bullet::OnCreate()
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
-	std::cout << this << " is OnCreate" << std::endl;
+	//std::cout << this << " is OnCreate" << std::endl;
 
 	return true;
 }
@@ -63,7 +63,7 @@ void Bullet::Render()
 
 void Bullet::Update(float deltaTime)
 {
-	cout << this << " || Timer: " << timer << endl;
+	//cout << this << " || Timer: " << timer << endl;
 
 	// Lower the value of timer if is above zero and is not destroyed
 	if (timer > 0.0f && !bulletDestroyIsCalled)

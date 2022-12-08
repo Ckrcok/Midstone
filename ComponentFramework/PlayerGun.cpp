@@ -80,9 +80,14 @@ void PlayerGun::Update(float deltaTime)
 
 	Vec3 gunOrientation = cameraFPS->GetCameraFPSOrientation();
 	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + cameraFPS->GetCameraFPSOrientation();
-	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)));
+	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 1.0f, 0.0f)));
+	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, (const Vec3(1.0f, 0.0f, 0.0f))));
+
+	cout << "gunOrientation: " << gunOrientation.x << endl;
 
 	position = model_3D->GetPosition();
+
+	//MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
@@ -123,6 +128,7 @@ void PlayerGun::HandleDestroyBullet()
 		{
 			if (spawnedBullets.at(i)->GetBulletDestroyIsCalled())
 			{
+				// Debug
 				cout << "Bullet " << spawnedBullets[i] << " is being destroyed in the PlayerGun!" << endl;
 
 				Bullet* bullet = spawnedBullets[i];

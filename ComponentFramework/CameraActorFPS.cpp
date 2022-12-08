@@ -142,7 +142,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 
 	mouseButtons = SDL_GetMouseState(&mouseX, &mouseY);	
 
-	SDL_Log("Mouse cursor is at %d, %d", mouseX, mouseY);
+	//SDL_Log("Mouse cursor is at %d, %d", mouseX, mouseY);
 	if ((mouseButtons & SDL_BUTTON_LMASK) != 0) 
 	{
 		//SDL_Log("Mouse Button 1 (left) is pressed.");
@@ -170,7 +170,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 			if (cameraPitch >  75.0f) cameraPitch =  75.0f;
 			if (cameraPitch < -75.0f) cameraPitch = -75.0f;
 			
-			std::cout << "Mouse X relative: " << mouseRelX << " Mouse Y relative : " << mouseRelY << std::endl;
+			//std::cout << "Mouse X relative: " << mouseRelX << " Mouse Y relative : " << mouseRelY << std::endl;
 		}
 
 	}
