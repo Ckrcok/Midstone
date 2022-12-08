@@ -77,11 +77,12 @@ void PlayerGun::Update(float deltaTime)
 	//model_3D->SetModelMatrix(MMath::translate(gunPos));
 	//model_3D->SetModelMatrix(MMath::rotate(90, Vec3 (0.0f, 1.0f, 0.0f))
 								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
-	
-	//Vec3 gunOrientation = cameraFPS->GetCameraFPSOrientation();
-	Vec3 gunOrientation = cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, -1.0f);
+
+	Vec3 gunOrientation = cameraFPS->GetCameraFPSOrientation();
 	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + cameraFPS->GetCameraFPSOrientation();
 	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
+
+	position = model_3D->GetPosition();
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)

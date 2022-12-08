@@ -6,232 +6,244 @@ SceneCombination::SceneCombination()
 	// Debug information
 	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
 
-	// Wall and pickups creation
-
+#pragma region Wall & Pickup Creation
 	// NorthLimit
 	float northWallZStart = -30.0f;
-	for (int a = 0; a < 25; a++) //Until northWallZEnd
+	for (int a = 0; a < 25; a++) // Until northWallZEnd
 	{
 		northWallZStart += 2.0f;
+
 		Wall* wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTestSOUTH);
 	}
 
-
-	//WestLimit
+	// WestLimit
 	float westWallXStart = 20.0f;
-	for (int a = 0; a < 22; a++) //Until northWallZEnd
+	for (int a = 0; a < 22; a++) // Until northWallZEnd
 	{
 		westWallXStart -= 2.0f;
+
 		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTesteast);
 	}
-	//A'RoomWalls  DOOR
+
+	// A'RoomWalls  DOOR
 	float AWallXStart = -30.0f;
 	float AWallzStart = -8.0f;
 	for (int a = 0; a < 5; a++)
 	{
 		AWallXStart += 2.0f;
 		AWallzStart += 2.0f;
+
 		Wall* AwallTestEast;
 		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		if (AWallzStart == 2.0f) {
+
+		if (AWallzStart == 2.0f)
 			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'a');
-		}
-		else {
+		else
 			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		}
 
 		theWalls.push_back(AwallTestNorth);
 		theWalls.push_back(AwallTestSouth);
 		theWalls.push_back(AwallTestEast);
 	}
 
-	//B'RoomWalls DOOR
+	// B'RoomWalls DOOR
 	float bWallXStart = -30.0f;
 	for (int a = 0; a < 5; a++)
 	{
-		Wall* BwallTestNorth;
 		bWallXStart += 2.0f;
-		if (bWallXStart == -28.0f) {
+		Wall* BwallTestNorth;
+
+		if (bWallXStart == -28.0f)
 			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'b');
-		}
-		else {
+		else
 			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		}
+
 		theWalls.push_back(BwallTestNorth);
 	}
+
 	float bWallzStart = -12.0f;
 	for (int a = 0; a < 1; a++)
 	{
 		bWallzStart -= 2.0f;
+
 		Wall* BwallTest = new Wall(Vec3(bWallzStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* BwallTestN = new Wall(Vec3(bWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(BwallTest);
 		theWalls.push_back(BwallTestN);
 	}
+
 	float bWallxzStart = -18.0f;
 	for (int a = 0; a < 3; a++)
 	{
 		bWallxzStart += 2.0f;
+
 		Wall* BwalzlTest = new Wall(Vec3(-16.0f, 0.0f, bWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(BwalzlTest);
 	}
-	//SecurityRoomDoor
+
+	// SecurityRoomDoor
 	float sWallxzStart = -12.0f;
 	Wall* SwalzlTest;
+
 	for (int a = 0; a < 5; a++)
 	{
 		sWallxzStart -= 2.0f;
-		if (sWallxzStart == -14.0f) {
+
+		if (sWallxzStart == -14.0f)
 			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 's');
-		}
-		else {
+		else
 			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
-		}
 		theWalls.push_back(SwalzlTest);
 	}
 
-	//PowerRoomDoor
+	// PowerRoomDoor
 	float pWallxzStart = -12.0f;
 	for (int a = 0; a < 5; a++)
 	{
 		Wall* PwalzlTest;
+
 		pWallxzStart -= 2.0f;
 		PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 
 		theWalls.push_back(PwalzlTest);
 	}
 
-	//ERoomWalls DOOR
+	// ERoomWalls DOOR
 	float EWallXStart = -10.0f;
 	for (int a = 0; a < 15; a++)
 	{
 		EWallXStart += 2.0f;
+
 		Wall* EwallTestNorth;
-		if (EWallXStart == 12.0f) {
+
+		if (EWallXStart == 12.0f)
 			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'g');
-		}
-		else {
+		else
 			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
-		}
 		theWalls.push_back(EwallTestNorth);
 	}
 
-
-	//DRoom DOORS
+	// DRoom DOORS
 	float DWallZStart = -10.0f;
-	for (int a = 0; a < 9; a++) //Until northWallZEnd
+	for (int a = 0; a < 9; a++) // Until northWallZEnd
 	{
 		DWallZStart += 2.0f;
+
 		Wall* DwallTest;
 		Wall* DwallTestSOUTH;
-		if (DWallZStart == -6.0f) {
+
+		if (DWallZStart == -6.0f)
 			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'd');
-		}
-		else {
+		else
 			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		}
 
-		if (DWallZStart == -6.0f) {
+		if (DWallZStart == -6.0f)
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'D');
-		}
-		else {
+		else
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
-		}
 
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
-	//DroomEASTWEST
+
+	// DroomEASTWEST
 	float DWallXStart = 8.0f;
 	for (int a = 0; a < 7; a++)
 	{
 		DWallXStart -= 2.0f;
+
 		Wall* DwallTest = new Wall(Vec3(DWallXStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* DwallTesteast = new Wall(Vec3(DWallXStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTesteast);
 	}
 
-	//FRoom door
+	// FRoom door
 	float FWallZStart = 14.0f;
 	for (int a = 0; a < 3; a++)
 	{
-
 		FWallZStart += 2.0f;
+
 		Wall* DwallTestSOUTH;
 		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		if (FWallZStart == 20.0f) {
-			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'f');
 
-		}
-		else {
+		if (FWallZStart == 20.0f)
+			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'f');
+		else
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
-		}
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
-	//Froom
+
+	// Froom
 	float FWallXStart = 8.0f;
-	for (int a = 0; a < 7; a++) //Until northWallZEnd
+	for (int a = 0; a < 7; a++) // Until northWallZEnd
 	{
 		FWallXStart -= 2.0f;
+
 		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		theWalls.push_back(FwallTest);
 	}
 
-	//CRoom
+	// CRoom
 	float CWallZStart = 20.0f;
-	for (int a = 0; a < 3; a++) //Until northWallZEnd
+	for (int a = 0; a < 3; a++)	// Until northWallZEnd
 	{
 		CWallZStart -= 2.0f;
+
 		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* CwallTestSOUTH;
-		if (CWallZStart == 18.0f) {
+
+		if (CWallZStart == 18.0f)
 			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'c');
-		}
-		else {
+		else
 			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
-		}
 		theWalls.push_back(CwallTest);
 		theWalls.push_back(CwallTestSOUTH);
 	}
-	//Croom
+
+	// Croom
 	float CWallXStart = -18.0f;
 	for (int a = 0; a < 13; a++)
 	{
 		CWallXStart += 2.0f;
-		Wall* CwallTest;
 
-		CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
-
+		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
 		theWalls.push_back(CwallTest);
 	}
-	//PICKUPS
-	//weapon pickup
+#pragma endregion
+
+#pragma region PickUps
+	// Weapon
 	Wall* wpPickup = new Wall(Vec3(6.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'o');
-	//health pickup
+	// Health
 	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'h');
-	//key pickup
+	// Key
 	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'k');
 
+	// Add them to the list
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
+#pragma endregion
 }
 
 SceneCombination::~SceneCombination()
@@ -253,9 +265,10 @@ bool SceneCombination::OnCreate()
 	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
 	playerGun->OnCreate();
 
-	for (Wall* wall : theWalls) {
+	// For every wall, call OnCreate
+	for (Wall* wall : theWalls)
 		wall->OnCreate();
-	}
+
 	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)	// Debug information
