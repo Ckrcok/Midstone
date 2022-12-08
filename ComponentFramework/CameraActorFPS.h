@@ -41,7 +41,7 @@ private:
 	int mouseRelX;
 	int mouseRelY;
 	float cameraPitch = 0.0f;
-	float cameraYaw = 0.0f;
+	float cameraYaw = -90.0f;
 	float mouseSensitivity;
 	
 public:

@@ -254,12 +254,18 @@ void SceneCameraTest::Update(const float deltaTime) {
 	playerGun->Update(deltaTime);
 
 	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	printf("\n\n");
+	printf("\n\n");
 	printf("Sphere: \t");	
 	sphere->GetPosition().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("objNegX: \t");
 	objNegX->GetPosition().print();
+	printf("\n\n");
+	printf("\n\n");
+	printf("playerGun: \t");
+	playerGun->GetPosition().print();
 	/*printf("\n\n");
 	printf("\n\n");
 	printf("Camera1: \t");
