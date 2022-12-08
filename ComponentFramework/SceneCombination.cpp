@@ -382,6 +382,47 @@ void SceneCombination::Update(const float deltaTime)
 		}
 	}
 
+	for (Wall* objectToTest : theWalls) {
+		objectToTest->rotateWall(deltaTime);
+		resultB = objectToTest->getPos();
+		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
+		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
+		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
+
+		int playerWallorDorCollision = Collision::distancePointBox(resultPlayer, *blueBox);
+		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *blueBox);
+
+		if (playerWallorDorCollision && (objectToTest->id == 'w')) {//Test if facing wall
+			printf("Collided with wall \n");
+		}
+		else if (playerWallorDorCollision && ((objectToTest->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
+			|| (wall->id == 'D') || (wall->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
+			printf("Collided with door \n");
+			wall->moveWall();
+		}
+		else if (playerWallorDorCollision && (objectToTest->id == 'd')) {//testing of colliding with locked door
+			printf("Collided with locked door \n");
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'o')) {//testing if collided with weapon pickup
+			printf("Collided with weapon \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'h')) {//testing if collided with healthpack pickup
+			printf("Collided with healthpack \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'k')) {//testing if collided with key pickup
+			printf("Collided with key pickup \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+
+		}
+
+	}
+
+	}
+
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)

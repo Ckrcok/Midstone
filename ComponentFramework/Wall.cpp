@@ -70,7 +70,7 @@ void Wall::OnDestroy()
 		delete objFile;
 	}
 }
-void Wall::rotateWall(float toatlTime_, Wall* theObject_)
+void Wall::rotateWall(float toatlTime_)
 {
 	if (id == 'k' || id == 'h' || id == 'o') {
 		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(1.5f, Vec3(0.0f, 1.0f, 0.0f)));

@@ -35,7 +35,7 @@ public:
 	void OnDestroy();
 	void Render();
 	void moveWall(float toatlTime_, Wall* theObject_);
-	void rotateWall(float toatlTime_, Wall* theObject_);
+	void rotateWall(float toatlTime_);
 
 	Vec3 getPos() { return position; }
 
