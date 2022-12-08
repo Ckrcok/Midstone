@@ -53,6 +53,8 @@ vector<int> Graph::GetNeighbours(int fromNode)
 	// Return the vector int list with all the neigbours
 	vector<int> result = {};
 
+	cout << "Size of NumNodes: " << NumNodes() << endl;
+
 	for (int j = 0; j < NumNodes(); j++)
 	{
 		if (cost[fromNode][j] > 0.0f)
@@ -136,22 +138,22 @@ vector<int> Graph::Dijkstra(int startNode, int goalNode)
 		}
 
 		// Run code for every neighbour
-		for (Node next : GetNeighbours(current))
+		for (int next : GetNeighbours(current))
 		{
 			// Debug to check which neighbours the current node has
-			cout << "Current: " << current << " || Neighbour: " << next.GetLabel() << endl;
+			cout << "Current: " << current << " || Neighbour: " << next << endl;
 
 			// Set the cost so far to the already existing cost
-			new_cost = cost_so_far[current] + cost[current][next.GetLabel()];
+			new_cost = cost_so_far[current] + cost[current][next];
 
 			// Check if the node is already in the list or if it's smaller than the cost so far
-			if (cost_so_far[next.GetLabel()] == 0.0f || new_cost < cost_so_far[next.GetLabel()])
+			if (cost_so_far[next] == 0.0f || new_cost < cost_so_far[next])
 			{
-				cost_so_far[next.GetLabel()] = new_cost;		// Set the cost so far for this node
+				cost_so_far[next] = new_cost;					// Set the cost so far for this node
 				currentNodeAndPriority->priority = new_cost;	// Set the current priority
-				currentNodeAndPriority->node = next.GetLabel();	// Set the current node
+				currentNodeAndPriority->node = next;			// Set the current node
 				frontier.push(*currentNodeAndPriority);			// Add the node and priority to the list
-				came_from[next.GetLabel()] = current;			// Add the current node to the came from list
+				came_from[next] = current;						// Add the current node to the came from list
 			}
 		}
 	}
@@ -161,6 +163,8 @@ vector<int> Graph::Dijkstra(int startNode, int goalNode)
 	{
 		// Create a vector int list for the path
 		vector<int> path;
+
+		path.push_back(current);
 
 		// Keep getting the previous node while the start node has not been reached
 		while (current != startNode)
@@ -183,6 +187,7 @@ vector<int> Graph::Dijkstra(int startNode, int goalNode)
 
 vector<int> Graph::AStar(int startNode, int goalNode)
 {
+	/**
 	// Declare helper variables
 	float new_cost = 0;
 	int current;
@@ -203,7 +208,7 @@ vector<int> Graph::AStar(int startNode, int goalNode)
 	map<int, float> cost_so_far;
 	cost_so_far[startNode] = 0.0f;
 
-	// Set every cost so far value to 0.0f 
+	// Set every cost so far value to 0.0f
 	// This will be used for checking if value is already in the list later
 	//for (int i = 0; i < cost_so_far.size(); i++)
 	//	cost_so_far[i] = 0.0f;
@@ -213,7 +218,7 @@ vector<int> Graph::AStar(int startNode, int goalNode)
 
 	while (!frontier.empty())
 	{
-		// Set the current node to the top one of the list and remove 
+		// Set the current node to the top one of the list and remove
 		current = frontier.top().node;
 		frontier.pop();
 
@@ -228,23 +233,23 @@ vector<int> Graph::AStar(int startNode, int goalNode)
 		}
 
 		// Run code for every neighbour
-		for (Node next : GetNeighbours(current))
+		for (int next : GetNeighbours(current))
 		{
 			// Debug to check which neighbours the current node has
-			cout << "Current: " << current << " || Neighbour: " << next.GetLabel() << endl;
+			cout << "Current: " << current << " || Neighbour: " << next << endl;
 
 			// Set the cost so far to the already existing cost
-			new_cost = cost_so_far[current] + cost[current][next.GetLabel()];
+			new_cost = cost_so_far[current] + cost[current][next];
 
 			// Check if the node is not already in the list or if it's smaller than the cost so far
 			//if (cost_so_far[next.GetLabel()] == 0.0f || new_cost < cost_so_far[next.GetLabel()])
-			if (cost_so_far.count(next.GetLabel()) == 0 || new_cost < cost_so_far[next.GetLabel()])
+			if (cost_so_far.count(next) == 0 || new_cost < cost_so_far[next])
 			{
-				cost_so_far[next.GetLabel()] = new_cost;																// Set the cost so far for this node
+				cost_so_far[next] = new_cost;																			// Set the cost so far for this node
 				currentNodeAndPriority->priority = new_cost + GetHeuristic(node[goalNode]->GetPos(), next.GetPos());	// Set the current priority
-				currentNodeAndPriority->node = next.GetLabel();															// Set the current node
+				currentNodeAndPriority->node = next;																	// Set the current node
 				frontier.push(*currentNodeAndPriority);																	// Add the node and priority to the list
-				came_from[next.GetLabel()] = current;																	// Add the current node to the came from list
+				came_from[next] = current;																				// Add the current node to the came from list
 			}
 		}
 	}
@@ -272,4 +277,7 @@ vector<int> Graph::AStar(int startNode, int goalNode)
 		reverse(path.begin(), path.end());
 		return path;
 	}
+	/**/
+
+	return vector<int>();
 }

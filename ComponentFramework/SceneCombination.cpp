@@ -292,7 +292,7 @@ bool SceneCombination::OnCreate()
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
 
-	CreateNodeLayout(15, 30, 5, 5);
+	CreateNodeLayout();
 
 	// Create the graph, an empty graph
 	graph = new Graph();
@@ -300,6 +300,36 @@ bool SceneCombination::OnCreate()
 		cout << "Graph OnCreate false!" << endl;
 		return false;
 	}
+
+	CalculateConnectionWeights();
+
+	// Print the neighbours of give node
+	printf("Neighbours of 0: \n");
+	int nodeLabel;
+	for (auto nodeLabel : graph->GetNeighbours(0))
+		printf("Node %i, ", nodeLabel);
+
+	// Get shortest path from node to give node
+	vector<int> path = graph->Dijkstra(0, 3);
+	cout << "Path size: " << path.size() << endl;
+	if (path.size() > 0)
+	{
+		for (int i = 0; i < path.size(); i++)
+			cout << "Path " << i << ": " << path[i] << endl;
+	}
+	else if (path.size() <= 0)
+		cout << "You can't get there from here!" << endl;
+
+
+	for (int i = 0; i < gridHeight; i++) {
+
+		for (int j = 0; j < gridWidth; j++)
+		{
+			cout << "Tile [" << i << "][" << j << "]: ";
+			tiles[i][j]->GetPos().print();
+		}
+	}
+
 	// Return true so program can run
 	return true;
 }
@@ -398,7 +428,7 @@ void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 	playerGun->HandleEvents(sdlEvent);
 }
 
-void SceneCombination::CreateNodeLayout(int _gridHeight, int _gridWidth, int _tileHeight, int _tileWidth)
+void SceneCombination::CreateNodeLayout()
 {
 	// Level layout (x value = gridWidth and y value = gridHeight) (first number = y, second number = x)
 	// rows = x & columns = y
@@ -420,15 +450,21 @@ void SceneCombination::CreateNodeLayout(int _gridHeight, int _gridWidth, int _ti
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, }
 	};
 
+	tiles.resize(gridHeight);
+
+	for (int i = 0; i < gridHeight; i++)
+		tiles[i].resize(gridWidth);
+
 	Node* n;
+	NodeTile* t;
 	int i, j, label;
 	i = 0;
 	j = 0;
 	label = 0;
 
-	for (int row = 0; row < _gridHeight; row++)
+	for (int row = 0; row < gridHeight; row++)
 	{
-		for (int column = 0; column < _gridWidth; column++)
+		for (int column = 0; column < gridWidth; column++)
 		{
 			int id = levelData[row][column];
 
@@ -437,29 +473,81 @@ void SceneCombination::CreateNodeLayout(int _gridHeight, int _gridWidth, int _ti
 			Vec3 endPos = Vec3(0.0f, 0.0f, 0.0f);
 
 			// Set the position to have the origin top left
-			endPos.x = (startPos.x + column * _tileWidth + (_tileWidth * 0.5f));
+			endPos.x = (startPos.x + column * tileWidth + (tileWidth * 0.5f));
 			endPos.y = 0.0f;
-			endPos.z = (startPos.z + row * _tileHeight + (_tileHeight * 0.5f));
+			endPos.z = (startPos.z + row * tileHeight + (tileHeight * 0.5f));
 
 			// Transverse the position from viewport to game
 			Vec3 position = Vec3(endPos.x, endPos.y, endPos.z);
-			//position = MMath::inverse(projectionMatrix) * position;
 
 			// Set the position to the game coordinates
 			endPos.x = (position.x);
 			endPos.y = (position.y);
 
 			// Set node
-			if (id == 0)
-				n = new Node(label, endPos, false);
-			else if (id == 1)
-				n = new Node(label, endPos, true);
-
-			// Add to the list with nodes
+			n = new Node(label, endPos);
 			nodes.push_back(n);
+
+			// Set node
+			if (id == 0)
+				n = new Node(label, endPos);
+			else if (id == 1)
+				n = new Node(label, endPos);
+
+			// Set the background tile
+			if (id == 1)
+				t = new NodeTile(n, true);
+			else
+				t = new NodeTile(n, false);
+
+			// Set the tile
+			t->AddTile(column, row, id, label, tileWidth, tileHeight);
+			tiles[row][column] = t;
 
 			// Increase the node label
 			label++;
+		}
+	}
+}
+
+void SceneCombination::CalculateConnectionWeights()
+{
+	int rows = gridHeight;
+	int columns = gridWidth;
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			//						i+1, j
+			//		i, j-1			  i, j			 i, j+1
+			//						i-1, j
+
+			int from = tiles[i][j]->GetNode()->GetLabel();
+
+			// Left is i, j-1
+			if (j > 0 && tiles[i][j - 1]->HasNode()) {
+				int to = tiles[i][j - 1]->GetNode()->GetLabel();
+				graph->AddWeightConnection(from, to, tileWidth);
+			}
+
+			// Right is i, j+1
+			if (j < columns - 1 && tiles[i][j + 1]->HasNode()) {
+				int to = tiles[i][j + 1]->GetNode()->GetLabel();
+				graph->AddWeightConnection(from, to, tileWidth);
+			}
+
+			// Above is i+1, j
+			if (i < rows - 1 && tiles[i + 1][j]->HasNode()) {
+				int to = tiles[i + 1][j]->GetNode()->GetLabel();
+				graph->AddWeightConnection(from, to, tileWidth);
+			}
+
+			// Below is i-1, j
+			if (i > 0 && tiles[i - 1][j]->HasNode()) {
+				int to = tiles[i - 1][j]->GetNode()->GetLabel();
+				graph->AddWeightConnection(from, to, tileWidth);
+			}
 		}
 	}
 }

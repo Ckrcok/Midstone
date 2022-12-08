@@ -100,6 +100,7 @@
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="NodeTile.cpp" />
     <ClCompile Include="PlayerGun.cpp" />
     <ClCompile Include="PuzzleButton.cpp" />
     <ClCompile Include="QMath.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeTile.h" />
     <ClInclude Include="PlayerGun.h" />
     <ClInclude Include="PuzzleButton.h" />
     <ClInclude Include="QMath.h" />

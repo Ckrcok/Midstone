@@ -16,6 +16,7 @@
 #include "Collision.h"
 #include "Wall.h"
 #include "Graph.h"
+#include "NodeTile.h"
 
 // Namespaces
 using namespace MATH;
@@ -40,9 +41,13 @@ private:
 
 	// Graph
 	Graph* graph;
+	vector<vector<NodeTile*>> tiles;
 	vector<Node*> nodes;
+
 	int gridWidth = 30;
 	int gridHeight = 15;
+	int tileWidth = 60;
+	int tileHeight = 60;
 
 	// Render variables
 	Vec3 lightPos[10];
@@ -105,7 +110,8 @@ private:
 	Box* triggerRoomF = new Box(Vec3(16.0f, 0.0f, -4.0f), minValueTriggerF, maxValueTriggerF, enemyF);		//= Box(minCornerB, maxCornerB);
 
 	// Functions
-	void CreateNodeLayout(int _gridHeight, int _gridWidth, int _tileHeight, int _tileWidth);
+	void CreateNodeLayout();
+	void CalculateConnectionWeights();
 
 public:
 	// Scene creation and destroy functions

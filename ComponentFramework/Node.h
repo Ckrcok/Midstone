@@ -16,11 +16,10 @@ private:
 	bool isAccessible;
 
 public:
-	Node(int label_, Vec3 position_, bool isAccesible_)
+	Node(int label_, Vec3 position_ = Vec3())
 	{
 		label = label_;
 		position = position_;
-		isAccessible = isAccesible_;
 	}
 
 	~Node();
