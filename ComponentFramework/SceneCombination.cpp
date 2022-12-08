@@ -384,10 +384,12 @@ void SceneCombination::Update(const float deltaTime)
 
 	for (Wall* objectToTest : theWalls) {
 		objectToTest->rotateWall(deltaTime);
-		resultPlayer = cameraFPS->GetPosition();
+		resultPlayer = cameraFPS->GetCameraFPSPos();
+
 		resultB = objectToTest->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
+
 		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
 		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
