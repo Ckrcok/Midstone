@@ -384,6 +384,7 @@ void SceneCombination::Update(const float deltaTime)
 
 	for (Wall* objectToTest : theWalls) {
 		objectToTest->rotateWall(deltaTime);
+		resultPlayer = cameraFPS->GetPosition();
 		resultB = objectToTest->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
@@ -395,26 +396,42 @@ void SceneCombination::Update(const float deltaTime)
 
 		if (playerWallorDorCollision && (objectToTest->id == 'w')) {//Test if facing wall
 			printf("Collided with wall \n");
+			cameraFPS->isFacingWall = true;
 		}
-		else if (playerWallorDorCollision && ((objectToTest->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
-			|| (wall->id == 'D') || (wall->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
+		else if (playerWallorDorCollision && ((wall->id == 'a') || (wall->id == 'b') || (wall->id == 's') || (wall->id == 'g')
+			|| (wall->id == 'D') || (objectToTest->id == 'f') || (wall->id == 'c'))) {//testing if colliding wall
 			printf("Collided with door \n");
-			wall->moveWall();
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+			cameraFPS->isFacingWall = false;
+
 		}
 		else if (playerWallorDorCollision && (objectToTest->id == 'd')) {//testing of colliding with locked door
 			printf("Collided with locked door \n");
+			cameraFPS->isFacingWall = true;
+			if (hasKey == true) {
+				theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+			}
+
 		}
 		else if (playerPickupCollision && (objectToTest->id == 'o')) {//testing if collided with weapon pickup
 			printf("Collided with weapon \n");
+			hasWeapon = true;
+			cameraFPS->isFacingWall = false;
+
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (objectToTest->id == 'h')) {//testing if collided with healthpack pickup
 			printf("Collided with healthpack \n");
-			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
+			hasHealth = true;
+			cameraFPS->isFacingWall = false;
 
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 		}
 		else if (playerPickupCollision && (objectToTest->id == 'k')) {//testing if collided with key pickup
 			printf("Collided with key pickup \n");
+			hasKey = true;
+			cameraFPS->isFacingWall = false;
+
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), wall), theWalls.end());
 
 		}
