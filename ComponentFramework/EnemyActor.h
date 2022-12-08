@@ -20,6 +20,7 @@ private:
 	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
+
 	// Model
 	Actor* model_3D;
 	Shader* shader;
@@ -77,11 +78,17 @@ public:
 		camera = nullptr;
 		camera = camera_;
 	}
-	Vec3 getPositionEnemy() {
-		return position;//because safak made me do the right thing
+
+	Vec3 getPositionEnemy()
+	{
+		// Because safak made me do the right thing
+		return position;
 	}
-	void setPositionEnemy(Vec3 newPos_) {
-		position = newPos_;//because safak made me do the right thing x2
+
+	void setPositionEnemy(Vec3 newPos_)
+	{
+		// Because safak made me do the right thing x2
+		position = newPos_;
 	}
 };
 
