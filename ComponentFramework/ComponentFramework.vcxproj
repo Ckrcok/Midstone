@@ -96,6 +96,7 @@
     <ClCompile Include="DoorPuzzle.cpp" />
     <ClCompile Include="EMath.cpp" />
     <ClCompile Include="EnemyActor.cpp" />
+    <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PlayerGun.cpp" />

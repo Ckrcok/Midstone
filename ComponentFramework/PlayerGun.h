@@ -32,14 +32,15 @@ private:
 	//CameraActor* camera;
 	CameraActorFPS* cameraFPS;
 
-	// Bullets
-	vector<Bullet*> spawnedBullets;
-	int bulletLabel = 0;
 
 public:
 	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
 	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_);
 	~PlayerGun();
+
+	// Bullets
+	vector<Bullet*> spawnedBullets;
+	int bulletLabel = 0;
 
 	bool OnCreate();
 	void OnDestroy();

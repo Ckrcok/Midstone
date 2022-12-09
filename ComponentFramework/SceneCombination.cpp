@@ -230,6 +230,16 @@ SceneCombination::SceneCombination()
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
+
+	Wall* firstInstruction = new Wall(Vec3(6.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'f');
+	//health pickup
+	Wall* secondInstruction = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 's');
+	//key pickup
+	Wall* thirdInstruction = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 't');
+
+	theWalls.push_back(firstInstruction);
+	theWalls.push_back(secondInstruction);
+	theWalls.push_back(thirdInstruction);
 }
 
 SceneCombination::~SceneCombination()
@@ -363,17 +373,40 @@ void SceneCombination::Update(const float deltaTime)
 
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
+	//Player collider values update
+	playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
+	resultPlayer = cameraFPS->GetCameraFPSPos();
 
-
-
+	//PlayerDanf¿gerRoomCollision
 	for (Box* roomTriggerBox : roomTriggers) {
 		//Check if the player has triggered/collided with room box
-		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
-		if (playerPickupCollision == true) {
+		int playerTriggerCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
+		if (playerTriggerCollision == true) {
 			//get enemy closer to player																						//enemy speed
 			Vec3 enemyMove2Player = VMath::normalize(cameraFPS->GetCameraFPSPos() - roomTriggerBox->enemyRoom->GetPosition());
 			Vec3 enemyTranslation = enemyMove2Player * 2.0f;
 			roomTriggerBox->enemyRoom->setPositionEnemy(enemyTranslation);
+
+
+			Vec3 enemyPositionOnRoom = roomTriggerBox->enemyRoom->getPositionEnemy();
+			minCornerEnemy = enemyPositionOnRoom - Vec3(1.0f, 1.0f, 1.0f);
+			maxCornerEnemy = enemyPositionOnRoom + Vec3(1.0f, 1.0f, 1.0f);
+			enemyColliderBox->updateVertPos(enemyPositionOnRoom, minCornerEnemy, maxCornerEnemy);
+
+			int playerEnemyCollision = Collision::distancePointBox(resultPlayer, *enemyColliderBox);
+			if (playerEnemyCollision == true)
+			{
+				//Player cas collided with tenemy
+				if (playerHealth >= 10) {
+				playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
+				cout << "Player is taking damage" << endl;
+				}
+				else {
+					cout << "Player has lost all his health" << endl;
+					gameOver = true;
+					gameLost = true;
+				}
+			}
 		}
 		else {
 			//enemy is static or returns to enemy
@@ -381,15 +414,14 @@ void SceneCombination::Update(const float deltaTime)
 
 		}
 	}
-
+	//PlayerLevelCollision
 	for (Wall* objectToTest : theWalls) {
 		objectToTest->rotateWall(deltaTime);
-		resultPlayer = cameraFPS->GetCameraFPSPos();
 
 		resultB = objectToTest->getPos();
 		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
-		resultPlayer.print("POS");
+
 		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
 		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
@@ -419,26 +451,60 @@ void SceneCombination::Update(const float deltaTime)
 			printf("Collided with weapon \n");
 			hasWeapon = true;
 			cameraFPS->isFacingWall = false;
-
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
 		}
 		else if (playerPickupCollision && (objectToTest->id == 'h')) {//testing if collided with healthpack pickup
 			printf("Collided with healthpack \n");
 			hasHealth = true;
 			cameraFPS->isFacingWall = false;
-
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
 		}
 		else if (playerPickupCollision && (objectToTest->id == 'k')) {//testing if collided with key pickup
 			printf("Collided with key pickup \n");
 			hasKey = true;
 			cameraFPS->isFacingWall = false;
-
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
 
 		}
 
+		if (playerGun->spawnedBullets.size() > 0) {
+			for (Bullet* bulletShot : playerGun->spawnedBullets) {
+				Vec3 shotBulletPosition = bulletShot->GetPosition();
+				int bulletWallCollision = Collision::distancePointBox(shotBulletPosition, *blueBox);
+				//When a bullet collides with a enemy the enemy gets stunned
+				if (bulletWallCollision == true) {
+					playerGun->HandleDestroyBullet();
+
+				}
+			}
+
+		}
+
 	}
+
+	//EnemyBulletColission
+	for (EnemyActor* enemyCheck : enemiesInRooms) {
+
+		Vec3 enemyPosition = enemyCheck->GetPosition();
+		minCornerEnemy = enemyPosition - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerEnemy = enemyPosition + Vec3(1.0f, 1.0f, 1.0f);
+		enemyColliderBox->updateVertPos(enemyPosition, minCornerEnemy, maxCornerEnemy);
+
+
+		if (playerGun->spawnedBullets.size() > 0) {
+			for (Bullet* bulletShot : playerGun->spawnedBullets) {
+				Vec3 shotBulletPosition = bulletShot->GetPosition();
+				int bulletEnemyCollision = Collision::distancePointBox(shotBulletPosition, *enemyColliderBox);
+				//When a bullet collides with a enemy the enemy gets stunned
+				if (bulletEnemyCollision == true) {
+					enemyCheck->StunEnemy(5.0f);
+				}
+			}
+
+		}
+	}
+	//BulletWallCollision
+	//EnemyBulletCollision
 
 }
 

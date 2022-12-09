@@ -30,6 +30,18 @@ bool Wall::OnCreate()
 	else if (id == 'h') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/finalHearth.obj"));
 	}
+	else if (id == 'f') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_1.obj"));
+
+	}
+	else if (id == 's') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_2.obj"));
+
+	}
+	else if (id == 't') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_3.obj"));
+
+	}
 	else {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	}

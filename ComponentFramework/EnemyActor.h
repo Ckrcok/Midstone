@@ -51,7 +51,8 @@ public:
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
 	Vec3 originalPos = position;
-
+	float enemyHealth = 15.0f;
+	float enemyDamage = 10.0f;
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
