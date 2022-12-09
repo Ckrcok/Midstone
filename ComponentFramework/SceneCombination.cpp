@@ -433,13 +433,13 @@ void SceneCombination::Update(const float deltaTime)
 			cameraFPS->isFacingWall = true;
 		}
 		else if (playerWallorDorCollision && ((objectToTest->id == 'a') || (objectToTest->id == 'b') || (objectToTest->id == 's') || (objectToTest->id == 'g')
-			|| (objectToTest->id == 'D') || (objectToTest->id == 'f') || (objectToTest->id == 'c'))) {//testing if colliding wall
+			|| (objectToTest->id == 'D') || (objectToTest->id == 'f') || (objectToTest->id == 'c'))) {//IDS OF ALL THE WALLS, IF THE ID IS EQUAL TO THIS LETTERS THEN ITS A WALL
 			printf("Collided with door \n");
 			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
 			cameraFPS->isFacingWall = false;
 
 		}
-		else if (playerWallorDorCollision && (objectToTest->id == 'd')) {//testing of colliding with locked door
+		else if (playerWallorDorCollision && (objectToTest->id == 'd')) {//THIS IS THE LOCKED DOOR
 			printf("Collided with locked door \n");
 			cameraFPS->isFacingWall = true;
 			if (hasKey == true) {
