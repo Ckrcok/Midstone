@@ -44,10 +44,10 @@ private:
 	vector<vector<NodeTile*>> tiles;
 	vector<Node*> nodes;
 
-	int gridWidth = 30;
-	int gridHeight = 15;
-	int tileWidth = 4;
-	int tileHeight = 4;
+	int gridWidth = 23;
+	int gridHeight = 27;
+	int tileWidth = 2;
+	int tileHeight = 2;
 
 	// Render variables
 	Vec3 lightPos[10];
