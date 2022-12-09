@@ -108,23 +108,24 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	{
 		// Move forward & backwards -- updated method
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
-		{
+		{//FORWARD
 			cameraPositionVec += cameraSpeed * cameraOrientationVec;
 			cameraPositionVec.y = 0.0f;
+			
 		}
 		else if (!keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_S])
-		{
+		{//BACKWARDS
 			cameraPositionVec += cameraSpeed * -cameraOrientationVec;
 			cameraPositionVec.y = 0.0f;
 		}
 
 		if (keyboard_state_array[SDL_SCANCODE_D] && !keyboard_state_array[SDL_SCANCODE_A])
-		{
+		{//RIGHT
 			cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
 			cameraPositionVec.y = 0.0f;
 		}
 		else if (!keyboard_state_array[SDL_SCANCODE_D] && keyboard_state_array[SDL_SCANCODE_A])
-		{
+		{//LEFT
 			cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
 			cameraPositionVec.y = 0.0f;
 		}

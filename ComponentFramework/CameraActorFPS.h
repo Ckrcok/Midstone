@@ -44,7 +44,7 @@ private:
 	float cameraYaw = 0.0f;
 	float mouseSensitivity;
 	bool isFacingWall = false;
-
+	char lastTypedKey = 'n';
 public:
 	CameraActorFPS(Component* parent_);
 	~CameraActorFPS();
