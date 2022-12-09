@@ -320,7 +320,7 @@ bool SceneCombination::OnCreate()
 	else if (path.size() <= 0)
 		cout << "You can't get there from here!" << endl;
 
-
+	/**
 	for (int i = 0; i < gridHeight; i++) {
 
 		for (int j = 0; j < gridWidth; j++)
@@ -329,6 +329,10 @@ bool SceneCombination::OnCreate()
 			tiles[i][j]->GetPos().print();
 		}
 	}
+	/**/
+
+	cout << "Tile Pos: "; tiles[0][0]->GetPos().print();
+	cout << "Node Pos: "; tiles[0][0]->GetNode()->GetPos().print();
 
 	// Return true so program can run
 	return true;
@@ -390,6 +394,16 @@ void SceneCombination::Render() const
 	for (Wall* wall : theWalls)
 		wall->Render();
 
+	for (int i = 0; i < gridHeight; i++) {
+
+		for (int j = 0; j < gridWidth; j++)
+		{
+			//cout << "Tile [" << i << "][" << j << "]: ";
+			if (tiles[i][j]->HasNode())
+				tiles[i][j]->GetNode()->Render();
+		}
+	}
+
 	// Use program 0
 	glUseProgram(0);
 }
@@ -417,6 +431,10 @@ void SceneCombination::Update(const float deltaTime)
 		else  // Enemy is static or returns to enemy	
 			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
 	}
+
+	// Debug
+	//cout << "CameraPos Scene: ";
+	//cameraFPS->GetCameraFPSPos().print();
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
@@ -469,7 +487,7 @@ void SceneCombination::CreateNodeLayout()
 			int id = levelData[row][column];
 
 			// Position in pixels
-			Vec3 startPos = Vec3(0.0f, 0.0f, 0.0f);
+			Vec3 startPos = Vec3(-20.0f, 0.0f, -20.0f);
 			Vec3 endPos = Vec3(0.0f, 0.0f, 0.0f);
 
 			// Set the position to have the origin top left
@@ -480,19 +498,12 @@ void SceneCombination::CreateNodeLayout()
 			// Transverse the position from viewport to game
 			Vec3 position = Vec3(endPos.x, endPos.y, endPos.z);
 
-			// Set the position to the game coordinates
-			endPos.x = (position.x);
-			endPos.y = (position.y);
+			cout << "Position in function: ";
+			position.print();
 
 			// Set node
 			n = new Node(label, endPos);
 			nodes.push_back(n);
-
-			// Set node
-			if (id == 0)
-				n = new Node(label, endPos);
-			else if (id == 1)
-				n = new Node(label, endPos);
 
 			// Set the background tile
 			if (id == 1)
@@ -501,7 +512,7 @@ void SceneCombination::CreateNodeLayout()
 				t = new NodeTile(n, false);
 
 			// Set the tile
-			t->AddTile(column, row, id, label, tileWidth, tileHeight);
+			t->AddTile(column, row, id, label, tileWidth, tileHeight, startPos);
 			tiles[row][column] = t;
 
 			// Increase the node label

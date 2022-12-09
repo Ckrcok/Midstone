@@ -145,7 +145,7 @@ void Scene3::Update(const float deltaTime)
 	playerGun->Update(deltaTime);
 
 	//cout << "CameraPos Scene: ";
-	//camera->GetPosition().print();
+	//cameraFPS->GetCameraFPSPos().print();
 }
 
 void Scene3::HandleEvents(const SDL_Event& sdlEvent)

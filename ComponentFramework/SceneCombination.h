@@ -46,8 +46,8 @@ private:
 
 	int gridWidth = 30;
 	int gridHeight = 15;
-	int tileWidth = 60;
-	int tileHeight = 60;
+	int tileWidth = 5;
+	int tileHeight = 5;
 
 	// Render variables
 	Vec3 lightPos[10];
