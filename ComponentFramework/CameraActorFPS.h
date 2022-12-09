@@ -43,8 +43,7 @@ private:
 	float cameraPitch = 0.0f;
 	float cameraYaw = 0.0f;
 	float mouseSensitivity;
-	bool isFacingWall = false;
-	char lastTypedKey = 'n';
+
 public:
 	CameraActorFPS(Component* parent_);
 	~CameraActorFPS();
@@ -61,5 +60,7 @@ public:
 	Skybox* GetSkyBox() { return skybox; }
 	inline Vec3 GetCameraFPSOrientation() { return cameraOrientationVec; }
 	inline Vec3 GetCameraFPSPos() { return cameraPositionVec; }
+	bool isFacingWall = false;
+	char lastTypedKey = 'n';//Being lazy yes, but this needs to work
 };
 
