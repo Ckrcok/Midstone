@@ -14,7 +14,12 @@ bool Node::OnCreate()
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
-	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
+
+	if (isAccessible)
+		model_3D->GetTexture()->LoadImage("textures/Texture_Green.png");
+	else
+		model_3D->GetTexture()->LoadImage("textures/Texture_Red.png");
+
 	model_3D->OnCreate();
 
 	cout << "Loaded texture!" << endl;

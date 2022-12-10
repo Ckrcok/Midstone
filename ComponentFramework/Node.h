@@ -48,6 +48,7 @@ public:
 	void SetPosX(float posX_) { position.x = posX_; }
 	void SetPosY(float posY_) { position.y = posY_; }
 	void SetPosZ(float posZ_) { position.z = posZ_; }
+	void SetIsAccesible(bool isAccessible_) { isAccessible = isAccessible_; }
 };
 
 #endif // !NODE_H

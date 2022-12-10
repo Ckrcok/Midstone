@@ -13,7 +13,7 @@ private:
 	bool hasNode = false;
 	Vec3 position;
 
-	void AddNode(int column, int row, int label, float tileWidth, float tileHeight, Vec3 startPos);
+	void AddNode(int column, int row, int label, float tileWidth, float tileHeight, Vec3 startPos, bool isAccesible);
 
 public:
 	NodeTile(Node* node_, bool hasNode_)
@@ -22,7 +22,10 @@ public:
 		hasNode = hasNode_;
 	}
 
-	void AddTile(int column, int row, int id, int label, float tileWidth, float tileHeight, Vec3 startPos);
+	void AddTile(int column, int row,
+		int id, int label,
+		float tileWidth, float tileHeight,
+		Vec3 startPos, bool isAccesible);
 
 	Node* GetNode() { return node; }
 	bool HasNode() { return hasNode; }

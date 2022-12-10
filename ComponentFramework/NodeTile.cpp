@@ -4,7 +4,7 @@ void NodeTile::AddTile(
 	int column, int row,
 	int id, int label,
 	float tileWidth, float tileHeight,
-	Vec3 startPos)
+	Vec3 startPos, bool isAccesible)
 {
 	// Debug for tile spawning
 	//cout << "Tile with label: " << label << " has been created!" << endl;
@@ -14,12 +14,12 @@ void NodeTile::AddTile(
 	position.y = 0.0f;
 	position.z = startPos.z + row * tileHeight + (tileHeight * 0.5f);
 
-	// Place node if the tile has a node
+	// Place node
 	if (hasNode)
-		AddNode(column, row, label, tileWidth, tileHeight, startPos);
+		AddNode(column, row, label, tileWidth, tileHeight, startPos, isAccesible);
 }
 
-void NodeTile::AddNode(int column, int row, int label, float tileWidth, float tileHeight, Vec3 startPos)
+void NodeTile::AddNode(int column, int row, int label, float tileWidth, float tileHeight, Vec3 startPos, bool isAccesible)
 {
 	// Create start node
 	Node* n = new Node(label);
@@ -35,6 +35,8 @@ void NodeTile::AddNode(int column, int row, int label, float tileWidth, float ti
 	//// Set the position to the game coordinates
 	//n->SetPosX(position.x);
 	//n->SetPosY(position.y);
+
+	n->SetIsAccesible(isAccesible);
 
 	// Set the node of the class to the created one
 	node = n;

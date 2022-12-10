@@ -11,7 +11,7 @@ CameraActorFPS::CameraActorFPS(Component* parent_) :Actor(parent_)
 	//translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 	
 	// initial cameraPosition is at spawn position
-	cameraPositionVec = Vec3(0.0f, 0.0f, 0.0f);
+	cameraPositionVec = Vec3(0.0f, 5.0f, 0.0f);
 	cameraOrientationVec = VMath::normalize(Vec3(0.0f, 0.0f, -1.0f));
 	cameraUpDirVec = VMath::normalize(Vec3(0.0f, 1.0f, 0.0f));
 
