@@ -483,14 +483,14 @@ void SceneCombination::Update(const float deltaTime)
 					cout << "Player has lost all his health" << endl;
 					gameOver = true;
 					gameLost = true;
-					
 					cout << "GAME OVER" << endl;
 
 				}
 			}
 		}
 		else {
-			//enemy is static or returns to enemy
+			//enemy returns to first position
+			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
 
 		}
 	}
