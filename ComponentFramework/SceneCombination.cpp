@@ -468,11 +468,12 @@ void SceneCombination::Update(const float deltaTime)
 			minCornerEnemy = enemyPositionOnRoom - Vec3(1.0f, 1.0f, 1.0f);
 			maxCornerEnemy = enemyPositionOnRoom + Vec3(1.0f, 1.0f, 1.0f);
 			enemyColliderBox->updateVertPos(enemyPositionOnRoom, minCornerEnemy, maxCornerEnemy);
+			resultPlayer = cameraFPS->GetCameraFPSPos();
 
-			int playerEnemyCollision = Collision::distancePointBox(resultPlayer, *enemyColliderBox);
+			int playerEnemyCollision = Collision::TestSphereSphere(*playerColliderBox, *enemyColliderBox);
 			if (playerEnemyCollision == true)
 			{
-				cout << "++++Collided with enemy" << endl;
+				cout << "Collided with enemy" << endl;
 				//Player cas collided with tenemy
 				if (playerHealth >= 10) {
 				playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
@@ -482,12 +483,14 @@ void SceneCombination::Update(const float deltaTime)
 					cout << "Player has lost all his health" << endl;
 					gameOver = true;
 					gameLost = true;
+					
+					cout << "GAME OVER" << endl;
+
 				}
 			}
 		}
 		else {
 			//enemy is static or returns to enemy
-			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
 
 		}
 	}

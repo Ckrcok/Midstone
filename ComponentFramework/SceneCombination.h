@@ -52,7 +52,7 @@ private:
 	bool gameOver = false;
 	bool gameLost = false;
 	bool gameWon = false;
-	float playerHealth = 100;
+	float playerHealth = 1000;
 	Vec3 rotationVec = Vec3(0.0f, 0.0f, 0.0f);
 	Vec3 test = Vec3(1.0f, 1.0f, 1.0f);
 	Vec3 resultPlayer = Vec3(1.0f, 1.0f, 1.0f);
