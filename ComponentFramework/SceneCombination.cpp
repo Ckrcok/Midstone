@@ -5,15 +5,64 @@ SceneCombination::SceneCombination()
 {
 	// Debug information
 	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
+	EnemyActor* enemyA = new EnemyActor(Vec3(-17.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyB = new EnemyActor(Vec3(-2.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyC = new EnemyActor(Vec3(8.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyD = new EnemyActor(Vec3(10.0f, 0.0f, -6.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyE = new EnemyActor(Vec3(15.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyF = new EnemyActor(Vec3(16.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
 
-#pragma region Wall & Pickup Creation
-	// NorthLimit
+	Vec3 minValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) -		(Vec3(16.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) -		(Vec3(2.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) -		(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) -		(Vec3(4.0f, 1.0f, 10.0f)));
+	Vec3 maxValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) +	(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) +	(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) +		(Vec3(16.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) +		(Vec3(2.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) +		(Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) +		(Vec3(4.0f, 1.0f, 10.0f)));
+	
+	Box* triggerRoomA = new Box(Vec3(-17.0f, 0.0f, -24.0f), minValueTriggerA, maxValueTriggerA, enemyA);//= Box(minCornerB, maxCornerB);
+	Box* triggerRoomB = new Box(Vec3(-2.0f, 0.0f, -24.0f), minValueTriggerB, maxValueTriggerB, enemyB);//= Box(minCornerB, maxCornerB);
+	Box* triggerRoomC = new Box(Vec3(8.0f, 0.0f, -20.0f), minValueTriggerC, maxValueTriggerC, enemyC);//= Box(minCornerB, maxCornerB);
+	Box* triggerRoomD = new Box(Vec3(10.0f, 0.0f, -6.0f), minValueTriggerD, maxValueTriggerD, enemyD);//= Box(minCornerB, maxCornerB);
+	Box* triggerRoomE = new Box(Vec3(15.0f, 0.0f, 16.0f), minValueTriggerE, maxValueTriggerE, enemyE);//= Box(minCornerB, maxCornerB);
+	Box* triggerRoomF = new Box(Vec3(16.0f, 0.0f, -4.0f), minValueTriggerF, maxValueTriggerF, enemyF);//= Box(minCornerB, maxCornerB);
+
+	enemiesInRooms.push_back(enemyA);
+	enemiesInRooms.push_back(enemyB);
+	enemiesInRooms.push_back(enemyC);
+	enemiesInRooms.push_back(enemyD);
+	enemiesInRooms.push_back(enemyE);
+	enemiesInRooms.push_back(enemyF);
+
+	roomTriggers.push_back(triggerRoomA);
+	roomTriggers.push_back(triggerRoomB);
+	roomTriggers.push_back(triggerRoomC);
+	roomTriggers.push_back(triggerRoomD);
+	roomTriggers.push_back(triggerRoomE);
+	roomTriggers.push_back(triggerRoomF);
+
+
+	
+	//Wall and pickups creation
+//NorthLimit
 	float northWallZStart = -30.0f;
 	for (int a = 0; a < 25; a++) // Until northWallZEnd
 	{
 		northWallZStart += 2.0f;
+		Wall* wallTest;
+		if (northWallZStart == -28.0f) {
+		wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'd');
 
-		Wall* wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+		}
+		else {
+		wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
+		}
 		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
 		theWalls.push_back(wallTest);
@@ -27,6 +76,7 @@ SceneCombination::SceneCombination()
 		westWallXStart -= 2.0f;
 
 		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
 		theWalls.push_back(wallTest);
@@ -144,11 +194,9 @@ SceneCombination::SceneCombination()
 
 		Wall* DwallTest;
 		Wall* DwallTestSOUTH;
-
-		if (DWallZStart == -6.0f)
-			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'd');
-		else
+		
 			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+		
 
 		if (DWallZStart == -6.0f)
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'D');
@@ -229,10 +277,10 @@ SceneCombination::SceneCombination()
 
 		theWalls.push_back(CwallTest);
 	}
-#pragma endregion
 
-#pragma region PickUps
-	// Weapon
+
+	//PICKUPS
+	//weapon pickup
 	Wall* wpPickup = new Wall(Vec3(6.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'o');
 	// Health
 	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'h');
@@ -243,13 +291,22 @@ SceneCombination::SceneCombination()
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
-#pragma endregion
+
+	Wall* firstInstruction = new Wall(Vec3(7.0f, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'x');
+	//health pickup
+	Wall* secondInstruction = new Wall(Vec3(0.0f, 0.0f, 21.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'y');
+	//key pickup
+	Wall* thirdInstruction = new Wall(Vec3(-13.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'z');
+
+	theWalls.push_back(firstInstruction);
+	theWalls.push_back(secondInstruction);
+	theWalls.push_back(thirdInstruction);
 }
 
 SceneCombination::~SceneCombination()
 {
 	// Debug information
-	Debug::Info("Deleted SceneÇombination: ", __FILE__, __LINE__);
+	Debug::Info("Deleted Sceneï¿½ombination: ", __FILE__, __LINE__);
 }
 
 bool SceneCombination::OnCreate()
@@ -268,7 +325,12 @@ bool SceneCombination::OnCreate()
 	// For every wall, call OnCreate
 	for (Wall* wall : theWalls)
 		wall->OnCreate();
+	}
 
+	for (EnemyActor* enemy : enemiesInRooms) {
+		enemy->SetCamera(cameraFPS);
+		enemy->OnCreate();
+	}
 	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)	// Debug information
@@ -320,6 +382,16 @@ void SceneCombination::OnDestroy()
 		playerGun->OnDestroy();
 		delete playerGun;
 	}
+
+	for (EnemyActor* enemy : enemiesInRooms)
+	{
+		if (enemy)
+		{
+			enemy->OnDestroy();
+			delete enemy;
+		}
+	}
+	enemiesInRooms.clear();
 }
 
 void SceneCombination::Render() const
@@ -346,11 +418,18 @@ void SceneCombination::Render() const
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
 	// Render the gun of the player
+	if (hasWeapon) {
 	playerGun->Render();
 
-	// Render all the walls
-	for (Wall* wall : theWalls)
+	}
+
+
+	for (Wall* wall : theWalls) {
 		wall->Render();
+
+	for (EnemyActor* enemy : enemiesInRooms) {
+		enemy->Render();
+	}
 
 	// Use program 0
 	glUseProgram(0);
@@ -360,31 +439,158 @@ void SceneCombination::Update(const float deltaTime)
 {
 	// Update the camera
 	cameraFPS->Update(deltaTime);
-
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
+	//Player collider values update
+	resultPlayer = cameraFPS->GetCameraFPSPos();
+	minCornerPlayer = resultPlayer - Vec3(1.0f, 1.0f, 1.0f);
+	maxCornerPlayer = resultPlayer + Vec3(1.0f, 1.0f, 1.0f);
+	playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
-	// Update all the colliders
-	for (Box* roomTriggerBox : roomTriggers)
-	{
-		// Check if the player has triggered/collided with room box
-		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *roomTriggerBox);
-		if (playerPickupCollision == true)
-		{
-			// Get enemy closer to player																					
-			Vec3 enemyMove2Player = VMath::normalize(cameraFPS->GetCameraFPSPos() - roomTriggerBox->enemyRoom->GetPosition());
-			Vec3 enemyTranslation = enemyMove2Player * 2.0f;
-			roomTriggerBox->enemyRoom->setPositionEnemy(enemyTranslation);
+	//PlayerDangerRoomCollision
+	for (Box* roomTriggerBox : roomTriggers) {
+		//Check if the player has triggered/collided with room box
+
+		int playerTriggerCollision = Collision::distancePointBox(resultPlayer, *roomTriggerBox);
+
+		if (playerTriggerCollision == true) {
+			cout << "---Collided with enemy trigger area" << endl;
+			//get enemy closer to player																						//enemy speed
+			roomTriggerBox->enemyRoom->Update(deltaTime);
+
+
+			Vec3 enemyPositionOnRoom = roomTriggerBox->enemyRoom->getPositionEnemy();
+			minCornerEnemy = enemyPositionOnRoom - Vec3(1.0f, 1.0f, 1.0f);
+			maxCornerEnemy = enemyPositionOnRoom + Vec3(1.0f, 1.0f, 1.0f);
+			enemyColliderBox->updateVertPos(enemyPositionOnRoom, minCornerEnemy, maxCornerEnemy);
+			resultPlayer = cameraFPS->GetCameraFPSPos();
+
+			int playerEnemyCollision = Collision::TestSphereSphere(*playerColliderBox, *enemyColliderBox);
+			if (playerEnemyCollision == true)
+			{
+				cout << "Collided with enemy" << endl;
+				//Player cas collided with tenemy
+				if (playerHealth >= 10) {
+				playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
+				cout << "Player is taking damage" << endl;
+				}
+				else {
+					cout << "Player has lost all his health" << endl;
+					gameOver = true;
+					gameLost = true;
+					cout << "GAME OVER" << endl;
+
+				}
+			}
 		}
-		else  // Enemy is static or returns to enemy	
+		else {
+			//enemy returns to first position
 			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
 	}
+	//PlayerLevelCollision
+	for (Wall* objectToTest : theWalls) {
+		//objectToTest->positionInstructions();
+		objectToTest->rotateWall(deltaTime);
+
+		resultB = objectToTest->getPos();
+		minCornerB = resultB - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerB = resultB + Vec3(1.0f, 1.0f, 1.0f);
+
+		blueBox->updateVertPos(resultB, minCornerB, maxCornerB);
+		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
+
+		int playerWallorDorCollision = Collision::distancePointBox(resultPlayer, *blueBox);
+		int playerPickupCollision = Collision::TestSphereSphere(*playerColliderBox, *blueBox);
+
+		if (playerWallorDorCollision && (objectToTest->id == 'w')) {//Test if facing wall
+			printf("Collided with wall \n");
+			cameraFPS->isFacingWall = true;
+		}
+		else if (playerWallorDorCollision && ((objectToTest->id == 'a') || (objectToTest->id == 'b') || (objectToTest->id == 's') || (objectToTest->id == 'g')
+			|| (objectToTest->id == 'D') || (objectToTest->id == 'f') || (objectToTest->id == 'c'))) {//IDS OF ALL THE WALLS, IF THE ID IS EQUAL TO THIS LETTERS THEN ITS A WALL
+			printf("Collided with door \n");
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
+			cameraFPS->isFacingWall = false;
+
+		}
+		else if (playerWallorDorCollision && (objectToTest->id == 'd')) {//THIS IS THE LOCKED DOOR
+			printf("Collided with locked door \n"); //Door in 20,0,-28
+			cameraFPS->isFacingWall = true;
+			if (hasKey == true) {
+				theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
+				gameOver = true;
+				gameWon = true;
+			}
+
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'o')) {//testing if collided with weapon pickup
+			printf("Collided with weapon \n");
+			hasWeapon = true;
+			cameraFPS->isFacingWall = false;
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'h')) {//testing if collided with healthpack pickup
+			printf("Collided with healthpack \n");
+			hasHealth = true;
+			cameraFPS->isFacingWall = false;
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
+		}
+		else if (playerPickupCollision && (objectToTest->id == 'k')) {//testing if collided with key pickup
+			printf("Collided with key pickup \n");
+			hasKey = true;
+			cameraFPS->isFacingWall = false;
+			theWalls.erase(std::remove(theWalls.begin(), theWalls.end(), objectToTest), theWalls.end());
+
+		}
+
+		if (playerGun->spawnedBullets.size() > 0) {
+			for (Bullet* bulletShot : playerGun->spawnedBullets) {
+				Vec3 shotBulletPosition = bulletShot->GetPosition();
+				int bulletWallCollision = Collision::distancePointBox(shotBulletPosition, *blueBox);
+				//When a bullet collides with a enemy the enemy gets stunned
+				if (bulletWallCollision == true) {
+					playerGun->HandleDestroyBullet();
+
+				}
+			}
+
+		}
+
+	}
+
+	//EnemyBulletColission
+	for (EnemyActor* enemyCheck : enemiesInRooms) {
+
+		Vec3 enemyPosition = enemyCheck->GetPosition();
+		minCornerEnemy = enemyPosition - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerEnemy = enemyPosition + Vec3(1.0f, 1.0f, 1.0f);
+		enemyColliderBox->updateVertPos(enemyPosition, minCornerEnemy, maxCornerEnemy);
+
+
+		if (playerGun->spawnedBullets.size() > 0) {
+			for (Bullet* bulletShot : playerGun->spawnedBullets) {
+				Vec3 shotBulletPosition = bulletShot->GetPosition();
+				int bulletEnemyCollision = Collision::distancePointBox(shotBulletPosition, *enemyColliderBox);
+				//When a bullet collides with a enemy the enemy gets stunned
+				if (bulletEnemyCollision == true) {
+					enemyCheck->StunEnemy(5.0f);
+				}
+			}
+
+		}
+	}
+	//BulletWallCollision
+	//EnemyBulletCollision
+
 }
 
 void SceneCombination::HandleEvents(const SDL_Event& sdlEvent)
 {
 	// Handle events of camera
 	cameraFPS->HandleEvents(sdlEvent);
+
+	for (EnemyActor* enemy : enemiesInRooms)
+		enemy->HandleEvents(sdlEvent);
 
 	// Handle events of the player gun
 	playerGun->HandleEvents(sdlEvent);

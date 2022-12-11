@@ -24,7 +24,7 @@ bool EnemyActor::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
@@ -71,20 +71,8 @@ void EnemyActor::Update(float deltaTime)
 {
 	position = model_3D->GetPosition();
 
-	/**
-	cout << "Enemy pos: ";
-	model_3D->GetPosition().print();
-
-	cout << "Cam pos: ";
-	camera->GetPlayerPosition().print();
-	/**/
-
-
 	// Calculate distance between enemy and player
 	float distanceToPlayer = GetDistance(position, camera->GetCameraFPSPos());
-
-	//cout << "Postion: ";
-	//position.print();
 
 	// Handle stun
 	if (isStunned)
@@ -101,45 +89,18 @@ void EnemyActor::Update(float deltaTime)
 		return;
 	}
 
-
-	// Handle attack
-	if (attackTarget != nullptr)
-		Attack(deltaTime);
-
-
-	// Calculate distance between enemy and target
-	float distanceToTarget = GetDistance(position, targets[currentTarget]);
-	//cout << "DistanceToTarget: " << distanceToTarget << endl;
-
-	// Check if target position is reached
-	if (distanceToTarget < 0.5f && currentTarget + 1 < targets.size())
-	{
-		// Set a new target in given seconds
-		if (currentTimeBetweenTargets > 0)
-			currentTimeBetweenTargets -= deltaTime;
-		else
-		{
-			currentTarget++;
-			currentTimeBetweenTargets = timeBetweenTargets;
-		}
-	}
-	else if (attackTarget == nullptr && distanceToTarget > 0.5f)
-	{
-		MoveToTarget(deltaTime);
-		FaceTarget(deltaTime);
-	}
-	else
-		return;
-
+	MoveToTarget(deltaTime);
+	FaceTarget(deltaTime);
 	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
 	//cout << "\n";
 
 	/**/ // If player is in range, attack
-	if (distanceToPlayer < 0.05f)
+	/*if (distanceToPlayer < 0.05f)
 		AttackTarget(model_3D, 1.0f);
 	else
-		attackTarget = nullptr;
+		attackTarget = nullptr;*/
 	/**/
+
 }
 
 void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
@@ -148,16 +109,7 @@ void EnemyActor::HandleEvents(const SDL_Event& sdlEvent)
 	{
 	case SDL_KEYDOWN:
 	{
-		// Move
-		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_K)
-			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f)));
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_I)
-			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, 1.0f)));
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_J)
-			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(1.0f, 0.0f, 0.0f)));
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_L)
-			model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-1.0f, 0.0f, 0.0f)));
-
+		
 		// Toggle stun state between true and false
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_M)
 		{

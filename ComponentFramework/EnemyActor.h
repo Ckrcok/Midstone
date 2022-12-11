@@ -38,7 +38,6 @@ private:
 	bool isStunned = false;
 	float currentStunTimer;
 
-	void MoveToTarget(float deltaTime);
 	void FaceTarget(float deltaTime);
 
 	float GetDistance(Vec3 p, Vec3 q);
@@ -48,11 +47,14 @@ private:
 	float attackInterval;
 	float currentAttackValue;
 
-public:
+public:	
+	void MoveToTarget(float deltaTime);
+
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
 	Vec3 originalPos = position;
-
+	float enemyHealth = 15.0f;
+	float enemyDamage = 10.0f;
 	bool OnCreate();
 	void OnDestroy();
 	void Render();

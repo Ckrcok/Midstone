@@ -49,7 +49,7 @@ private:
 	float cameraPitch = 0.0f;
 	float cameraYaw = -90.0f;
 	float mouseSensitivity;
-	
+
 public:
 	CameraActorFPS(Component* parent_);
 	~CameraActorFPS();

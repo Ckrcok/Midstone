@@ -30,6 +30,18 @@ bool Wall::OnCreate()
 	else if (id == 'h') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/finalHearth.obj"));
 	}
+	else if (id == 'x') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_1.obj"));
+
+	}
+	else if (id == 'y') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_2.obj"));
+
+	}
+	else if (id == 'z') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_3.obj"));
+
+	}
 	else {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 	}
@@ -58,6 +70,15 @@ bool Wall::OnCreate()
 	if (objShader->OnCreate() == false)
 		Debug::Error("Can't load OBJECT shader", __FILE__, __LINE__);
 
+	if (id == 'x') {
+		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(-90.0f, Vec3(0.0f, 1.0f, 0.0f)));
+	}
+	if (id == 'y') {
+		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::scale(Vec3(0.27f, 0.27f, 0.27f))  * MMath::rotate(180.0f, Vec3(0.0f, 1.0f, 0.0f)));
+	}
+	if (id == 'z') {
+		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::scale(Vec3(0.27f, 0.27f, 0.27f)) * MMath::rotate(-180.0f, Vec3(0.0f, 1.0f, 0.0f)));
+	}
 	return true;
 }
 
@@ -70,7 +91,7 @@ void Wall::OnDestroy()
 		delete objFile;
 	}
 }
-void Wall::rotateWall(float toatlTime_, Wall* theObject_)
+void Wall::rotateWall(float toatlTime_)
 {
 	if (id == 'k' || id == 'h' || id == 'o') {
 		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(1.5f, Vec3(0.0f, 1.0f, 0.0f)));
@@ -92,6 +113,13 @@ void Wall::moveWall(float toatlTime_, Wall* theObject_)
 {
 	if (theObject_->id == 'k') {
 		theObject_->SetModelMatrix(theObject_->GetModelMatrix() * MMath::translate(toatlTime_ * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(toatlTime_ * 50, Vec3(0.0f, 1.0f, 0.0f)));
+	}
+}
 
+
+void Wall::positionInstructions( )
+{
+	if (id == 'x') {
+		objFile->SetModelMatrix(objFile->GetModelMatrix() * MMath::rotate(90.0f, Vec3(0.0f, 1.0f, 0.0f)));
 	}
 }

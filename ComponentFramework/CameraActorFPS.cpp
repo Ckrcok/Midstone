@@ -104,9 +104,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	{
 		// Move forward & backwards -- updated method
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
-		{
-			/*cameraPositionVec += cameraSpeed * cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;*/
+		{//FORWARD
 
 			if (isFacingWall == true) {
 				if (lastTypedKey != 'w')
@@ -122,11 +120,12 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 				cameraPositionVec.y = 0.0f;
 				lastTypedKey = 'w';
 			}
+
+			
 		}
 		else if (!keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_S])
-		{
-			/*cameraPositionVec += cameraSpeed * -cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;*/
+		{//BACKWARDS
+			
 
 			if (isFacingWall == true) {
 				if (lastTypedKey != 's')
@@ -147,9 +146,8 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 		}
 
 		if (keyboard_state_array[SDL_SCANCODE_D] && !keyboard_state_array[SDL_SCANCODE_A])
-		{
-			/*cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;*/
+		{//RIGHT
+			
 
 			if (isFacingWall == true) {
 				if (lastTypedKey != 'd')
@@ -166,14 +164,11 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 				cameraPositionVec.y = 0.0f;
 				lastTypedKey = 'd';
 			}
-
 		}
 
 		else if (!keyboard_state_array[SDL_SCANCODE_D] && keyboard_state_array[SDL_SCANCODE_A])
-		{
-			/*cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;*/
-
+		{//LEFT
+			
 			if (isFacingWall == true) {
 				if (lastTypedKey != 'a')
 				{
@@ -190,7 +185,6 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 				lastTypedKey = 'a';
 
 			}
-
 		}
 	}
 	
