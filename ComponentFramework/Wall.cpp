@@ -22,7 +22,7 @@ bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
 	if (id == 'o') {
-		objFile->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+		objFile->SetMesh(new Mesh(nullptr, "meshes/gun8.obj"));
 	}
 	else if (id == 'k') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/securityCard.obj"));
@@ -40,6 +40,10 @@ bool Wall::OnCreate()
 	}
 	else if (id == 'z') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_3.obj"));
+
+	}
+	else if (id == 'd') {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/cubeExit.obj"));
 
 	}
 	else if ( ((id == 'a') || (id == 'b') || (id == 's') || (id == 'g')

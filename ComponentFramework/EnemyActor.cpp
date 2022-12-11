@@ -24,7 +24,7 @@ bool EnemyActor::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
