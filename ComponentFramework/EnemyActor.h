@@ -8,7 +8,7 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
-#include "CameraActor.h"
+#include "CameraActorFPS.h"
 
 using namespace MATH;
 using namespace std;
@@ -32,13 +32,12 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	CameraActor* camera;
+	CameraActorFPS* camera;
 
 	// Stun variables
 	bool isStunned = false;
 	float currentStunTimer;
 
-	void MoveToTarget(float deltaTime);
 	void FaceTarget(float deltaTime);
 
 	float GetDistance(Vec3 p, Vec3 q);
@@ -48,10 +47,14 @@ private:
 	float attackInterval;
 	float currentAttackValue;
 
-public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
-	~EnemyActor();
+public:	
+	void MoveToTarget(float deltaTime);
 
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
+	~EnemyActor();
+	Vec3 originalPos = position;
+	float enemyHealth = 15.0f;
+	float enemyDamage = 10.0f;
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
@@ -70,12 +73,24 @@ public:
 		isStunned = true;
 	};
 
-	void SetCamera(CameraActor* camera_)
+	void SetCamera(CameraActorFPS* camera_)
 	{
 		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
 
 		camera = nullptr;
 		camera = camera_;
+	}
+
+	Vec3 getPositionEnemy()
+	{
+		// Because safak made me do the right thing
+		return position;
+	}
+
+	void setPositionEnemy(Vec3 newPos_)
+	{
+		// Because safak made me do the right thing x2
+		position = newPos_;
 	}
 };
 

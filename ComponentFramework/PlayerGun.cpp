@@ -1,11 +1,11 @@
 #include "PlayerGun.h"
 
-PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_) : Actor(parent_)
 {
 	offset = offset_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	camera = camera_;
+	cameraFPS = camera_;
 }
 
 PlayerGun::~PlayerGun() {}
@@ -18,16 +18,19 @@ bool PlayerGun::OnCreate()
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
+	gunMatrix = cameraFPS->GetCameraFPSLookAt() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f));
+
+	model_3D->SetModelMatrix(gunMatrix);	// Spawn position
 
 	// Only rotate if a rotation value is given
-	if (rotation > 0)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	//if (rotation > 0)
+	//	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
 	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
 	model_3D->OnCreate();
+
 
 	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
@@ -68,10 +71,27 @@ void PlayerGun::Render()
 void PlayerGun::Update(float deltaTime)
 {
 	// Position with correct camera position matrix
-	Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+	//Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+
+	//Vec3 gunPos = cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f);
 
 	// Set the model matrix and the position value
-	model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	//model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	//model_3D->SetModelMatrix(MMath::translate(gunPos));
+	//model_3D->SetModelMatrix(MMath::rotate(90, Vec3 (0.0f, 1.0f, 0.0f))
+								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
+	
+	Vec3 gunOrientation = cameraFPS->GetCameraFront();
+	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + gunOrientation + Vec3(0.0f, -0.5f, 0.0f);
+	//offset = gunPos;
+	rotation = gunOrientation.x;
+	rotationAxis = Vec3(0.0f, cameraFPS->GetCameraFront().y, 0.0f);
+	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
+	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 0.0f, 1.0f)));
+	
+	gunMatrix = MMath::translate(gunPos) * cameraFPS->GetCameraFPSLookAt() * MMath::inverse(cameraFPS->GetCameraRotationMatrix()) * MMath::translate(Vec3(0.0f, 0.0f, -0.2f));
+	model_3D->SetModelMatrix(gunMatrix);
+	
 	position = model_3D->GetPosition();
 
 	// Update the bullets
@@ -89,14 +109,14 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 
 		// Left mouse button is down
 		if (SDL_BUTTON_LEFT == sdlEvent.button.button)
-			SpawnBullet(Vec3(0.0f, 0, -0.5f));
+			SpawnBullet(Vec3(0.0f, 0.0f, 0.0f));
 	}
 }
 
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
-	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);											// Spawn bullet with offset from gun
-	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);	// Create bullet
+	Vec3 offset = Vec3(0.0f, 0.1f, 0.0f);											// Spawn bullet with offset from gun
+	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this, this);	// Create bullet
 	bulletLabel++;																	// Increase number for next bullet
 
 	bullet->OnCreate();					// Call OnCreate for bullet

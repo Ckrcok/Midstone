@@ -9,10 +9,13 @@
 #include "Debug.h"
 #include "MMAth.h"
 #include "CameraActor.h"
+#include "CameraActorFPS.h"
 #include "Bullet.h"
 
 using namespace MATH;
 using namespace std;
+
+class Bullet;
 
 class PlayerGun : public Actor
 {
@@ -27,17 +30,22 @@ private:
 	Actor* model_3D;
 	Shader* shader;
 
+	Matrix4 gunMatrix;
+
 	// Player
-	CameraActor* camera;
+	//CameraActor* camera;
+	CameraActorFPS* cameraFPS;
+
+
+public:
+	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
+	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_);
+	PlayerGun();
+	~PlayerGun();
 
 	// Bullets
 	vector<Bullet*> spawnedBullets;
 	int bulletLabel = 0;
-
-public:
-	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
-	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
-	~PlayerGun();
 
 	bool OnCreate();
 	void OnDestroy();
@@ -47,6 +55,8 @@ public:
 
 	void SpawnBullet(Vec3 velocity_);
 	void HandleDestroyBullet();
+
+	inline Matrix4 GetGunMatrix() { return gunMatrix; }
 };
 
 #endif // !PLAYER_GUN_H

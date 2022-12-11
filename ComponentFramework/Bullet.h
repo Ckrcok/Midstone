@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
+#include "PlayerGun.h"
 
 using namespace std;
 
@@ -22,15 +23,16 @@ private:
 	// Model
 	Actor* model_3D;
 	Shader* shader;
+	PlayerGun* playerGun;
 
-	float destroyAfterSeconds = 5.0f;
+	float destroyAfterSeconds = 0.60f;
 	float timer = 0.0f;
 	int label;
 
 	bool bulletDestroyIsCalled = false;
 
 public:
-	Bullet(int label, Vec3 spawnPos, Vec3 velocity_, Component* parent_);
+	Bullet(int label, Vec3 spawnPos, Vec3 velocity_, PlayerGun* playerGun_, Component* parent_);
 	~Bullet();
 
 	bool OnCreate();

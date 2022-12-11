@@ -8,7 +8,7 @@ Scene3::Scene3() : shader(nullptr)
 	int spawnPos = -2.0f;
 	for (int i = 0; i < 1; i++)
 	{
-		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), camera, NULL);
+		EnemyActor* enemy = new EnemyActor(Vec3(spawnPos, 0.0f, 0.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
 		spawnPos += 2;
 
 		enemies.push_back(enemy);
@@ -27,15 +27,20 @@ bool Scene3::OnCreate()
 {
 	Debug::Info("Loading assets Scene3: ", __FILE__, __LINE__);
 
-	camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
-	camera->OnCreate();
+	/*camera = new CameraActor(Vec3(0.0f, 0.0f, 0.0f), nullptr);
+	camera->OnCreate();*/
+
+	cameraFPS = new CameraActorFPS(nullptr);
+	cameraFPS->OnCreate();
+
+
 
 	//playerGun = new PlayerGun(Vec3(1.0f, -0.5f, -2.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
-	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), camera, nullptr);
+	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
 	playerGun->OnCreate();
 
 	for (EnemyActor* enemy : enemies) {
-		enemy->SetCamera(camera);
+		enemy->SetCamera(cameraFPS);
 		enemy->OnCreate();
 	}
 
@@ -65,10 +70,16 @@ void Scene3::OnDestroy()
 {
 	Debug::Info("Deleting assets Scene3: ", __FILE__, __LINE__);
 
-	if (camera)
+	/*if (camera)
 	{
 		camera->OnDestroy();
 		delete camera;
+	}*/
+
+	if (cameraFPS)
+	{
+		cameraFPS->OnDestroy();
+		delete cameraFPS;
 	}
 
 	for (EnemyActor* enemy : enemies)
@@ -103,14 +114,14 @@ void Scene3::Render() const
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	camera->Render();
+	cameraFPS->Render();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
 	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
 
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
@@ -126,7 +137,7 @@ void Scene3::Render() const
 
 void Scene3::Update(const float deltaTime)
 {
-	camera->Update(deltaTime);
+	cameraFPS->Update(deltaTime);
 
 	for (EnemyActor* enemy : enemies)
 		enemy->Update(deltaTime);
@@ -139,7 +150,7 @@ void Scene3::Update(const float deltaTime)
 
 void Scene3::HandleEvents(const SDL_Event& sdlEvent)
 {
-	camera->HandleEvents(sdlEvent);
+	cameraFPS->HandleEvents(sdlEvent);
 
 	for (EnemyActor* enemy : enemies)
 		enemy->HandleEvents(sdlEvent);

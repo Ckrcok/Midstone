@@ -14,7 +14,7 @@
 
 
 SceneCameraTest::SceneCameraTest() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
-	Debug::Info("Created SceneCameraTest: ", __FILE__, __LINE__);	
+	Debug::Info("Created SceneCameraTest: ", __FILE__, __LINE__);
 }
 
 SceneCameraTest::~SceneCameraTest() {
@@ -30,9 +30,19 @@ bool SceneCameraTest::OnCreate() {
 	// CAMERA FPS
 	cameraFPS = new CameraActorFPS(nullptr);
 	cameraFPS->OnCreate();
-	
+
 	//modelMatrix.loadIdentity();
 
+	// Create the player gun and call OnCreate
+	playerGun = new PlayerGun(Vec3(0.0f, 0.0f, 0.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
+	playerGun->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	playerGun->GetMesh()->OnCreate();
+	playerGun->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, -1.0f)));
+	playerGun->SetTexture(new Texture());
+	playerGun->GetTexture()->LoadImage("textures/Texture_Gray.png");
+	playerGun->OnCreate();
+
+	// reference object on xz
 	sphere = new Actor(nullptr);
 	sphere->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	sphere->GetMesh()->OnCreate();
@@ -40,6 +50,90 @@ bool SceneCameraTest::OnCreate() {
 	sphere->SetTexture(new Texture());
 	sphere->GetTexture()->LoadImage("textures/white.png");
 	sphere->OnCreate();
+
+	// XZ plane (ground)
+	ground = new Actor(nullptr);
+	ground->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	ground->GetMesh()->OnCreate();
+	ground->SetModelMatrix(MMath::translate(Vec3(0.0f, -3.0f, 0.0f)) * MMath::scale(Vec3(50.0f, 0.05f, 50.0f)));
+	ground->SetTexture(new Texture());
+	ground->GetTexture()->LoadImage("textures/ground.png");
+	ground->OnCreate();
+
+	// XZ plane (ceiling)
+	ceiling = new Actor(nullptr);
+	ceiling->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	ceiling->GetMesh()->OnCreate();
+	ceiling->SetModelMatrix(MMath::translate(Vec3(0.0f, 5.1f, 0.0f)) * MMath::scale(Vec3(50.0f, 0.05f, 50.0f)));
+	ceiling->SetTexture(new Texture());
+	ceiling->GetTexture()->LoadImage("textures/white.png");
+	ceiling->OnCreate();
+
+	// walls
+	wallNegZ = new Actor(nullptr);
+	wallNegZ->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	wallNegZ->GetMesh()->OnCreate();
+	wallNegZ->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, -50.0f)) * MMath::scale(Vec3(50.0f, 5.0f, 50.0f)));
+	wallNegZ->SetTexture(new Texture());
+	wallNegZ->GetTexture()->LoadImage("textures/yellow.png");
+	wallNegZ->OnCreate();
+
+	wallPosZ = new Actor(nullptr);
+	wallPosZ->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	wallPosZ->GetMesh()->OnCreate();
+	wallPosZ->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, 50.0f)) * MMath::scale(Vec3(50.0f, 5.0f, 50.0f)));
+	wallPosZ->SetTexture(new Texture());
+	wallPosZ->GetTexture()->LoadImage("textures/yellow.png");
+	wallPosZ->OnCreate();
+
+	wallNegX = new Actor(nullptr);
+	wallNegX->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	wallNegX->GetMesh()->OnCreate();
+	wallNegX->SetModelMatrix(MMath::translate(Vec3(-50.0f, 0.0f, 0.0f)) * MMath::scale(Vec3(50.0f, 5.0f, 50.0f)));
+	wallNegX->SetTexture(new Texture());
+	wallNegX->GetTexture()->LoadImage("textures/yellow.png");
+	wallNegX->OnCreate();
+
+	wallPosX = new Actor(nullptr);
+	wallPosX->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	wallPosX->GetMesh()->OnCreate();
+	wallPosX->SetModelMatrix(MMath::translate(Vec3(50.0f, 0.0f, 0.0f)) * MMath::scale(Vec3(50.0f, 5.0f, 50.0f)));
+	wallPosX->SetTexture(new Texture());
+	wallPosX->GetTexture()->LoadImage("textures/yellow.png");
+	wallPosX->OnCreate();
+
+	// LIGHTING
+	lightSource1 = new Actor(nullptr);
+	lightSource1->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	lightSource1->GetMesh()->OnCreate();
+	lightSource1->SetModelMatrix(MMath::translate(Vec3(0.0f, 5.0f, -20.0f)) * MMath::scale(Vec3(1.0f, 0.1f, 1.0f)));
+	lightSource1->SetTexture(new Texture());
+	lightSource1->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource1->OnCreate();
+
+	lightSource2 = new Actor(nullptr);
+	lightSource2->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	lightSource2->GetMesh()->OnCreate();
+	lightSource2->SetModelMatrix(MMath::translate(Vec3(20.0f, 5.0f, 0.0f)) * MMath::scale(Vec3(1.0f, 0.1f, 1.0f)));
+	lightSource2->SetTexture(new Texture());
+	lightSource2->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource2->OnCreate();
+
+	lightSource3 = new Actor(nullptr);
+	lightSource3->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	lightSource3->GetMesh()->OnCreate();
+	lightSource3->SetModelMatrix(MMath::translate(Vec3(0.0f, 5.0f, 20.0f)) * MMath::scale(Vec3(1.0f, 0.1f, 1.0f)));
+	lightSource3->SetTexture(new Texture());
+	lightSource3->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource3->OnCreate();
+
+	lightSource4 = new Actor(nullptr);
+	lightSource4->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	lightSource4->GetMesh()->OnCreate();
+	lightSource4->SetModelMatrix(MMath::translate(Vec3(-20.0f, 5.0f, 0.0f)) * MMath::scale(Vec3(1.0f, 0.1f, 1.0f)));
+	lightSource4->SetTexture(new Texture());
+	lightSource4->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource4->OnCreate();
 
 	objNegX = new Actor(nullptr);
 	objNegX->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
@@ -81,13 +175,7 @@ bool SceneCameraTest::OnCreate() {
 	objPosZ->GetTexture()->LoadImage("textures/grey.png");
 	objPosZ->OnCreate();
 
-	lightSource1 = new Actor(nullptr);
-	lightSource1->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
-	lightSource1->GetMesh()->OnCreate();
-	lightSource1->SetModelMatrix(MMath::translate(Vec3(0.0f, 5.0f, 0.0f)) * MMath::scale(Vec3(1.0f, 0.2f, 4.0f)));
-	lightSource1->SetTexture(new Texture());
-	lightSource1->GetTexture()->LoadImage("textures/white.png");
-	lightSource1->OnCreate();
+	
 
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
 	if (shader->OnCreate() == false)
@@ -95,34 +183,34 @@ bool SceneCameraTest::OnCreate() {
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 	}
 
-	// center lights
-	lightPos[0] = Vec3(3.0f, 0.0f, 0.0f);
-	lightPos[1] = Vec3(-3.0f, 0.0f, 0.0f);
-	lightPos[2] = Vec3(0.0f, 3.0f, 0.0f);
-	lightPos[3] = Vec3(0.0f, -3.0f, 0.0f);
+	// ceiling lights
+	lightPos[0] = lightSource1->GetPosition();
+	lightPos[1] = lightSource2->GetPosition();
+	lightPos[2] = lightSource2->GetPosition();
+	lightPos[3] = lightSource2->GetPosition();
 
 	// surrounding lights
-	lightPos[4] = Vec3(10.0f, 4.0f, 0.0f);
-	lightPos[5] = Vec3(-10.0f, 4.0f, 0.0f);
-	lightPos[6] = Vec3(0.0f, 4.0f, 10.0f);
-	lightPos[7] = Vec3(0.0f, 4.0f, -10.0f);
+	/*lightPos[4] = Vec3(0.0f, 0.0f, 1000.0f);
+	lightPos[5] = Vec3(0.0f, 0.0f, 1000.0f);
+	lightPos[6] = Vec3(0.0f, 0.0f, 1000.0f);
+	lightPos[7] = Vec3(0.0f, 0.0f, 1000.0f);*/
 
 	// GAME LEVEL LIGHT SOURCE POSITIONS
-	lightPos[8] = lightSource1->GetPosition();
+	//lightPos[8] = Vec3(0.0f, 0.0f, 1000.0f);
 
 	// diffuse values
-	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
-	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
-	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
+	diffuse[0] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	diffuse[1] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	diffuse[2] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 
-	diffuse[4] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	/*diffuse[4] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[5] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[6] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
-	diffuse[7] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	diffuse[7] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);*/
 
 	// GAME LEVEL LIGHT SOURCE DIFFUSE VALUES
-	diffuse[8] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	//diffuse[8] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 
 	// specular values
 	specular[0] = 0.5 * diffuse[0];
@@ -130,13 +218,13 @@ bool SceneCameraTest::OnCreate() {
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
 
-	specular[4] = 0.5 * diffuse[4];
+	/*specular[4] = 0.5 * diffuse[4];
 	specular[5] = 0.5 * diffuse[5];
 	specular[6] = 0.5 * diffuse[6];
-	specular[7] = 0.5 * diffuse[7];
+	specular[7] = 0.5 * diffuse[7];*/
 
 	// GAME LEVEL LIGHT SOURCE SPECULAR VALUES
-	specular[8] = 0.5 * diffuse[8];
+	//specular[8] = 0.5 * diffuse[8];
 
 	return true;
 }
@@ -194,12 +282,76 @@ void SceneCameraTest::OnDestroy() {
 		delete objPosZ;
 	}
 
+	// PLAYER GUN
+	if (playerGun)
+	{
+		playerGun->OnDestroy();
+		delete playerGun;
+	}
+
+	// GROUND
+	if (ground)
+	{
+		ground->OnDestroy();
+		delete ground;
+	}
+
+	// CEILING
+	if (ceiling)
+	{
+		ceiling->OnDestroy();
+		delete ceiling;
+	}
+
+	// WALLS
+	if (wallNegX)
+	{
+		wallNegX->OnDestroy();
+		delete wallNegX;
+	}
+
+	if (wallPosX)
+	{
+		wallPosX->OnDestroy();
+		delete wallPosX;
+	}
+
+	if (wallNegZ)
+	{
+		wallNegZ->OnDestroy();
+		delete wallNegZ;
+	}
+
+	if (wallPosZ)
+	{
+		wallPosZ->OnDestroy();
+		delete wallPosZ;
+	}
+
 	if (lightSource1)
 	{
 		lightSource1->OnDestroy();
 		delete lightSource1;
 	}
-	
+
+	if (lightSource2)
+	{
+		lightSource2->OnDestroy();
+		delete lightSource2;
+	}
+
+	if (lightSource3)
+	{
+		lightSource3->OnDestroy();
+		delete lightSource3;
+	}
+
+	if (lightSource4)
+	{
+		lightSource4->OnDestroy();
+		delete lightSource4;
+	}
+
 	shader->OnDestroy();
 	delete shader;
 
@@ -210,6 +362,8 @@ void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 
 	// CAMERA FPS
 	cameraFPS->HandleEvents(sdlEvent);
+
+	playerGun->HandleEvents(sdlEvent);
 
 	switch (sdlEvent.type) {
 	case SDL_KEYDOWN:
@@ -232,13 +386,25 @@ void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 void SceneCameraTest::Update(const float deltaTime) {
 	static float totalTime = 0.0f;
 	totalTime += deltaTime;
+
+	playerGun->Update(deltaTime);
+
+	//cameraFPS->Update(deltaTime);
+
 	//sphere->SetModelMatrix(sphere->GetModelMatrix() * MMath::translate(deltaTime * Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(deltaTime * 50, Vec3(0.0f, 1.0f, 0.0f)));
-	printf("Sphere: \t");	
+	printf("\n\n");
+	printf("\n\n");
+	printf("Sphere: \t");
 	sphere->GetPosition().print();
 	printf("\n\n");
 	printf("\n\n");
-	printf("objNegX: \t");
-	objNegX->GetPosition().print();
+	printf("PlayerGun: \t");
+	playerGun->GetPosition().print();
+
+
+
+	/*printf("objNegX: \t");
+	objNegX->GetPosition().print();*/
 	/*printf("\n\n");
 	printf("\n\n");
 	printf("Camera1: \t");
@@ -253,7 +419,7 @@ void SceneCameraTest::Update(const float deltaTime) {
 	printf("\n\n");
 	printf("\n\n");
 	printf("CameraFPS: \t");
-	cameraFPS->GetCamFPSPos().print();
+	cameraFPS->GetCameraFPSPos().print();
 	printf("\n\n");
 	printf("\n\n");
 	printf("Camera Orientation: \t");
@@ -279,7 +445,7 @@ void SceneCameraTest::Render() const {
 	//glFrontFace(GL_CCW);
 
 	/// Clear the screen
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -294,7 +460,7 @@ void SceneCameraTest::Render() const {
 	glUseProgram(shader->GetProgram());
 	/*glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());*/
-	
+
 	// FPS CAMERA MATRIX CALLS 
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
@@ -302,7 +468,7 @@ void SceneCameraTest::Render() const {
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
-	
+
 
 	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
@@ -310,7 +476,20 @@ void SceneCameraTest::Render() const {
 	sphere->Render();
 	//glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	
+
+	// GROUND
+	glBindTexture(GL_TEXTURE_2D, ground->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, ground->GetModelMatrix());
+	ground->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// CEILING
+	glBindTexture(GL_TEXTURE_2D, ceiling->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, ceiling->GetModelMatrix());
+	ceiling->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+		// OBJECTS
 	glBindTexture(GL_TEXTURE_2D, objNegX->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, objNegX->GetModelMatrix());
 	objNegX->Render();
@@ -336,11 +515,64 @@ void SceneCameraTest::Render() const {
 	objPosZ->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	// PLAYER GUN
+	glBindTexture(GL_TEXTURE_2D, playerGun->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, playerGun->GetModelMatrix());
+	playerGun->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// LIGHT SOURCES
 	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());
 	lightSource1->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	glBindTexture(GL_TEXTURE_2D, lightSource2->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource2->GetModelMatrix());
+	lightSource2->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource3->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource3->GetModelMatrix());
+	lightSource3->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource4->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource4->GetModelMatrix());
+	lightSource4->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// WALLS
+	glBindTexture(GL_TEXTURE_2D, wallNegX->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, wallNegX->GetModelMatrix());
+	wallNegX->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, wallPosX->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, wallPosX->GetModelMatrix());
+	wallPosX->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, wallNegZ->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, wallNegZ->GetModelMatrix());
+	wallNegZ->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, wallPosZ->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, wallPosZ->GetModelMatrix());
+	wallPosZ->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// CAMERA ATTACHMENT
+	glBindTexture(GL_TEXTURE_2D, cameraFPS->GetCameraAttachment()->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraFPS->GetCameraAttachment()->GetModelMatrix());
+	cameraFPS->GetCameraAttachment()->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	/*glBindTexture(GL_TEXTURE_2D, camera->GetSkyBox()->GetSkyboxTextureID());
+	glBindTexture(GL_TEXTURE_CUBE_MAP, camera->GetSkyBox()->GetSkyboxTextureID());
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	glUseProgram(0);
 

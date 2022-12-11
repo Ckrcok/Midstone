@@ -7,8 +7,8 @@ using namespace MATH;
 CameraActorFPS::CameraActorFPS(Component* parent_) :Actor(parent_)
 {
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
-	translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
+	//rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
+	//translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 	
 	// initial cameraPosition is at spawn position
 	cameraPositionVec = Vec3(0.0f, 0.0f, 0.0f);
@@ -34,7 +34,7 @@ Matrix4 CameraActorFPS::LookAtFPS(const float positionX, const float positionY, 
 
 	Vec3 up		= VMath::cross(front, side);
 
-	Matrix4 translationLookAt;
+	translationLookAt;
 
 		translationLookAt[0]  = 1.0f;
 		translationLookAt[1]  = 0.0f;
@@ -54,7 +54,7 @@ Matrix4 CameraActorFPS::LookAtFPS(const float positionX, const float positionY, 
 		translationLookAt[15] = 1.0f;
 
 
-	Matrix4 rotationLookAt;
+	rotationLookAt;
 	
 		rotationLookAt[0]  = side.x;
 		rotationLookAt[1]  = up.x;
@@ -86,21 +86,17 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 {
 	SDL_PumpEvents();  // make sure we have the latest mouse & keyboard state.
 	SDL_SetRelativeMouseMode(SDL_TRUE); // Set relative mouse mode for First Person view
-	bool MouseMotion = false;
+	
 
 	// Camera Orientation Vector (camera is looking at:)
-	Vec3 cameraFront;
+	cameraFront;
 	cameraFront.x = cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
 	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS);
 	cameraFront.z = cos(cameraPitch * DEGREES_TO_RADIANS) * sin(cameraYaw * DEGREES_TO_RADIANS);
-	/*cameraFront.x = -sin(cameraYaw * DEGREES_TO_RADIANS);
-	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
-	cameraFront.z = -cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);*/
 	cameraOrientationVec = VMath::normalize(cameraFront);
 
 	// Create the view matrix with First Person LookAt function
 	viewMatrix = LookAtFPS(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec);
-	//viewMatrix = MMath::lookAt(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec); // --- Scott's method
 
 	// CAMERA MOVEMENT on XY Plane (45-90 degree movement)
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
@@ -108,25 +104,87 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	{
 		// Move forward & backwards -- updated method
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
-		{
-			cameraPositionVec += cameraSpeed * cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;
+		{//FORWARD
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'w')
+				{
+					cameraPositionVec += cameraSpeed * cameraOrientationVec;
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'w';
+					isFacingWall = false;
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * cameraOrientationVec;
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'w';
+			}
+
+			
 		}
 		else if (!keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_S])
-		{
-			cameraPositionVec += cameraSpeed * -cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;
+		{//BACKWARDS
+			
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 's')
+				{
+					cameraPositionVec += cameraSpeed * -cameraOrientationVec;
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 's';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * -cameraOrientationVec;
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 's';
+			}
+
 		}
 
 		if (keyboard_state_array[SDL_SCANCODE_D] && !keyboard_state_array[SDL_SCANCODE_A])
-		{
-			cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;
+		{//RIGHT
+			
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'd')
+				{
+					cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'd';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'd';
+			}
 		}
+
 		else if (!keyboard_state_array[SDL_SCANCODE_D] && keyboard_state_array[SDL_SCANCODE_A])
-		{
-			cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;
+		{//LEFT
+			
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'a')
+				{
+					cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'a';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'a';
+
+			}
 		}
 	}
 	
@@ -179,12 +237,34 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 
 bool CameraActorFPS::OnCreate()
 {
+	cameraAttachment = new Actor(nullptr);
+	cameraAttachment->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	cameraAttachment->GetMesh()->OnCreate();
+	cameraAttachment->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
+	cameraAttachment->SetTexture(new Texture());
+	cameraAttachment->GetTexture()->LoadImage("textures/white.png");
+	cameraAttachment->OnCreate();
+
+	// Create shader
+	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	if (shader->OnCreate() == false)
+		Debug::Error("Can't load shader", __FILE__, __LINE__);
+
 	return true;
 }
 
 void CameraActorFPS::OnDestroy()
 {
+	if (cameraAttachment)
+	{
+		cameraAttachment->OnDestroy();
+		delete cameraAttachment;
+	}
+}
 
+void CameraActorFPS::Update(float deltaTime)
+{
+	cameraAttachment->SetModelMatrix(MMath::rotate(this->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
 }
 
 CameraActorFPS::~CameraActorFPS()
@@ -194,11 +274,14 @@ CameraActorFPS::~CameraActorFPS()
 
 void CameraActorFPS::Render() const
 {
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_CULL_FACE);
-	/*glUseProgram(skybox->GetShader()->GetProgram());
-	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
-	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("cameraRotationMatrix"), 1, GL_FALSE, rotationMatrix);
-	skybox->Render();
-	glUseProgram(0);*/
+	/*glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(shader->GetProgram());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, viewMatrix);*/
+	/*glBindTexture(GL_TEXTURE_2D, cameraAttachment->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraAttachment->GetModelMatrix());
+	cameraAttachment->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);*/
+	/*glUseProgram(0);*/
 }
