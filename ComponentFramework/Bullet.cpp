@@ -1,12 +1,14 @@
 #include "Bullet.h"
 
 //Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, PlayerGun* playerGun_, Component* parent_) : Actor(parent_)
-Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, Component* parent_) : Actor(parent_)
+Bullet::Bullet(int label_, Vec3 spawnPos, Vec3 velocity_, PlayerGun* playerGun_, Component* parent_) : Actor(parent_)
 {
 	label = label_;
 
 	position = spawnPos;
 	velocity = velocity_;
+
+	playerGun = playerGun_;
 
 	timer = destroyAfterSeconds;
 }
@@ -17,11 +19,11 @@ bool Bullet::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/GunBullet2.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));	// Spawn position
-
+	//model_3D->SetModelMatrix(MMath::translate(position));	// Spawn position
+	model_3D->SetModelMatrix(playerGun->GetGunMatrix() * MMath::scale(Vec3(0.5f, 0.5f, 0.5f)));
 	// Create texture
 	model_3D->SetTexture(new Texture());
 	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
@@ -73,9 +75,12 @@ void Bullet::Update(float deltaTime)
 		std::cout << "Destroy is called for " << this << " bullet!" << std::endl;
 		bulletDestroyIsCalled = true;
 	}
+	
+	velocity += Vec3(0.0f, 0.0f, -deltaTime * 1500);
 
-	position = model_3D->GetPosition() + velocity;
-	model_3D->SetModelMatrix(MMath::translate(position));
+	//position = model_3D->GetPosition();
+	model_3D->SetModelMatrix(playerGun->GetGunMatrix() *= MMath::translate(velocity));
+	cout << "Bullet Spawn!" << endl;
 }
 
 void Bullet::OnCollision()

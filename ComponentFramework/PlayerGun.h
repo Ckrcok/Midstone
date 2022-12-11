@@ -15,6 +15,8 @@
 using namespace MATH;
 using namespace std;
 
+class Bullet;
+
 class PlayerGun : public Actor
 {
 private:
@@ -27,6 +29,8 @@ private:
 	// Model
 	Actor* model_3D;
 	Shader* shader;
+
+	Matrix4 gunMatrix;
 
 	// Player
 	//CameraActor* camera;
@@ -51,6 +55,8 @@ public:
 
 	void SpawnBullet(Vec3 velocity_);
 	void HandleDestroyBullet();
+
+	inline Matrix4 GetGunMatrix() { return gunMatrix; }
 };
 
 #endif // !PLAYER_GUN_H

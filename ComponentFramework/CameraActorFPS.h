@@ -37,6 +37,10 @@ private:
 
 	Matrix4 LookAtFPS(const Vec3 position, const Vec3 target, const Vec3 worldUp);
 
+	Matrix4 translationLookAt;
+	Matrix4 rotationLookAt;
+	Matrix4 LookAtFPSMatrix;
+
 	Vec3 cameraPositionVec;
 	Vec3 cameraOrientationVec;
 	Vec3 cameraUpDirVec;
@@ -50,6 +54,7 @@ private:
 	float cameraYaw = -90.0f;
 	float mouseSensitivity;
 
+
 public:
 	CameraActorFPS(Component* parent_);
 	~CameraActorFPS();
@@ -58,6 +63,9 @@ public:
 	void OnDestroy() override;
 	void Update(float deltaTime);
 	void Render() const override;
+
+	bool MouseMotion = false;
+
 	inline Matrix4 GetProjectionMatrix() { return projectionMatrix; }
 	inline Matrix4 GetViewMatrix() { return viewMatrix; }
 	inline Matrix4 GetTranslationMatrix() { return translationMatrix; }
@@ -69,6 +77,9 @@ public:
 	inline Vec3 GetCameraFPSPos() { return cameraPositionVec; }
 	inline Vec3 GetCameraFront() { return cameraFront; }
 	Actor* GetCameraAttachment() { return cameraAttachment; }
+	inline Matrix4 GetCameraRotationMatrix() { return rotationLookAt; };
+	inline Matrix4 GetCameraTranslationMatrix() { return translationLookAt; }
+	inline Matrix4 GetCameraFPSLookAt() { return LookAtFPSMatrix; }
 	bool isFacingWall = false;
 	char lastTypedKey = 'n';//Being lazy yes, but this needs to work
 };

@@ -18,7 +18,9 @@ bool PlayerGun::OnCreate()
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(cameraFPS->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f)));	// Spawn position
+	gunMatrix = cameraFPS->GetCameraFPSLookAt() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f));
+
+	model_3D->SetModelMatrix(gunMatrix);	// Spawn position
 
 	// Only rotate if a rotation value is given
 	//if (rotation > 0)
@@ -85,7 +87,11 @@ void PlayerGun::Update(float deltaTime)
 	rotation = gunOrientation.x;
 	rotationAxis = Vec3(0.0f, cameraFPS->GetCameraFront().y, 0.0f);
 	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
-	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, Vec3(0.0f, 1.0f, 0.0f)));
+	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 0.0f, 1.0f)));
+	
+	gunMatrix = MMath::translate(gunPos) * cameraFPS->GetCameraFPSLookAt() * MMath::inverse(cameraFPS->GetCameraRotationMatrix()) * MMath::translate(Vec3(0.0f, 0.0f, -0.2f));
+	model_3D->SetModelMatrix(gunMatrix);
+	
 	position = model_3D->GetPosition();
 
 	// Update the bullets
@@ -103,14 +109,14 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 
 		// Left mouse button is down
 		if (SDL_BUTTON_LEFT == sdlEvent.button.button)
-			SpawnBullet(Vec3(0.0f, 0, -0.5f));
+			SpawnBullet(Vec3(0.0f, 0.0f, 0.0f));
 	}
 }
 
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
-	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);											// Spawn bullet with offset from gun
-	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);	// Create bullet
+	Vec3 offset = Vec3(0.0f, 0.1f, 0.0f);											// Spawn bullet with offset from gun
+	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this, this);	// Create bullet
 	bulletLabel++;																	// Increase number for next bullet
 
 	bullet->OnCreate();					// Call OnCreate for bullet

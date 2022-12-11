@@ -72,7 +72,7 @@ private:
 
 
 
-	
+
 
 public:
 	// Scene creation and destroy functions

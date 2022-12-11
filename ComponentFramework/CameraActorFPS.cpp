@@ -34,7 +34,7 @@ Matrix4 CameraActorFPS::LookAtFPS(const float positionX, const float positionY, 
 
 	Vec3 up		= VMath::cross(front, side);
 
-	Matrix4 translationLookAt;
+	translationLookAt;
 
 		translationLookAt[0]  = 1.0f;
 		translationLookAt[1]  = 0.0f;
@@ -54,7 +54,7 @@ Matrix4 CameraActorFPS::LookAtFPS(const float positionX, const float positionY, 
 		translationLookAt[15] = 1.0f;
 
 
-	Matrix4 rotationLookAt;
+	rotationLookAt;
 	
 		rotationLookAt[0]  = side.x;
 		rotationLookAt[1]  = up.x;
@@ -86,7 +86,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 {
 	SDL_PumpEvents();  // make sure we have the latest mouse & keyboard state.
 	SDL_SetRelativeMouseMode(SDL_TRUE); // Set relative mouse mode for First Person view
-	bool MouseMotion = false;
+	
 
 	// Camera Orientation Vector (camera is looking at:)
 	cameraFront;

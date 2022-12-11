@@ -12,19 +12,19 @@ SceneCombination::SceneCombination()
 	EnemyActor* enemyE = new EnemyActor(Vec3(15.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
 	EnemyActor* enemyF = new EnemyActor(Vec3(16.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
 
-	Vec3 minValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 minValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 minValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) -		(Vec3(16.0f, 1.0f, 4.0f)));
-	Vec3 minValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) -		(Vec3(2.0f, 1.0f, 4.0f)));
-	Vec3 minValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) -		(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 minValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) -		(Vec3(4.0f, 1.0f, 10.0f)));
-	Vec3 maxValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) +	(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 maxValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) +	(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 maxValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) +		(Vec3(16.0f, 1.0f, 4.0f)));
-	Vec3 maxValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) +		(Vec3(2.0f, 1.0f, 4.0f)));
-	Vec3 maxValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) +		(Vec3(4.0f, 1.0f, 4.0f)));
-	Vec3 maxValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) +		(Vec3(4.0f, 1.0f, 10.0f)));
-	
+	Vec3 minValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) - (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) - (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) - (Vec3(16.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) - (Vec3(2.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) - (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 minValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) - (Vec3(4.0f, 1.0f, 10.0f)));
+	Vec3 maxValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) + (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) + (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerC = (Vec3(8.0f, 0.0f, -20.0f) + (Vec3(16.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerD = (Vec3(10.0f, 0.0f, -6.0f) + (Vec3(2.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerE = (Vec3(15.0f, 0.0f, 16.0f) + (Vec3(4.0f, 1.0f, 4.0f)));
+	Vec3 maxValueTriggerF = (Vec3(16.0f, 0.0f, -4.0f) + (Vec3(4.0f, 1.0f, 10.0f)));
+
 	Box* triggerRoomA = new Box(Vec3(-17.0f, 0.0f, -24.0f), minValueTriggerA, maxValueTriggerA, enemyA);//= Box(minCornerB, maxCornerB);
 	Box* triggerRoomB = new Box(Vec3(-2.0f, 0.0f, -24.0f), minValueTriggerB, maxValueTriggerB, enemyB);//= Box(minCornerB, maxCornerB);
 	Box* triggerRoomC = new Box(Vec3(8.0f, 0.0f, -20.0f), minValueTriggerC, maxValueTriggerC, enemyC);//= Box(minCornerB, maxCornerB);
@@ -47,233 +47,225 @@ SceneCombination::SceneCombination()
 	roomTriggers.push_back(triggerRoomF);
 
 
-	
+
 	//Wall and pickups creation
 //NorthLimit
 	float northWallZStart = -30.0f;
-	for (int a = 0; a < 25; a++) // Until northWallZEnd
+	for (int a = 0; a < 25; a++) //Until northWallZEnd
 	{
 		northWallZStart += 2.0f;
 		Wall* wallTest;
 		if (northWallZStart == -28.0f) {
-		wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'd');
+			wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'd');
 
 		}
 		else {
-		wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+			wallTest = new Wall(Vec3(20.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
 		}
 		Wall* wallTestSOUTH = new Wall(Vec3(-24.0f, 0.0f, northWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTestSOUTH);
 	}
 
-	// WestLimit
+
+	//WestLimit
 	float westWallXStart = 20.0f;
-	for (int a = 0; a < 22; a++) // Until northWallZEnd
+	for (int a = 0; a < 22; a++) //Until northWallZEnd
 	{
 		westWallXStart -= 2.0f;
 
 		Wall* wallTest = new Wall(Vec3(westWallXStart, 0.0f, -30.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
 		Wall* wallTesteast = new Wall(Vec3(westWallXStart, 0.0f, 22.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(wallTest);
 		theWalls.push_back(wallTesteast);
 	}
-
-	// A'RoomWalls  DOOR
+	//A'RoomWalls  DOOR
 	float AWallXStart = -30.0f;
 	float AWallzStart = -8.0f;
 	for (int a = 0; a < 5; a++)
 	{
 		AWallXStart += 2.0f;
 		AWallzStart += 2.0f;
-
 		Wall* AwallTestEast;
 		Wall* AwallTestNorth = new Wall(Vec3(4.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* AwallTestSouth = new Wall(Vec3(-8.0f, 0.0f, AWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
-		if (AWallzStart == 2.0f)
+		if (AWallzStart == 2.0f) {
 			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'a');
-		else
+		}
+		else {
 			AwallTestEast = new Wall(Vec3(AWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+		}
 
 		theWalls.push_back(AwallTestNorth);
 		theWalls.push_back(AwallTestSouth);
 		theWalls.push_back(AwallTestEast);
 	}
 
-	// B'RoomWalls DOOR
+	//B'RoomWalls DOOR
 	float bWallXStart = -30.0f;
 	for (int a = 0; a < 5; a++)
 	{
-		bWallXStart += 2.0f;
 		Wall* BwallTestNorth;
-
-		if (bWallXStart == -28.0f)
+		bWallXStart += 2.0f;
+		if (bWallXStart == -28.0f) {
 			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'b');
-		else
+		}
+		else {
 			BwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, bWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
+		}
 		theWalls.push_back(BwallTestNorth);
 	}
-
 	float bWallzStart = -12.0f;
 	for (int a = 0; a < 1; a++)
 	{
 		bWallzStart -= 2.0f;
-
 		Wall* BwallTest = new Wall(Vec3(bWallzStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* BwallTestN = new Wall(Vec3(bWallzStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(BwallTest);
 		theWalls.push_back(BwallTestN);
 	}
-
 	float bWallxzStart = -18.0f;
 	for (int a = 0; a < 3; a++)
 	{
 		bWallxzStart += 2.0f;
-
 		Wall* BwalzlTest = new Wall(Vec3(-16.0f, 0.0f, bWallxzStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(BwalzlTest);
 	}
-
-	// SecurityRoomDoor
+	//SecurityRoomDoor
 	float sWallxzStart = -12.0f;
 	Wall* SwalzlTest;
-
 	for (int a = 0; a < 5; a++)
 	{
 		sWallxzStart -= 2.0f;
-
-		if (sWallxzStart == -14.0f)
+		if (sWallxzStart == -14.0f) {
 			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 's');
-		else
+		}
+		else {
 			SwalzlTest = new Wall(Vec3(sWallxzStart, 0.0f, 0.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
+		}
 		theWalls.push_back(SwalzlTest);
 	}
 
-	// PowerRoomDoor
+	//PowerRoomDoor
 	float pWallxzStart = -12.0f;
 	for (int a = 0; a < 5; a++)
 	{
 		Wall* PwalzlTest;
-
 		pWallxzStart -= 2.0f;
 		PwalzlTest = new Wall(Vec3(pWallxzStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
 
 		theWalls.push_back(PwalzlTest);
 	}
 
-	// ERoomWalls DOOR
+	//ERoomWalls DOOR
 	float EWallXStart = -10.0f;
 	for (int a = 0; a < 15; a++)
 	{
 		EWallXStart += 2.0f;
-
 		Wall* EwallTestNorth;
-
-		if (EWallXStart == 12.0f)
+		if (EWallXStart == 12.0f) {
 			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'g');
-		else
+		}
+		else {
 			EwallTestNorth = new Wall(Vec3(-12.0f, 0.0f, EWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
+		}
 		theWalls.push_back(EwallTestNorth);
 	}
 
-	// DRoom DOORS
+
+	//DRoom DOORS
 	float DWallZStart = -10.0f;
-	for (int a = 0; a < 9; a++) // Until northWallZEnd
+	for (int a = 0; a < 9; a++) //Until northWallZEnd
 	{
 		DWallZStart += 2.0f;
-
 		Wall* DwallTest;
 		Wall* DwallTestSOUTH;
-		
-			DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-		
 
-		if (DWallZStart == -6.0f)
+		DwallTest = new Wall(Vec3(8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
+
+		if (DWallZStart == -6.0f) {
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'D');
-		else
+		}
+		else {
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, DWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
+		}
 
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
-
-	// DroomEASTWEST
+	//DroomEASTWEST
 	float DWallXStart = 8.0f;
 	for (int a = 0; a < 7; a++)
 	{
 		DWallXStart -= 2.0f;
-
 		Wall* DwallTest = new Wall(Vec3(DWallXStart, 0.0f, -10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* DwallTesteast = new Wall(Vec3(DWallXStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTesteast);
 	}
 
-	// FRoom door
+	//FRoom door
 	float FWallZStart = 14.0f;
 	for (int a = 0; a < 3; a++)
 	{
-		FWallZStart += 2.0f;
 
+		FWallZStart += 2.0f;
 		Wall* DwallTestSOUTH;
 		Wall* DwallTest = new Wall(Vec3(8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
-		if (FWallZStart == 20.0f)
+		if (FWallZStart == 20.0f) {
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'f');
-		else
+
+		}
+		else {
 			DwallTestSOUTH = new Wall(Vec3(-8.0f, 0.0f, FWallZStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
+		}
 		theWalls.push_back(DwallTest);
 		theWalls.push_back(DwallTestSOUTH);
 	}
-
-	// Froom
+	//Froom
 	float FWallXStart = 8.0f;
-	for (int a = 0; a < 7; a++) // Until northWallZEnd
+	for (int a = 0; a < 7; a++) //Until northWallZEnd
 	{
 		FWallXStart -= 2.0f;
-
 		Wall* FwallTest = new Wall(Vec3(FWallXStart, 0.0f, 14.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
-
 		theWalls.push_back(FwallTest);
 	}
 
-	// CRoom
+	//CRoom
 	float CWallZStart = 20.0f;
-	for (int a = 0; a < 3; a++)	// Until northWallZEnd
+	for (int a = 0; a < 3; a++) //Until northWallZEnd
 	{
 		CWallZStart -= 2.0f;
-
 		Wall* CwallTest = new Wall(Vec3(CWallZStart, 0.0f, -18.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 		Wall* CwallTestSOUTH;
-
-		if (CWallZStart == 18.0f)
+		if (CWallZStart == 18.0f) {
 			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'c');
-		else
+		}
+		else {
 			CwallTestSOUTH = new Wall(Vec3(CWallZStart, 0.0f, 10.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
 
+		}
 		theWalls.push_back(CwallTest);
 		theWalls.push_back(CwallTestSOUTH);
 	}
-
-	// Croom
+	//Croom
 	float CWallXStart = -18.0f;
 	for (int a = 0; a < 13; a++)
 	{
 		CWallXStart += 2.0f;
+		Wall* CwallTest;
 
-		Wall* CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+		CwallTest = new Wall(Vec3(12.0f, 0.0f, CWallXStart), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'w');
+
+
 
 		theWalls.push_back(CwallTest);
 	}
@@ -282,12 +274,11 @@ SceneCombination::SceneCombination()
 	//PICKUPS
 	//weapon pickup
 	Wall* wpPickup = new Wall(Vec3(6.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'o');
-	// Health
+	//health pickup
 	Wall* hpPickup = new Wall(Vec3(-6.0f, 0.0f, -28.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'h');
-	// Key
+	//key pickup
 	Wall* kpPickup = new Wall(Vec3(-18.0f, 0.0f, 8.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL, 'k');
 
-	// Add them to the list
 	theWalls.push_back(wpPickup);
 	theWalls.push_back(hpPickup);
 	theWalls.push_back(kpPickup);
@@ -306,7 +297,7 @@ SceneCombination::SceneCombination()
 SceneCombination::~SceneCombination()
 {
 	// Debug information
-	Debug::Info("Deleted Scene�ombination: ", __FILE__, __LINE__);
+	Debug::Info("Deleted SceneÇombination: ", __FILE__, __LINE__);
 }
 
 bool SceneCombination::OnCreate()
@@ -315,6 +306,9 @@ bool SceneCombination::OnCreate()
 	Debug::Info("Loading assets SceneCombination: ", __FILE__, __LINE__);
 
 	// Create camera and call OnCreate
+	/*camera = new CameraActor(Vec3(0.0f, 0.0f, -10.0f), nullptr);
+	camera->OnCreate();*/
+
 	cameraFPS = new CameraActorFPS(nullptr);
 	cameraFPS->OnCreate();
 
@@ -322,8 +316,7 @@ bool SceneCombination::OnCreate()
 	playerGun = new PlayerGun(Vec3(1.0f, -0.5f, 8.0f), 0.0f, Vec3(0, 0, 0), cameraFPS, nullptr);
 	playerGun->OnCreate();
 
-	// For every wall, call OnCreate
-	for (Wall* wall : theWalls)
+	for (Wall* wall : theWalls) {
 		wall->OnCreate();
 	}
 
@@ -364,6 +357,12 @@ void SceneCombination::OnDestroy()
 	Debug::Info("Deleting assets SceneCombination: ", __FILE__, __LINE__);
 
 	// If camera exists, call OnDestroy and delete
+	/*if (camera)
+	{
+		camera->OnDestroy();
+		delete camera;
+	}*/
+
 	if (cameraFPS)
 	{
 		cameraFPS->OnDestroy();
@@ -396,15 +395,20 @@ void SceneCombination::OnDestroy()
 
 void SceneCombination::Render() const
 {
+	// Set the culling and front face variables
+	/*glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);*/
+
 	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Render the camera
+
+
 	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
-	// Render the camera
 	cameraFPS->Render();
 
 	// Set matrices
@@ -419,13 +423,14 @@ void SceneCombination::Render() const
 
 	// Render the gun of the player
 	if (hasWeapon) {
-	playerGun->Render();
+		playerGun->Render();
 
 	}
 
 
 	for (Wall* wall : theWalls) {
 		wall->Render();
+	}
 
 	for (EnemyActor* enemy : enemiesInRooms) {
 		enemy->Render();
@@ -471,8 +476,8 @@ void SceneCombination::Update(const float deltaTime)
 				cout << "Collided with enemy" << endl;
 				//Player cas collided with tenemy
 				if (playerHealth >= 10) {
-				playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
-				cout << "Player is taking damage" << endl;
+					playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
+					cout << "Player is taking damage" << endl;
 				}
 				else {
 					cout << "Player has lost all his health" << endl;
@@ -486,6 +491,8 @@ void SceneCombination::Update(const float deltaTime)
 		else {
 			//enemy returns to first position
 			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
+
+		}
 	}
 	//PlayerLevelCollision
 	for (Wall* objectToTest : theWalls) {
@@ -574,6 +581,7 @@ void SceneCombination::Update(const float deltaTime)
 				//When a bullet collides with a enemy the enemy gets stunned
 				if (bulletEnemyCollision == true) {
 					enemyCheck->StunEnemy(5.0f);
+					cout << "Bullseye!" << endl;
 				}
 			}
 

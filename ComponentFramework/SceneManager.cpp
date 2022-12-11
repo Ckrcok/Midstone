@@ -113,7 +113,7 @@ void SceneManager::HandleEvents()
 				break;
 
 			case SDL_SCANCODE_F2:
-				BuildNewScene(SCENE_NUMBER::SCENE2);
+				BuildNewScene(SCENE_NUMBER::SCENECAMERATEST);
 				break;
 
 			case SDL_SCANCODE_F3:
@@ -166,7 +166,7 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		status = currentScene->OnCreate();
 		break;
 
-	case SCENE_NUMBER::SCENE2:
+	case SCENE_NUMBER::SCENECAMERATEST:
 		currentScene = new SceneCameraTest();
 		status = currentScene->OnCreate();
 		break;
