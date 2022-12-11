@@ -69,5 +69,7 @@ public:
 	inline Vec3 GetCameraFPSPos() { return cameraPositionVec; }
 	inline Vec3 GetCameraFront() { return cameraFront; }
 	Actor* GetCameraAttachment() { return cameraAttachment; }
+	bool isFacingWall = false;
+	char lastTypedKey = 'n';//Being lazy yes, but this needs to work
 };
 

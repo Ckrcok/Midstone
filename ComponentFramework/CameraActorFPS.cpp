@@ -105,24 +105,92 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 		// Move forward & backwards -- updated method
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
 		{
-			cameraPositionVec += cameraSpeed * cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;
+			/*cameraPositionVec += cameraSpeed * cameraOrientationVec;
+			cameraPositionVec.y = 0.0f;*/
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'w')
+				{
+					cameraPositionVec += cameraSpeed * cameraOrientationVec;
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'w';
+					isFacingWall = false;
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * cameraOrientationVec;
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'w';
+			}
 		}
 		else if (!keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_S])
 		{
-			cameraPositionVec += cameraSpeed * -cameraOrientationVec;
-			cameraPositionVec.y = 0.0f;
+			/*cameraPositionVec += cameraSpeed * -cameraOrientationVec;
+			cameraPositionVec.y = 0.0f;*/
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 's')
+				{
+					cameraPositionVec += cameraSpeed * -cameraOrientationVec;
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 's';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * -cameraOrientationVec;
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 's';
+			}
+
 		}
 
 		if (keyboard_state_array[SDL_SCANCODE_D] && !keyboard_state_array[SDL_SCANCODE_A])
 		{
-			cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;
+			/*cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+			cameraPositionVec.y = 0.0f;*/
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'd')
+				{
+					cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'd';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'd';
+			}
+
 		}
+
 		else if (!keyboard_state_array[SDL_SCANCODE_D] && keyboard_state_array[SDL_SCANCODE_A])
 		{
-			cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
-			cameraPositionVec.y = 0.0f;
+			/*cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+			cameraPositionVec.y = 0.0f;*/
+
+			if (isFacingWall == true) {
+				if (lastTypedKey != 'a')
+				{
+					cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+					cameraPositionVec.y = 0.0f;
+					lastTypedKey = 'a';
+					isFacingWall = false;
+
+				}printf("Colliding in  the same direction");
+			}
+			else if (isFacingWall == false) {
+				cameraPositionVec += cameraSpeed * -VMath::normalize(VMath::cross(cameraOrientationVec, cameraUpDirVec));
+				cameraPositionVec.y = 0.0f;
+				lastTypedKey = 'a';
+
+			}
+
 		}
 	}
 	
