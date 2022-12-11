@@ -286,5 +286,11 @@
     <None Include="shaders\defaultBlueVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\gunFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\gunVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

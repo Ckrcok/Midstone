@@ -18,7 +18,7 @@ bool PlayerGun::OnCreate()
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f)));	// Spawn position
+	model_3D->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(0.0f, 0.0f, 0.0f)) * MMath::rotate(cameraFPS->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f)));	// Spawn position
 
 	// Only rotate if a rotation value is given
 	//if (rotation > 0)
@@ -28,6 +28,7 @@ bool PlayerGun::OnCreate()
 	model_3D->SetTexture(new Texture());
 	model_3D->GetTexture()->LoadImage("textures/Texture_Gray.png");
 	model_3D->OnCreate();
+
 
 	// Create shader
 	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
@@ -77,11 +78,14 @@ void PlayerGun::Update(float deltaTime)
 	//model_3D->SetModelMatrix(MMath::translate(gunPos));
 	//model_3D->SetModelMatrix(MMath::rotate(90, Vec3 (0.0f, 1.0f, 0.0f))
 								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
-
-	Vec3 gunOrientation = cameraFPS->GetCameraFPSOrientation();
-	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + cameraFPS->GetCameraFPSOrientation();
-	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
-
+	
+	Vec3 gunOrientation = cameraFPS->GetCameraFront();
+	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + gunOrientation + Vec3(0.0f, -0.5f, 0.0f);
+	//offset = gunPos;
+	rotation = gunOrientation.x;
+	rotationAxis = Vec3(0.0f, cameraFPS->GetCameraFront().y, 0.0f);
+	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
+	model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, Vec3(0.0f, 1.0f, 0.0f)));
 	position = model_3D->GetPosition();
 
 	// Update the bullets

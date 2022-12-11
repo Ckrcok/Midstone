@@ -39,6 +39,7 @@ private:
 public:
 	//PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_);
 	PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_);
+	PlayerGun();
 	~PlayerGun();
 
 	bool OnCreate();

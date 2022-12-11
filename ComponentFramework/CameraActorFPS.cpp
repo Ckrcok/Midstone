@@ -89,18 +89,14 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	bool MouseMotion = false;
 
 	// Camera Orientation Vector (camera is looking at:)
-	Vec3 cameraFront;
+	cameraFront;
 	cameraFront.x = cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
 	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS);
 	cameraFront.z = cos(cameraPitch * DEGREES_TO_RADIANS) * sin(cameraYaw * DEGREES_TO_RADIANS);
-	/*cameraFront.x = -sin(cameraYaw * DEGREES_TO_RADIANS);
-	cameraFront.y = sin(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
-	cameraFront.z = -cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);*/
 	cameraOrientationVec = VMath::normalize(cameraFront);
 
 	// Create the view matrix with First Person LookAt function
 	viewMatrix = LookAtFPS(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec);
-	//viewMatrix = MMath::lookAt(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec); // --- Scott's method
 
 	// CAMERA MOVEMENT on XY Plane (45-90 degree movement)
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
@@ -179,12 +175,34 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 
 bool CameraActorFPS::OnCreate()
 {
+	cameraAttachment = new Actor(nullptr);
+	cameraAttachment->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	cameraAttachment->GetMesh()->OnCreate();
+	cameraAttachment->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
+	cameraAttachment->SetTexture(new Texture());
+	cameraAttachment->GetTexture()->LoadImage("textures/white.png");
+	cameraAttachment->OnCreate();
+
+	// Create shader
+	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	if (shader->OnCreate() == false)
+		Debug::Error("Can't load shader", __FILE__, __LINE__);
+
 	return true;
 }
 
 void CameraActorFPS::OnDestroy()
 {
+	if (cameraAttachment)
+	{
+		cameraAttachment->OnDestroy();
+		delete cameraAttachment;
+	}
+}
 
+void CameraActorFPS::Update(float deltaTime)
+{
+	cameraAttachment->SetModelMatrix(MMath::rotate(this->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
 }
 
 CameraActorFPS::~CameraActorFPS()
@@ -194,11 +212,14 @@ CameraActorFPS::~CameraActorFPS()
 
 void CameraActorFPS::Render() const
 {
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_CULL_FACE);
-	/*glUseProgram(skybox->GetShader()->GetProgram());
-	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
-	glUniformMatrix4fv(skybox->GetShader()->GetUniformID("cameraRotationMatrix"), 1, GL_FALSE, rotationMatrix);
-	skybox->Render();
-	glUseProgram(0);*/
+	/*glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(shader->GetProgram());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, viewMatrix);*/
+	/*glBindTexture(GL_TEXTURE_2D, cameraAttachment->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraAttachment->GetModelMatrix());
+	cameraAttachment->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);*/
+	/*glUseProgram(0);*/
 }
