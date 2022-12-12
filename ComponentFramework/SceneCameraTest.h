@@ -40,6 +40,7 @@ private:
 	Actor* objNegZ;
 	Actor* objPosZ;
 	Actor* cube;
+	Actor* light;
 
 	Actor* ground;
 	Actor* ceiling;
@@ -58,7 +59,7 @@ private:
 	PlayerGun* playerGun;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
-	Shader* shaderCube;
+	Shader* lightCube;
 	/*Texture* texture; --> CameraActor handles these now
 	Matrix4 projectionMatrix; 
 	Matrix4 viewMatrix;

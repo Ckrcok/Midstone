@@ -19,6 +19,7 @@ class Shader;
 
 class CameraActorFPS : public Actor
 {
+// Create private variables
 private:
 	// Projection Matrices
 	Matrix4 projectionMatrix;
@@ -38,25 +39,25 @@ private:
 	// Shader
 	Shader* shader;
 
-	// Matrix functions
-	Matrix4 LookAtFPS(const float positionX, const float positionY, const float positionZ,
-		const float targetX, const float targetY, const float targetZ,
-		const float worldUpX, const float worldUpY, const float worldUpZ);
+	// Custom look at function to create a first person view camera
+	Matrix4 LookAtFPS(	const float positionX,	const float positionY,	const float positionZ,
+						const float targetX,	const float targetY,	const float targetZ,
+						const float worldUpX,	const float worldUpY,	const float worldUpZ);
 
 	Matrix4 LookAtFPS(const Vec3 position, const Vec3 target, const Vec3 worldUp);
 
-	// Matrices
+	// First person camera matrices
 	Matrix4 translationLookAt;
 	Matrix4 rotationLookAt;
 	Matrix4 LookAtFPSMatrix;
 
-	// Camera positions
+	// First person camera vectors
 	Vec3 cameraPositionVec;
 	Vec3 cameraOrientationVec;
 	Vec3 cameraUpDirVec;
 	Vec3 cameraFront;
-
-	// Mouse variables
+	
+	// Camera rotation variables 
 	float mouseRotX;
 	float mouseRotY;
 	int mouseRelX;
@@ -77,12 +78,12 @@ public:
 	void Update(float deltaTime);
 	void Render() const override;
 
-	// Booleans
+	// Set initial motion to false
 	bool MouseMotion = false;
 	bool isFacingWall = false;
 
 	// Last typed key character
-	char lastTypedKey = 'n';	//Being lazy yes, but this needs to work
+	char lastTypedKey = 'n';	// Being lazy yes, but this needs to work
 
 	// Set functions
 	inline void SetTranslationMatrix(const Matrix4& translationMatrix_) { translationMatrix = translationMatrix_; }

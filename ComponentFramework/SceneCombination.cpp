@@ -410,23 +410,132 @@ bool SceneCombination::OnCreate()
 	if (shader->OnCreate() == false)	// Debug information
 		Debug::Error("Can't load shader in SceneCombination", __FILE__, __LINE__);
 
+	// CREATE GROUND AND CEILING
+	// 
+	// XZ plane (ground)
+	ground = new Actor(nullptr);
+	ground->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	ground->GetMesh()->OnCreate();
+	ground->SetModelMatrix(MMath::translate(Vec3(0.0f, -1.0f, 0.0f)) * MMath::scale(Vec3(50.0f, 0.05f, 50.0f)));
+	ground->SetTexture(new Texture());
+	ground->GetTexture()->LoadImage("textures/ground.png");
+	ground->OnCreate();
+
+	// XZ plane (ceiling)
+	ceiling = new Actor(nullptr);
+	ceiling->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
+	ceiling->GetMesh()->OnCreate();
+	ceiling->SetModelMatrix(MMath::translate(Vec3(0.0f, 1.0f, 0.0f)) * MMath::scale(Vec3(50.0f, 0.05f, 50.0f)));
+	ceiling->SetTexture(new Texture());
+	ceiling->GetTexture()->LoadImage("textures/grey.png");
+	ceiling->OnCreate();
+
+	// LIGHTING
+	lightSource0 = new Actor(nullptr);
+	lightSource0->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource0->GetMesh()->OnCreate();
+	lightSource0->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.9f, 0.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource0->SetTexture(new Texture());
+	lightSource0->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource0->OnCreate();
+
+	lightSource1 = new Actor(nullptr);
+	lightSource1->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource1->GetMesh()->OnCreate();
+	lightSource1->SetModelMatrix(MMath::translate(Vec3(-17.0f, 0.9f, -24.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource1->SetTexture(new Texture());
+	lightSource1->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource1->OnCreate();
+
+	lightSource2 = new Actor(nullptr);
+	lightSource2->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource2->GetMesh()->OnCreate();
+	lightSource2->SetModelMatrix(MMath::translate(Vec3(-2.0f, 0.9f, -24.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource2->SetTexture(new Texture());
+	lightSource2->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource2->OnCreate();
+
+	lightSource3 = new Actor(nullptr);
+	lightSource3->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource3->GetMesh()->OnCreate();
+	lightSource3->SetModelMatrix(MMath::translate(Vec3(8.0f, 0.9f, -20.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource3->SetTexture(new Texture());
+	lightSource3->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource3->OnCreate();
+
+	lightSource4 = new Actor(nullptr);
+	lightSource4->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource4->GetMesh()->OnCreate();
+	lightSource4->SetModelMatrix(MMath::translate(Vec3(10.0f, 0.9f, -6.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource4->SetTexture(new Texture());
+	lightSource4->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource4->OnCreate();
+
+	lightSource5 = new Actor(nullptr);
+	lightSource5->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource5->GetMesh()->OnCreate();
+	lightSource5->SetModelMatrix(MMath::translate(Vec3(15.0f, 0.9f, 16.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource5->SetTexture(new Texture());
+	lightSource5->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource5->OnCreate();
+
+	lightSource6 = new Actor(nullptr);
+	lightSource6->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource6->GetMesh()->OnCreate();
+	lightSource6->SetModelMatrix(MMath::translate(Vec3(16.0f, 0.9f, -4.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource6->SetTexture(new Texture());
+	lightSource6->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource6->OnCreate();
+
+	lightSource7 = new Actor(nullptr);
+	lightSource7->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource7->GetMesh()->OnCreate();
+	lightSource7->SetModelMatrix(MMath::translate(Vec3(6.0f, 0.9f, 16.0f)) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource7->SetTexture(new Texture());
+	lightSource7->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource7->OnCreate();
+
+	lightSource8 = new Actor(nullptr);
+	lightSource8->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	lightSource8->GetMesh()->OnCreate();
+	lightSource8->SetModelMatrix(MMath::translate((Vec3(6.0f, 0.9f, 0.0))) * MMath::scale(Vec3(0.5f, 0.025f, 0.5f)));
+	lightSource8->SetTexture(new Texture());
+	lightSource8->GetTexture()->LoadImage("textures/brilliant.png");
+	lightSource8->OnCreate();
+
+
 	// Set light positions
-	lightPos[0] = Vec3(3.0f, 0.0f, -6.5f);
-	lightPos[1] = Vec3(-3.0f, 0.0f, -6.5f);
-	lightPos[2] = Vec3(0.0f, 3.0f, -6.5f);
-	lightPos[3] = Vec3(0.0f, -3.0f, -6.5f);
+	lightPos[0] = lightSource0->GetPosition();
+	lightPos[1] = lightSource1->GetPosition();
+	lightPos[2] = lightSource2->GetPosition();
+	lightPos[3] = lightSource3->GetPosition();
+	lightPos[4] = lightSource4->GetPosition();
+	lightPos[5] = lightSource5->GetPosition();
+	lightPos[6] = lightSource6->GetPosition();
+	lightPos[7] = lightSource7->GetPosition();
+	lightPos[8] = lightSource8->GetPosition();
 
 	// Set diffuse values
-	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
-	diffuse[1] = Vec4(0.0f, 0.6f, 0.0f, 0.0f);
-	diffuse[2] = Vec4(0.0f, 0.0f, 0.6f, 0.0f);
-	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	diffuse[0] = Vec4(0.3f, 0.2f, 0.0f, 0.0f);
+	diffuse[1] = Vec4(0.3f, 0.2f, 0.0f, 0.0f);
+	diffuse[2] = Vec4(0.2f, 0.4f, 0.0f, 0.0f);
+	diffuse[3] = Vec4(0.6f, 0.1f, 0.4f, 0.0f);
+	diffuse[4] = Vec4(0.4f, 0.5f, 0.2f, 0.0f);
+	diffuse[5] = Vec4(0.6f, 0.0f, 0.6f, 0.0f);
+	diffuse[6] = Vec4(0.6f, 0.2f, 0.4f, 0.0f);
+	diffuse[7] = Vec4(0.6f, 0.1f, 0.5f, 0.0f);
+	diffuse[8] = Vec4(0.6f, 0.3f, 0.1f, 0.0f);
 
 	// Set specular values
 	specular[0] = 0.5 * diffuse[0];
 	specular[1] = 0.5 * diffuse[1];
 	specular[2] = 0.5 * diffuse[2];
 	specular[3] = 0.5 * diffuse[3];
+	specular[4] = 0.5 * diffuse[4];
+	specular[5] = 0.5 * diffuse[5];
+	specular[6] = 0.5 * diffuse[6];
+	specular[7] = 0.5 * diffuse[7];
+	specular[8] = 0.5 * diffuse[8];
 
 	// Return true so program can run
 	return true;
@@ -458,8 +567,77 @@ void SceneCombination::OnDestroy()
 		delete playerGun;
 	}
 
+	// GROUND
+	if (ground)
+	{
+		ground->OnDestroy();
+		delete ground;
+	}
+
+	// CEILING
+	if (ceiling)
+	{
+		ceiling->OnDestroy();
+		delete ceiling;
+	}
+
+	// LIGHTSOURCES
+	if (lightSource0)
+	{
+		lightSource0->OnDestroy();
+		delete lightSource0;
+	}
+
+	if (lightSource1)
+	{
+		lightSource1->OnDestroy();
+		delete lightSource1;
+	}
+
+	if (lightSource2)
+	{
+		lightSource2->OnDestroy();
+		delete lightSource2;
+	}
+
+	if (lightSource3)
+	{
+		lightSource3->OnDestroy();
+		delete lightSource3;
+	}
+
+	if (lightSource4)
+	{
+		lightSource4->OnDestroy();
+		delete lightSource4;
+	}
+
+	if (lightSource5)
+	{
+		lightSource5->OnDestroy();
+		delete lightSource5;
+	}
+
+	if (lightSource6)
+	{
+		lightSource6->OnDestroy();
+		delete lightSource6;
+	}
+
+	if (lightSource7)
+	{
+		lightSource7->OnDestroy();
+		delete lightSource7;
+	}
+
+	if (lightSource8)
+	{
+		lightSource8->OnDestroy();
+		delete lightSource8;
+	}
+
 	// For every enemy in the list, check if it still exists
-	// If so, call OnDestroy and delte
+	// If so, call OnDestroy and delete
 	// Clear the whole list after
 	for (EnemyActor* enemy : enemiesInRooms)
 	{
@@ -474,14 +652,18 @@ void SceneCombination::OnDestroy()
 
 void SceneCombination::Render() const
 {
-	/// Clear the screen
+	// Set the culling and front face variables
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
+	// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Enable depth and culling
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
+	
 	// Render the camera
 	cameraFPS->Render();
 
@@ -491,7 +673,7 @@ void SceneCombination::Render() const
 	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
 
 	// Set uniforms
-	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
+	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos - cameraFPS->GetCameraFPSPos());
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
 
@@ -506,6 +688,64 @@ void SceneCombination::Render() const
 	// Call Render for every enemy in the list
 	for (EnemyActor* enemy : enemiesInRooms)
 		enemy->Render();
+
+	// GROUND
+	glBindTexture(GL_TEXTURE_2D, ground->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, ground->GetModelMatrix());
+	ground->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// CEILING
+	glBindTexture(GL_TEXTURE_2D, ceiling->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, ceiling->GetModelMatrix());
+	ceiling->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+		
+	// LIGHT SOURCES
+	glBindTexture(GL_TEXTURE_2D, lightSource0->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource0->GetModelMatrix());
+	lightSource0->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());
+	lightSource1->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource2->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource2->GetModelMatrix());
+	lightSource2->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource3->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource3->GetModelMatrix());
+	lightSource3->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource4->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource4->GetModelMatrix());
+	lightSource4->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource5->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource5->GetModelMatrix());
+	lightSource5->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource6->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource6->GetModelMatrix());
+	lightSource6->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource7->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource7->GetModelMatrix());
+	lightSource7->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource8->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource8->GetModelMatrix());
+	lightSource8->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Use program 0
 	glUseProgram(0);

@@ -9,8 +9,8 @@ CameraActorFPS::CameraActorFPS(Component* parent_) :Actor(parent_)
 {
 	// Set the projection matrix with the hardcoded values
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-
-	// Initial cameraPosition is at spawn position
+	
+	// Initial camera vectors
 	cameraPositionVec = Vec3(0.0f, 0.0f, 0.0f);
 	cameraOrientationVec = VMath::normalize(Vec3(0.0f, 0.0f, -1.0f));
 	cameraUpDirVec = VMath::normalize(Vec3(0.0f, 1.0f, 0.0f));
@@ -143,11 +143,11 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	// Create the view matrix with First Person LookAt function
 	viewMatrix = LookAtFPS(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec);
 
-	// CAMERA MOVEMENT on XY Plane (45-90 degree movement)
+	// Camera movement on XY Plane 
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
 	if (sdlEvent.type == SDL_KEYDOWN || sdlEvent.type == SDL_KEYUP)
 	{
-		// Move forward & backwards -- updated method
+		// Move forward & backwards
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
 		{	//FORWARD
 
@@ -244,7 +244,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 			}
 		}
 	}
-
+	
 	// Mouse Inputs
 	int mouseX, mouseY;
 	Uint32 mouseButtons;
@@ -275,5 +275,20 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 			// Debug for the mouse relative positions
 			//std::cout << "Mouse X relative: " << mouseRelX << " Mouse Y relative : " << mouseRelY << std::endl;
 		}
+
 	}
+
 }
+
+bool CameraActorFPS::OnCreate()
+{
+	return true;
+}
+
+void CameraActorFPS::OnDestroy(){}
+
+void CameraActorFPS::Update(float deltaTime){}
+
+CameraActorFPS::~CameraActorFPS(){}
+
+void CameraActorFPS::Render() const{}

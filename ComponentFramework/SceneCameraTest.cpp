@@ -13,7 +13,7 @@
 #include "CameraActorFPS.h"
 
 
-SceneCameraTest::SceneCameraTest() :sphere(nullptr), cube(nullptr), shader(nullptr), shaderCube(nullptr) {
+SceneCameraTest::SceneCameraTest() :sphere(nullptr), light(nullptr), shader(nullptr), lightCube(nullptr) {
 	Debug::Info("Created SceneCameraTest: ", __FILE__, __LINE__);
 }
 
@@ -175,12 +175,20 @@ bool SceneCameraTest::OnCreate() {
 	objPosZ->GetTexture()->LoadImage("textures/grey.png");
 	objPosZ->OnCreate();
 
+	// if obj = light {}
 	
+	// create shader
 
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
+	shader = new Shader(nullptr, "shaders/multiLightVert.glsl", "shaders/multiLightFrag.glsl");
 	if (shader->OnCreate() == false)
 	{
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
+	}
+
+	lightCube = new Shader(nullptr, "shaders/multiLight2Vert.glsl", "shaders/multiLight2Frag.glsl");
+	if (lightCube->OnCreate() == false)
+	{
+		Debug::Error("Can't load shaderLight", __FILE__, __LINE__);
 	}
 
 	// ceiling lights
@@ -199,7 +207,7 @@ bool SceneCameraTest::OnCreate() {
 	//lightPos[8] = Vec3(0.0f, 0.0f, 1000.0f);
 
 	// diffuse values
-	diffuse[0] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
+	diffuse[0] = Vec4(0.6f, 0.0f, 0.0f, 0.0f);
 	diffuse[1] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[2] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
 	diffuse[3] = Vec4(0.6f, 0.6f, 0.6f, 0.0f);
@@ -355,6 +363,9 @@ void SceneCameraTest::OnDestroy() {
 	shader->OnDestroy();
 	delete shader;
 
+	lightCube->OnDestroy();
+	delete lightCube;
+
 }
 void SceneCameraTest::HandleEvents(const SDL_Event& sdlEvent) {
 
@@ -456,19 +467,13 @@ void SceneCameraTest::Render() const {
 	// FPS CAMERA RENDER
 	cameraFPS->Render();
 
-	// LEGACY CAMERA MATRIX CALLS 
 	glUseProgram(shader->GetProgram());
-	/*glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());*/
+	cout << shader->GetProgram() << " shader is active!" << endl;
+
 
 	// FPS CAMERA MATRIX CALLS 
 	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());
-
-	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
-	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
-	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
-
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());	
 
 	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
@@ -521,27 +526,6 @@ void SceneCameraTest::Render() const {
 	playerGun->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// LIGHT SOURCES
-	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());
-	lightSource1->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glBindTexture(GL_TEXTURE_2D, lightSource2->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource2->GetModelMatrix());
-	lightSource2->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glBindTexture(GL_TEXTURE_2D, lightSource3->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource3->GetModelMatrix());
-	lightSource3->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glBindTexture(GL_TEXTURE_2D, lightSource4->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource4->GetModelMatrix());
-	lightSource4->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	// WALLS
 	glBindTexture(GL_TEXTURE_2D, wallNegX->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, wallNegX->GetModelMatrix());
@@ -563,11 +547,50 @@ void SceneCameraTest::Render() const {
 	wallPosZ->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// CAMERA ATTACHMENT
-	glBindTexture(GL_TEXTURE_2D, cameraFPS->GetCameraAttachment()->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraFPS->GetCameraAttachment()->GetModelMatrix());
-	cameraFPS->GetCameraAttachment()->Render();
+	//glUseProgram(0);
+
+	// SWITCH TO LIGHT SHADER
+	glUseProgram(shader->GetProgram());
+	cout << shader->GetProgram() << " light cube is active!" << endl;
+
+	// FPS CAMERA MATRIX CALLS 
+	/*glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, cameraFPS->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, cameraFPS->GetViewMatrix());*/
+
+	
+
+	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos);
+	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
+	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+
+	// LIGHT SOURCES
+	glBindTexture(GL_TEXTURE_2D, lightSource1->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource1->GetModelMatrix());
+	lightSource1->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource2->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource2->GetModelMatrix());
+	lightSource2->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource3->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource3->GetModelMatrix());
+	lightSource3->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, lightSource4->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, lightSource4->GetModelMatrix());
+	lightSource4->Render();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	
+
+	// CAMERA ATTACHMENT
+	//glBindTexture(GL_TEXTURE_2D, cameraFPS->GetCameraAttachment()->GetTexture()->getTextureID());
+	//glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraFPS->GetCameraAttachment()->GetModelMatrix());
+	//cameraFPS->GetCameraAttachment()->Render();
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	/*glBindTexture(GL_TEXTURE_2D, camera->GetSkyBox()->GetSkyboxTextureID());
 	glBindTexture(GL_TEXTURE_CUBE_MAP, camera->GetSkyBox()->GetSkyboxTextureID());
