@@ -1,11 +1,13 @@
+// Basic include
 #include "PlayerGun.h"
 
-PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* camera_, Component* parent_) : Actor(parent_)
+PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_) : Actor(parent_)
 {
+	// Set the values to the given ones
 	offset = offset_;
 	rotation = spawnRotation_;
 	rotationAxis = spawnRotationAxis_;
-	camera = camera_;
+	cameraFPS = camera_;
 }
 
 PlayerGun::~PlayerGun() {}
@@ -18,11 +20,10 @@ bool PlayerGun::OnCreate()
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	model_3D->SetModelMatrix(MMath::translate(position));												// Spawn position
+	gunMatrix = cameraFPS->GetCameraFPSLookAt() * MMath::translate(Vec3(0.0f, 0.0f, -1.0f));
 
-	// Only rotate if a rotation value is given
-	if (rotation > 0)
-		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::rotate(rotation, rotationAxis));	// Spawn rotation
+	// Spawn position
+	model_3D->SetModelMatrix(gunMatrix);
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -34,17 +35,20 @@ bool PlayerGun::OnCreate()
 	if (shader->OnCreate() == false)
 		Debug::Error("Can't load shader", __FILE__, __LINE__);
 
+	// Return true, so that the program can run
 	return true;
 }
 
 void PlayerGun::OnDestroy()
 {
+	// If model_3D exists, call OnDestroy and delete
 	if (model_3D)
 	{
 		model_3D->OnDestroy();
 		delete model_3D;
 	}
 
+	// If shader exists, call OnDestroy and delete
 	if (shader)
 	{
 		shader->OnDestroy();
@@ -54,25 +58,43 @@ void PlayerGun::OnDestroy()
 
 void PlayerGun::Render()
 {
+	// Render calls
 	glBindTexture(GL_TEXTURE_2D, model_3D->GetTexture()->getTextureID());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, model_3D->GetModelMatrix());
+
+	// Render the model
 	model_3D->Render();
 
 	// Render the bullets
 	for (Bullet* bullet : spawnedBullets)
 		bullet->Render();
 
+	// Render call
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void PlayerGun::Update(float deltaTime)
 {
-	// Position with correct camera position matrix
-	Vec3 posWithOffset = Vec3(-camera->cameraPositionTracker.x, camera->cameraPositionTracker.y, -camera->cameraPositionTracker.z) + offset;
+	// Create and set the gun orientation and position
+	Vec3 gunOrientation = cameraFPS->GetCameraFront();
+	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + gunOrientation + Vec3(0.0f, -0.5f, 0.0f);
 
-	// Set the model matrix and the position value
-	model_3D->SetModelMatrix(MMath::translate(posWithOffset) * MMath::rotate(-camera->cameraRotationTracker.y, (const Vec3(0.0f, 1.0f, 0.0f))));
+	// Set orientation
+	rotation = gunOrientation.x;
+	rotationAxis = Vec3(0.0f, cameraFPS->GetCameraFront().y, 0.0f);
+
+	// Set model matrix
+	gunMatrix = MMath::translate(gunPos) * cameraFPS->GetCameraFPSLookAt() * MMath::inverse(cameraFPS->GetCameraRotationMatrix()) * MMath::translate(Vec3(0.0f, 0.0f, -0.2f));
+	model_3D->SetModelMatrix(gunMatrix);
+
+	// Set position
 	position = model_3D->GetPosition();
+
+	cout << "Position of the playerGun: ";
+	position.print();
+
+	cout << "Position of the player: ";
+	cameraFPS->GetCameraFPSPos().print();
 
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
@@ -84,20 +106,21 @@ void PlayerGun::Update(float deltaTime)
 
 void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 {
-	switch (sdlEvent.type) {
+	switch (sdlEvent.type)
+	{
 	case SDL_MOUSEBUTTONDOWN:
 
 		// Left mouse button is down
 		if (SDL_BUTTON_LEFT == sdlEvent.button.button)
-			SpawnBullet(Vec3(0.0f, 0, -0.5f));
+			SpawnBullet(cameraFPS->GetCameraFPSOrientation());
 	}
 }
 
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
-	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);											// Spawn bullet with offset from gun
-	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);	// Create bullet
-	bulletLabel++;																	// Increase number for next bullet
+	Vec3 offset = Vec3(0.0f, 0.1f, 0.0f);												// Spawn bullet with offset from gun
+	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this, this);	// Create bullet
+	bulletLabel++;																		// Increase number for next bullet
 
 	bullet->OnCreate();					// Call OnCreate for bullet
 	spawnedBullets.push_back(bullet);	// Add bullet to list

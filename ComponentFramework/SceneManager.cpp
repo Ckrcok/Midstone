@@ -1,14 +1,15 @@
+// Basic include
 #include <SDL.h>
 
 #include "SceneManager.h"
 #include "Timer.h"
 #include "Window.h"
 
-#include "LevelScene.h"
+// Extra include
 #include "Scene1.h"
-#include "SceneCameraTest.h"
 #include "Scene3.h"
 #include "Scene4.h"
+#include "SceneCameraTest.h"
 #include "SceneCombination.h"
 
 SceneManager::SceneManager() :
@@ -38,6 +39,7 @@ SceneManager::~SceneManager()
 		delete window;
 		window = nullptr;
 	}
+
 	Debug::Info("Deleting the SceneManager", __FILE__, __LINE__);
 }
 
@@ -58,8 +60,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	//BuildNewScene(SCENE_NUMBER::LEVELSCENE);
-	BuildNewScene(SCENE_NUMBER::SCENE2);
+	BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
 
 	return true;
 }
@@ -113,7 +114,7 @@ void SceneManager::HandleEvents()
 				break;
 
 			case SDL_SCANCODE_F2:
-				BuildNewScene(SCENE_NUMBER::SCENE2);
+				BuildNewScene(SCENE_NUMBER::SCENECAMERATEST);
 				break;
 
 			case SDL_SCANCODE_F3:
@@ -125,7 +126,7 @@ void SceneManager::HandleEvents()
 				break;
 
 			case SDL_SCANCODE_F5:
-				BuildNewScene(SCENE_NUMBER::LEVELSCENE);
+				BuildNewScene(SCENE_NUMBER::SCENE4);
 				break;
 
 			case SDL_SCANCODE_F6:
@@ -166,7 +167,7 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		status = currentScene->OnCreate();
 		break;
 
-	case SCENE_NUMBER::SCENE2:
+	case SCENE_NUMBER::SCENECAMERATEST:
 		currentScene = new SceneCameraTest();
 		status = currentScene->OnCreate();
 		break;
@@ -178,13 +179,7 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		break;
 
 	case SCENE_NUMBER::SCENE4:
-		cout << "Window: " << window->getWindow() << endl;
 		currentScene = new Scene4(window->getWindow());
-		status = currentScene->OnCreate();
-		break;
-
-	case SCENE_NUMBER::LEVELSCENE:
-		currentScene = new LevelScene();
 		status = currentScene->OnCreate();
 		break;
 

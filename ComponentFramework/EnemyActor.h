@@ -1,6 +1,7 @@
 #ifndef ENEMY_ACTOR_H
 #define ENEMY_ACTOR_H
 
+// Basic include
 #include <SDL.h>
 
 #include "Actor.h"
@@ -8,8 +9,11 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
-#include "CameraActor.h"
 
+// Extra include
+#include "CameraActorFPS.h"
+
+// Namespaces
 using namespace MATH;
 using namespace std;
 
@@ -21,7 +25,7 @@ private:
 	float rotation;
 	Vec3 rotationAxis;
 
-	// Model
+	// Model & Shader
 	Actor* model_3D;
 	Shader* shader;
 
@@ -32,14 +36,11 @@ private:
 	float currentTimeBetweenTargets;
 
 	// Player
-	CameraActor* camera;
+	CameraActorFPS* camera;
 
 	// Stun variables
 	bool isStunned = false;
 	float currentStunTimer;
-
-	void MoveToTarget(float deltaTime);
-	void FaceTarget(float deltaTime);
 
 	float GetDistance(Vec3 p, Vec3 q);
 
@@ -49,34 +50,59 @@ private:
 	float currentAttackValue;
 
 public:
-	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActor* player_, Component* parent_);
+	void MoveToTarget(float deltaTime);
+
+	// Constructors
+	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
 
+	// Basic functions
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
 	void Update(float deltaTime);
 	void HandleEvents(const SDL_Event& sdlEvent);
 
+	// Variables
+	Vec3 originalPos = position;
+	float enemyHealth = 15.0f;
+	float enemyDamage = 10.0f;
+
+	// Attack
 	void AttackTarget(Actor* target_, float attackInterval_)
 	{
 		attackTarget = target_;
 		attackInterval = attackInterval_;
 	};
 
+	// Stun
 	void StunEnemy(float stunTime_)
 	{
 		currentStunTimer = stunTime_;
 		isStunned = true;
 	};
 
-	void SetCamera(CameraActor* camera_)
+	// Get function
+	Vec3 getPositionEnemy()
+	{
+		// Because safak made me do the right thing
+		return position;
+	}
+
+	// Set functions
+	void SetCamera(CameraActorFPS* camera_)
 	{
 		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
 
 		camera = nullptr;
 		camera = camera_;
 	}
+
+	void setPositionEnemy(Vec3 newPos_)
+	{
+		// Because safak made me do the right thing x2
+		position = newPos_;
+	}
 };
 
-#endif
+#endif // !ENEMY_ACTOR_H
