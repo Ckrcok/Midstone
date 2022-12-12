@@ -20,11 +20,11 @@ bool Bullet::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/GunBullet2.obj"));
 	model_3D->GetMesh()->OnCreate();
 
-	// Set the position & scale
-	model_3D->SetModelMatrix(playerGun->GetGunMatrix() * MMath::scale(Vec3(0.5f, 0.5f, 0.5f)));
+	// Set the position
+	model_3D->SetModelMatrix(playerGun->GetGunMatrix());
 
 	// Create texture
 	model_3D->SetTexture(new Texture());
@@ -85,8 +85,10 @@ void Bullet::Update(float deltaTime)
 	}
 
 	// Set the velocity
-	velocity += Vec3(0.0f, 0.0f, -deltaTime * 1500);
+	//velocity += Vec3(0.0f, 0.0f, -deltaTime * 1500);
 
 	// Set the position of the bullet according to the velocity
-	model_3D->SetModelMatrix(playerGun->GetGunMatrix() *= MMath::translate(velocity));
+	//model_3D->SetModelMatrix(playerGun->GetGunMatrix() *= MMath::translate(velocity));
+	model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(velocity));
+	//model_3D->SetModelMatrix(model_3D->GetModelMatrix() * velocity);
 }

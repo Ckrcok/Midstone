@@ -90,6 +90,12 @@ void PlayerGun::Update(float deltaTime)
 	// Set position
 	position = model_3D->GetPosition();
 
+	cout << "Position of the playerGun: ";
+	position.print();
+
+	cout << "Position of the player: ";
+	cameraFPS->GetCameraFPSPos().print();
+
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
 		bullet->Update(deltaTime);
@@ -106,7 +112,7 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 
 		// Left mouse button is down
 		if (SDL_BUTTON_LEFT == sdlEvent.button.button)
-			SpawnBullet(Vec3(0.0f, 0.0f, 0.0f));
+			SpawnBullet(cameraFPS->GetCameraFPSOrientation());
 	}
 }
 
