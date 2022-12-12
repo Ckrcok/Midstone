@@ -7,16 +7,14 @@ using namespace MATH;
 CameraActorFPS::CameraActorFPS(Component* parent_) :Actor(parent_)
 {
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	//rotationMatrix = MMath::rotate(0.0f, (const Vec3(0.0f, 1.0f, 0.0f)));
-	//translationMatrix = MMath::translate((const Vec3(0.0f, 0.0f, 0.0f)));
 	
-	// initial cameraPosition is at spawn position
+	// initial camera vectors
 	cameraPositionVec = Vec3(0.0f, 0.0f, 0.0f);
 	cameraOrientationVec = VMath::normalize(Vec3(0.0f, 0.0f, -1.0f));
 	cameraUpDirVec = VMath::normalize(Vec3(0.0f, 1.0f, 0.0f));
 
+	// set camera speed
 	cameraSpeed = 0.2f;
-	//viewMatrix = rotationMatrix * translationMatrix;
 }
 
  //Create the view frustum with a First Person LookAt function - float constructor
@@ -87,7 +85,6 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	SDL_PumpEvents();  // make sure we have the latest mouse & keyboard state.
 	SDL_SetRelativeMouseMode(SDL_TRUE); // Set relative mouse mode for First Person view
 	
-
 	// Camera Orientation Vector (camera is looking at:)
 	cameraFront;
 	cameraFront.x = cos(cameraPitch * DEGREES_TO_RADIANS) * cos(cameraYaw * DEGREES_TO_RADIANS);
@@ -98,11 +95,11 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	// Create the view matrix with First Person LookAt function
 	viewMatrix = LookAtFPS(cameraPositionVec, cameraPositionVec + cameraOrientationVec, cameraUpDirVec);
 
-	// CAMERA MOVEMENT on XY Plane (45-90 degree movement)
+	// Camera movement on XY Plane 
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
 	if (sdlEvent.type == SDL_KEYDOWN || sdlEvent.type == SDL_KEYUP)
 	{
-		// Move forward & backwards -- updated method
+		// Move forward & backwards
 		if (keyboard_state_array[SDL_SCANCODE_W] && !(keyboard_state_array[SDL_SCANCODE_S]))
 		{//FORWARD
 
@@ -188,11 +185,6 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 		}
 	}
 	
-	// TODO
-	//
-	// Sprint
-	// cross strafe speed align(normalize)
-
 	// Mouse Inputs
 	int mouseX, mouseY;
 	Uint32 mouseButtons;
@@ -237,34 +229,17 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 
 bool CameraActorFPS::OnCreate()
 {
-	cameraAttachment = new Actor(nullptr);
-	cameraAttachment->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
-	cameraAttachment->GetMesh()->OnCreate();
-	cameraAttachment->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
-	cameraAttachment->SetTexture(new Texture());
-	cameraAttachment->GetTexture()->LoadImage("textures/white.png");
-	cameraAttachment->OnCreate();
-
-	// Create shader
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
-	if (shader->OnCreate() == false)
-		Debug::Error("Can't load shader", __FILE__, __LINE__);
-
 	return true;
 }
 
 void CameraActorFPS::OnDestroy()
 {
-	if (cameraAttachment)
-	{
-		cameraAttachment->OnDestroy();
-		delete cameraAttachment;
-	}
+
 }
 
 void CameraActorFPS::Update(float deltaTime)
 {
-	cameraAttachment->SetModelMatrix(MMath::rotate(this->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
+
 }
 
 CameraActorFPS::~CameraActorFPS()
@@ -274,14 +249,5 @@ CameraActorFPS::~CameraActorFPS()
 
 void CameraActorFPS::Render() const
 {
-	/*glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, viewMatrix);*/
-	/*glBindTexture(GL_TEXTURE_2D, cameraAttachment->GetTexture()->getTextureID());
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cameraAttachment->GetModelMatrix());
-	cameraAttachment->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);*/
-	/*glUseProgram(0);*/
+	
 }

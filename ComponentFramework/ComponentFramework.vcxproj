@@ -98,6 +98,7 @@
     <ClCompile Include="EnemyActor.cpp" />
     <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="LevelScene.cpp" />
+    <ClCompile Include="LightMesh.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PlayerGun.cpp" />
     <ClCompile Include="PuzzleButton.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="EnemyActor.h" />
     <ClInclude Include="Euler.h" />
     <ClInclude Include="LevelScene.h" />
+    <ClInclude Include="LightMesh.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PlayerGun.h" />
     <ClInclude Include="PuzzleButton.h" />
@@ -167,8 +169,6 @@
     <None Include="shaders\defaultBlueVert.glsl" />
     <None Include="shaders\defaultFrag.glsl" />
     <None Include="shaders\defaultVert.glsl" />
-    <None Include="shaders\gunFrag.glsl" />
-    <None Include="shaders\gunVert.glsl" />
     <None Include="shaders\multiLightFrag.glsl" />
     <None Include="shaders\multiLightVert.glsl" />
     <None Include="shaders\skyboxFrag.glsl" />

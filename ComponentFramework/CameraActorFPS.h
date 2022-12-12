@@ -8,15 +8,13 @@
 #include "Skybox.h"
 #include "Shader.h"
 
-
-
 using namespace MATH;
 
 class Shader;
 
 class CameraActorFPS : public Actor
 {
-
+// create private variables
 private:
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
@@ -31,21 +29,25 @@ private:
 
 	Actor* cameraAttachment;
 
+	// custom look at function to create a first person view camera
 	Matrix4 LookAtFPS(	const float positionX,	const float positionY,	const float positionZ,
 						const float targetX,	const float targetY,	const float targetZ,
 						const float worldUpX,	const float worldUpY,	const float worldUpZ);
 
 	Matrix4 LookAtFPS(const Vec3 position, const Vec3 target, const Vec3 worldUp);
 
+	// first person camera matrices
 	Matrix4 translationLookAt;
 	Matrix4 rotationLookAt;
 	Matrix4 LookAtFPSMatrix;
 
+	// first person camera vectors
 	Vec3 cameraPositionVec;
 	Vec3 cameraOrientationVec;
 	Vec3 cameraUpDirVec;
 	Vec3 cameraFront;
 	
+	// camera rotation variables 
 	float mouseRotX;
 	float mouseRotY;
 	int mouseRelX;
@@ -64,6 +66,7 @@ public:
 	void Update(float deltaTime);
 	void Render() const override;
 
+	// set initial motion to false
 	bool MouseMotion = false;
 
 	inline Matrix4 GetProjectionMatrix() { return projectionMatrix; }
@@ -81,6 +84,6 @@ public:
 	inline Matrix4 GetCameraTranslationMatrix() { return translationLookAt; }
 	inline Matrix4 GetCameraFPSLookAt() { return LookAtFPSMatrix; }
 	bool isFacingWall = false;
-	char lastTypedKey = 'n';//Being lazy yes, but this needs to work
+	char lastTypedKey = 'n';
 };
 
