@@ -41,6 +41,13 @@ bool Wall::OnCreate()
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_2.obj"));
 	else if (id == 'z')
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Instruction_3.obj"));
+	else if (id == 'd') 
+		objFile->SetMesh(new Mesh(nullptr, "meshes/cubeExit.obj"));
+	else if (((id == 'a') || (id == 'b') || (id == 's') || (id == 'g')
+		|| (id == 'D') || (id == 'f') || (id == 'c'))) {
+		objFile->SetMesh(new Mesh(nullptr, "meshes/cubeDoor.obj"));
+
+	}
 	else
 		objFile->SetMesh(new Mesh(nullptr, "meshes/Cube.obj"));
 

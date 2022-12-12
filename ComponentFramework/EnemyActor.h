@@ -51,6 +51,7 @@ private:
 
 public:
 	void MoveToTarget(float deltaTime);
+	void MoveToTarget(Vec3 playerPos);
 
 	// Constructors
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
@@ -103,6 +104,9 @@ public:
 		// Because safak made me do the right thing x2
 		position = newPos_;
 	}
+	Vec3 getPos() { return position; }
+	void setPos(Vec3 position_) { position = position_; }
+
 };
 
 #endif // !ENEMY_ACTOR_H

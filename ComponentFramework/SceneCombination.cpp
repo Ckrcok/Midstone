@@ -503,6 +503,21 @@ bool SceneCombination::OnCreate()
 	lightSource8->GetTexture()->LoadImage("textures/brilliant.png");
 	lightSource8->OnCreate();
 
+	sphere = new Actor(nullptr);//GAME OVER
+	sphere->SetMesh(new Mesh(nullptr, "meshes/Message_1.obj"));
+	sphere->GetMesh()->OnCreate();
+	sphere->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos()));
+	sphere->SetTexture(new Texture());
+	sphere->GetTexture()->LoadImage("textures/white.png");
+	sphere->OnCreate();
+
+	cube = new Actor(nullptr);//YOU WIN
+	cube->SetMesh(new Mesh(nullptr, "meshes/Message_2.obj"));
+	cube->GetMesh()->OnCreate();
+	cube->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos()));
+	cube->SetTexture(new Texture());
+	cube->GetTexture()->LoadImage("textures/white.png");
+	cube->OnCreate();
 
 	// Set light positions
 	lightPos[0] = lightSource0->GetPosition();
@@ -572,7 +587,16 @@ void SceneCombination::OnDestroy()
 		playerGun->OnDestroy();
 		delete playerGun;
 	}
-
+	if (sphere)
+	{
+		sphere->OnDestroy();
+		delete sphere;
+	}
+	if (cube)
+	{
+		cube->OnDestroy();
+		delete cube;
+	}
 	// GROUND
 	if (ground)
 	{
@@ -682,6 +706,19 @@ void SceneCombination::Render() const
 	glUniform3fv(shader->GetUniformID("lightPos[0]"), 10, *lightPos - cameraFPS->GetCameraFPSPos());
 	glUniform4fv(shader->GetUniformID("diffuse[0]"), 10, *diffuse);
 	glUniform4fv(shader->GetUniformID("specular[0]"), 10, *specular);
+	
+	if (gameOver && gameLost) {
+	glBindTexture(GL_TEXTURE_2D, sphere->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, sphere->GetModelMatrix());
+	sphere->Render();
+	}
+	
+	if (gameOver && gameWon) {
+	glBindTexture(GL_TEXTURE_2D, cube->GetTexture()->getTextureID());
+	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, cube->GetModelMatrix());
+	cube->Render();
+	}
+	
 
 	// Render the gun of the player
 	if (hasWeapon)
@@ -765,6 +802,8 @@ void SceneCombination::Update(const float deltaTime)
 	// Update the gun of the player
 	playerGun->Update(deltaTime);
 
+	cube->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(10.0f,0.0f,10.0f)) * MMath::rotate(-90.0f, Vec3(0.0f, 1.0f, 0.0f)));
+	sphere->SetModelMatrix(MMath::translate(cameraFPS->GetCameraFPSPos() + Vec3(10.0f, 0.0f, 10.0f)) * MMath::rotate(-90.0f, Vec3(0.0f, 1.0f, 0.0f)));
 
 	// Player collider values update
 	resultPlayer = cameraFPS->GetCameraFPSPos();
@@ -785,7 +824,7 @@ void SceneCombination::Update(const float deltaTime)
 			cout << "--- Collided with enemy trigger area ---" << endl;
 
 			// Get enemy closer to player
-			roomTriggerBox->enemyRoom->Update(deltaTime);
+			roomTriggerBox->enemyRoom->MoveToTarget(resultPlayer);
 
 			// Set values
 			Vec3 enemyPositionOnRoom = roomTriggerBox->enemyRoom->getPositionEnemy();
@@ -823,9 +862,7 @@ void SceneCombination::Update(const float deltaTime)
 				}
 			}
 		}
-		else   // Enemy returns to first position
-			roomTriggerBox->enemyRoom->setPositionEnemy(roomTriggerBox->enemyRoom->originalPos);
-	}
+}
 
 
 	// PlayerLevelCollision
@@ -929,12 +966,16 @@ void SceneCombination::Update(const float deltaTime)
 			// For every bullet in the list, check if it has collided
 			for (Bullet* bulletShot : playerGun->spawnedBullets)
 			{
-				Vec3 shotBulletPosition = bulletShot->GetPosition();
-				int bulletWallCollision = Collision::distancePointBox(shotBulletPosition, *blueBox);
-
+				Vec3 shotBulletPos = bulletShot->getPos();
+				Vec3 minCornerBulletW = shotBulletPos - Vec3(1.0f, 1.0f, 1.0f);
+				Vec3 maxCornerBulletW = shotBulletPos + Vec3(1.0f, 1.0f, 1.0f);
+				Box* bulletColliderBoxw = new Box(shotBulletPos, minCornerBulletW, maxCornerBulletW, emptyActor);
+				bulletColliderBoxw->updateVertPos(shotBulletPos, minCornerBulletW, maxCornerBulletW);
+				int bulletEnemyCollision = Collision::TestSphereSphere(*bulletColliderBoxw, *blueBox);
+				
 				// When a bullet collides with a wall the bullet gets destroyed
-				if (bulletWallCollision == true)
-					playerGun->HandleDestroyBullet();
+				if (bulletEnemyCollision == true)
+					playerGun->spawnedBullets.erase(std::remove(playerGun->spawnedBullets.begin(), playerGun->spawnedBullets.end(), bulletShot), playerGun->spawnedBullets.end());
 			}
 		}
 	}
@@ -955,14 +996,19 @@ void SceneCombination::Update(const float deltaTime)
 			// For every bullet in the list, check if it has collided
 			for (Bullet* bulletShot : playerGun->spawnedBullets)
 			{
-				Vec3 shotBulletPosition = bulletShot->GetPosition();
-				int bulletEnemyCollision = Collision::distancePointBox(shotBulletPosition, *enemyColliderBox);
+				Vec3 shotBulletPosition = bulletShot->getPos();
+				Vec3 minCornerBullet = shotBulletPosition - Vec3(1.0f, 1.0f, 1.0f);
+				Vec3 maxCornerBullet = shotBulletPosition + Vec3(1.0f, 1.0f, 1.0f);
+				Box* bulletColliderBox = new Box(shotBulletPosition, minCornerBullet, maxCornerBullet, enemyCheck);
+				bulletColliderBox->updateVertPos(shotBulletPosition, minCornerBullet, maxCornerPlayer);
+
+				int bulletEnemyCollision = Collision::TestSphereSphere(*bulletColliderBox, *enemyColliderBox);
 
 				// When a bullet collides with a enemy the enemy gets stunned
 				if (bulletEnemyCollision == true)
 				{
-					enemyCheck->StunEnemy(5.0f);
-					cout << "Bullet has hit an enemy!" << endl;
+					enemiesInRooms.erase(std::remove(enemiesInRooms.begin(), enemiesInRooms.end(), enemyCheck), enemiesInRooms.end());
+					playerGun->spawnedBullets.erase(std::remove(playerGun->spawnedBullets.begin(), playerGun->spawnedBullets.end(), bulletShot), playerGun->spawnedBullets.end());
 				}
 			}
 		}

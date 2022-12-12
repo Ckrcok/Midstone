@@ -158,6 +158,27 @@ void EnemyActor::MoveToTarget(float deltaTime)
 		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
 }
 
+
+void EnemyActor::MoveToTarget(Vec3 playerPos)
+{
+	Vec3 targetPos = playerPos;
+	float stepAmount = 0.1f;
+
+	// Move to the right
+	if (position.x < targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-stepAmount, 0.0f, 0.0f)));
+	// Move to the left
+	else if (position.x > targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
+
+	// Move to the back
+	if (position.z < targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
+	// Move to the front
+	else if (position.z > targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
+}
+
 float EnemyActor::GetDistance(Vec3 p, Vec3 q)
 {
 	/**

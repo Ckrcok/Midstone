@@ -35,6 +35,10 @@ private:
 	// Scene actors
 	Actor* ground;
 	Actor* ceiling;
+	Actor* sphere;
+	Actor* cube;
+
+	
 	Actor* light;
 	Actor* lightSource0;
 	Actor* lightSource1;
@@ -48,7 +52,6 @@ private:
 
 	// Shader
 	Shader* shader;
-	vector<Wall*> theWalls;
 
 	// Render variables
 	Vec3 lightPos[10];

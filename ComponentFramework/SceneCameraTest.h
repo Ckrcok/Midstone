@@ -39,36 +39,22 @@ private:
 	Actor* objPosY;
 	Actor* objNegZ;
 	Actor* objPosZ;
-	Actor* cube;
-	Actor* light;
-
-	Actor* ground;
-	Actor* ceiling;
-
 	Actor* lightSource1;
-	Actor* lightSource2;
-	Actor* lightSource3;
-	Actor* lightSource4;
-
-	Actor* wallNegZ;
-	Actor* wallPosZ;
-	Actor* wallNegX;
-	Actor* wallPosX;
-
+	Actor* cube;
 
 	PlayerGun* playerGun;
 	//Mesh* mesh; --> CameraActor handles this now
 	Shader* shader;
-	Shader* lightCube;
+	Shader* shaderCube;
 	/*Texture* texture; --> CameraActor handles these now
-	Matrix4 projectionMatrix; 
+	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
 	Matrix4 modelMatrix;*/
 	Vec3 lightPos[10];
 	Vec4 diffuse[10];
 	Vec4 specular[10];
 	Matrix4 modelMatrix;
-	
+
 public:
 	explicit SceneCameraTest();
 	virtual ~SceneCameraTest();
@@ -77,7 +63,7 @@ public:
 	virtual void OnDestroy() override;
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
-	virtual void HandleEvents(const SDL_Event &sdlEvent) override;
+	virtual void HandleEvents(const SDL_Event& sdlEvent) override;
 };
 
 

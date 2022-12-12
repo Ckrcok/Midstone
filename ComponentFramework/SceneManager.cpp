@@ -60,7 +60,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
+	BuildNewScene(SCENE_NUMBER::SCENECAMERATEST);
 
 	return true;
 }
@@ -129,7 +129,7 @@ void SceneManager::HandleEvents()
 				BuildNewScene(SCENE_NUMBER::SCENE4);
 				break;
 
-			case SDL_SCANCODE_F6:
+			case SDL_SCANCODE_SPACE:
 				BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
 				break;
 
