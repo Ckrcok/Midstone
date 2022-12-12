@@ -102,9 +102,6 @@
     <ClCompile Include="Scene4.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +127,9 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Instructions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -257,6 +257,9 @@
     <ClInclude Include="LevelScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="LightMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\defaultFrag.glsl">
@@ -287,12 +290,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\defaultBlueVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\gunFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\gunVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

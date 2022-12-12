@@ -32,6 +32,20 @@ private:
 	CameraActorFPS* cameraFPS;
 	EnemyActor* emptyActor;
 
+	// Scene actors
+	Actor* ground;
+	Actor* ceiling;
+	Actor* light;
+	Actor* lightSource0;
+	Actor* lightSource1;
+	Actor* lightSource2;
+	Actor* lightSource3;
+	Actor* lightSource4;
+	Actor* lightSource5;
+	Actor* lightSource6;
+	Actor* lightSource7;
+	Actor* lightSource8;
+
 	// Shader
 	Shader* shader;
 
@@ -69,7 +83,6 @@ private:
 	Box* enemyColliderBox = new Box(test, minCornerEnemy, maxCornerEnemy, emptyActor); //= Box(minCornerA, maxCornerA);
 
 	Box* blueBox = new Box(test, minCornerB, maxCornerB, emptyActor);//= Box(minCornerB, maxCornerB);
-
 
 
 

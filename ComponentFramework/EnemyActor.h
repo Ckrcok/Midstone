@@ -1,6 +1,7 @@
 #ifndef ENEMY_ACTOR_H
 #define ENEMY_ACTOR_H
 
+// Basic include
 #include <SDL.h>
 
 #include "Actor.h"
@@ -8,8 +9,11 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "MMAth.h"
+
+// Extra include
 #include "CameraActorFPS.h"
 
+// Namespaces
 using namespace MATH;
 using namespace std;
 
@@ -21,7 +25,7 @@ private:
 	float rotation;
 	Vec3 rotationAxis;
 
-	// Model
+	// Model & Shader
 	Actor* model_3D;
 	Shader* shader;
 
@@ -38,8 +42,6 @@ private:
 	bool isStunned = false;
 	float currentStunTimer;
 
-	void FaceTarget(float deltaTime);
-
 	float GetDistance(Vec3 p, Vec3 q);
 
 	Actor* attackTarget = nullptr;
@@ -47,44 +49,53 @@ private:
 	float attackInterval;
 	float currentAttackValue;
 
-public:	
+public:
 	void MoveToTarget(float deltaTime);
 
+	// Constructors
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
-	Vec3 originalPos = position;
-	float enemyHealth = 15.0f;
-	float enemyDamage = 10.0f;
+
+	// Basic functions
 	bool OnCreate();
 	void OnDestroy();
 	void Render();
 	void Update(float deltaTime);
 	void HandleEvents(const SDL_Event& sdlEvent);
 
+	// Variables
+	Vec3 originalPos = position;
+	float enemyHealth = 15.0f;
+	float enemyDamage = 10.0f;
+
+	// Attack
 	void AttackTarget(Actor* target_, float attackInterval_)
 	{
 		attackTarget = target_;
 		attackInterval = attackInterval_;
 	};
 
+	// Stun
 	void StunEnemy(float stunTime_)
 	{
 		currentStunTimer = stunTime_;
 		isStunned = true;
 	};
 
+	// Get function
+	Vec3 getPositionEnemy()
+	{
+		// Because safak made me do the right thing
+		return position;
+	}
+
+	// Set functions
 	void SetCamera(CameraActorFPS* camera_)
 	{
 		cout << "New camera set! || Old camera: " << camera << " || New camera: " << camera_ << endl;
 
 		camera = nullptr;
 		camera = camera_;
-	}
-
-	Vec3 getPositionEnemy()
-	{
-		// Because safak made me do the right thing
-		return position;
 	}
 
 	void setPositionEnemy(Vec3 newPos_)
@@ -94,4 +105,4 @@ public:
 	}
 };
 
-#endif
+#endif // !ENEMY_ACTOR_H

@@ -1,14 +1,15 @@
+// Basic include
 #include <SDL.h>
 
 #include "SceneManager.h"
 #include "Timer.h"
 #include "Window.h"
 
-//#include "LevelScene.h"
+// Extra include
 #include "Scene1.h"
-#include "SceneCameraTest.h"
 #include "Scene3.h"
 #include "Scene4.h"
+#include "SceneCameraTest.h"
 #include "SceneCombination.h"
 
 SceneManager::SceneManager() :
@@ -38,6 +39,7 @@ SceneManager::~SceneManager()
 		delete window;
 		window = nullptr;
 	}
+
 	Debug::Info("Deleting the SceneManager", __FILE__, __LINE__);
 }
 
@@ -58,7 +60,6 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	//BuildNewScene(SCENE_NUMBER::LEVELSCENE);
 	BuildNewScene(SCENE_NUMBER::SCENE_COMBINATION);
 
 	return true;
@@ -178,12 +179,9 @@ void SceneManager::BuildNewScene(SCENE_NUMBER scene)
 		break;
 
 	case SCENE_NUMBER::SCENE4:
-		cout << "Window: " << window->getWindow() << endl;
 		currentScene = new Scene4(window->getWindow());
 		status = currentScene->OnCreate();
 		break;
-
-
 
 	case SCENE_NUMBER::SCENE_COMBINATION:
 		currentScene = new SceneCombination();
