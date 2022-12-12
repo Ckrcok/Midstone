@@ -69,6 +69,7 @@ public:
 	// set initial motion to false
 	bool MouseMotion = false;
 
+	// getters & setters
 	inline Matrix4 GetProjectionMatrix() { return projectionMatrix; }
 	inline Matrix4 GetViewMatrix() { return viewMatrix; }
 	inline Matrix4 GetTranslationMatrix() { return translationMatrix; }
@@ -83,6 +84,8 @@ public:
 	inline Matrix4 GetCameraRotationMatrix() { return rotationLookAt; };
 	inline Matrix4 GetCameraTranslationMatrix() { return translationLookAt; }
 	inline Matrix4 GetCameraFPSLookAt() { return LookAtFPSMatrix; }
+
+	// set facing Wall value and keyboard entry
 	bool isFacingWall = false;
 	char lastTypedKey = 'n';
 };
