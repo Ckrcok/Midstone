@@ -19,7 +19,7 @@ class Shader;
 
 class CameraActorFPS : public Actor
 {
-// Create private variables
+	// Create private variables
 private:
 	// Projection Matrices
 	Matrix4 projectionMatrix;
@@ -28,11 +28,7 @@ private:
 	Matrix4 translationMatrix;
 	Matrix4 gunModelMatrix;
 
-	// Skybox
-	Skybox* skybox;
-
 	// Camera
-	Actor* cameraAttachment;
 	Vec3 CameraActorPosition;
 	float cameraSpeed;
 
@@ -40,9 +36,9 @@ private:
 	Shader* shader;
 
 	// Custom look at function to create a first person view camera
-	Matrix4 LookAtFPS(	const float positionX,	const float positionY,	const float positionZ,
-						const float targetX,	const float targetY,	const float targetZ,
-						const float worldUpX,	const float worldUpY,	const float worldUpZ);
+	Matrix4 LookAtFPS(const float positionX, const float positionY, const float positionZ,
+		const float targetX, const float targetY, const float targetZ,
+		const float worldUpX, const float worldUpY, const float worldUpZ);
 
 	Matrix4 LookAtFPS(const Vec3 position, const Vec3 target, const Vec3 worldUp);
 
@@ -56,7 +52,7 @@ private:
 	Vec3 cameraOrientationVec;
 	Vec3 cameraUpDirVec;
 	Vec3 cameraFront;
-	
+
 	// Camera rotation variables 
 	float mouseRotX;
 	float mouseRotY;
@@ -95,14 +91,10 @@ public:
 	inline Matrix4 GetTranslationMatrix() { return translationMatrix; }
 	inline Matrix4 GetRotationMatrix() { return rotationMatrix; }
 
-	// Get function (skybox)
-	Skybox* GetSkyBox() { return skybox; }
-
 	// Get functions (camera)
 	inline Vec3 GetCameraFPSOrientation() { return cameraOrientationVec; }
 	inline Vec3 GetCameraFPSPos() { return cameraPositionVec; }
 	inline Vec3 GetCameraFront() { return cameraFront; }
-	Actor* GetCameraAttachment() { return cameraAttachment; }
 	inline Matrix4 GetCameraRotationMatrix() { return rotationLookAt; };
 	inline Matrix4 GetCameraTranslationMatrix() { return translationLookAt; }
 	inline Matrix4 GetCameraFPSLookAt() { return LookAtFPSMatrix; }

@@ -9,7 +9,7 @@ CameraActorFPS::CameraActorFPS(Component* parent_) :Actor(parent_)
 {
 	// Set the projection matrix with the hardcoded values
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	
+
 	// Initial camera vectors
 	cameraPositionVec = Vec3(0.0f, 0.0f, 0.0f);
 	cameraOrientationVec = VMath::normalize(Vec3(0.0f, 0.0f, -1.0f));
@@ -23,42 +23,13 @@ CameraActorFPS::~CameraActorFPS() {}
 
 bool CameraActorFPS::OnCreate()
 {
-	// Create and setup the camera attachments
-	cameraAttachment = new Actor(nullptr);
-	cameraAttachment->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
-	cameraAttachment->GetMesh()->OnCreate();
-	cameraAttachment->SetModelMatrix(MMath::translate(Vec3(0.0f, 0.0f, -5.0f)) * MMath::scale(Vec3(0.3, 0.3, 0.3)));
-	cameraAttachment->SetTexture(new Texture());
-	cameraAttachment->GetTexture()->LoadImage("textures/white.png");
-	cameraAttachment->OnCreate();
-
-	// Create shader
-	shader = new Shader(nullptr, "shaders/multilightVert.glsl", "shaders/multilightFrag.glsl");
-	if (shader->OnCreate() == false)
-		Debug::Error("Can't load shader", __FILE__, __LINE__);
-
 	// Return true, so that the program can run
 	return true;
 }
 
-void CameraActorFPS::OnDestroy()
-{
-	// If cameraAttachment exists, call OnDestroy and delete
-	if (cameraAttachment)
-	{
-		cameraAttachment->OnDestroy();
-		delete cameraAttachment;
-	}
-}
+void CameraActorFPS::OnDestroy() {}
 
-void CameraActorFPS::Update(float deltaTime)
-{
-	// Set the model matrix of the camera
-	cameraAttachment->SetModelMatrix(
-		MMath::rotate(this->GetCameraFPSOrientation().x, Vec3(0.0f, 1.0f, 0.0f))
-		* MMath::translate(Vec3(0.0f, 0.0f, -5.0f))
-		* MMath::scale(Vec3(0.3, 0.3, 0.3)));
-}
+void CameraActorFPS::Update(float deltaTime) {}
 
 void CameraActorFPS::Render() const {}
 
@@ -244,7 +215,7 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 			}
 		}
 	}
-	
+
 	// Mouse Inputs
 	int mouseX, mouseY;
 	Uint32 mouseButtons;
@@ -279,16 +250,3 @@ void CameraActorFPS::HandleEvents(const SDL_Event& sdlEvent)
 	}
 
 }
-
-bool CameraActorFPS::OnCreate()
-{
-	return true;
-}
-
-void CameraActorFPS::OnDestroy(){}
-
-void CameraActorFPS::Update(float deltaTime){}
-
-CameraActorFPS::~CameraActorFPS(){}
-
-void CameraActorFPS::Render() const{}
