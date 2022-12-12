@@ -1,3 +1,4 @@
+// Basic include
 #include "PlayerGun.h"
 
 PlayerGun::PlayerGun(Vec3 offset_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* camera_, Component* parent_) : Actor(parent_)
@@ -80,7 +81,7 @@ void PlayerGun::Update(float deltaTime)
 	//model_3D->SetModelMatrix(MMath::translate(gunPos));
 	//model_3D->SetModelMatrix(MMath::rotate(90, Vec3 (0.0f, 1.0f, 0.0f))
 								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
-	
+
 	Vec3 gunOrientation = cameraFPS->GetCameraFront();
 	Vec3 gunPos = cameraFPS->GetCameraFPSPos() + gunOrientation + Vec3(0.0f, -0.5f, 0.0f);
 	//offset = gunPos;
@@ -88,10 +89,10 @@ void PlayerGun::Update(float deltaTime)
 	rotationAxis = Vec3(0.0f, cameraFPS->GetCameraFront().y, 0.0f);
 	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(180 * DEGREES_TO_RADIANS, (gunOrientation)));
 	//model_3D->SetModelMatrix(MMath::translate(gunPos) * MMath::rotate(gunOrientation.x, Vec3(0.0f, 1.0f, 0.0f)) * MMath::rotate(gunOrientation.y, Vec3(0.0f, 0.0f, 1.0f)));
-	
+
 	gunMatrix = MMath::translate(gunPos) * cameraFPS->GetCameraFPSLookAt() * MMath::inverse(cameraFPS->GetCameraRotationMatrix()) * MMath::translate(Vec3(0.0f, 0.0f, -0.2f));
 	model_3D->SetModelMatrix(gunMatrix);
-	
+
 	position = model_3D->GetPosition();
 
 	// Update the bullets
