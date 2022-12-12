@@ -24,7 +24,7 @@ bool EnemyActor::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/Zombie.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/Sphere.obj"));
 	model_3D->GetMesh()->OnCreate();
 
 	model_3D->SetModelMatrix(MMath::translate(position));											// Spawn position
@@ -88,9 +88,12 @@ void EnemyActor::Update(float deltaTime)
 
 		return;
 	}
-
-	MoveToTarget(deltaTime);
-	FaceTarget(deltaTime);
+	else {
+		MoveToTarget(deltaTime);
+		FaceTarget(deltaTime);
+	}
+	
+	
 	//cout << "DistanceToPlayer: " << distanceToPlayer << endl;
 	//cout << "\n";
 
@@ -210,4 +213,25 @@ void EnemyActor::Attack(float deltaTime)
 		// Set current value to original value
 		currentAttackValue = attackInterval;
 	}
+}
+
+
+void EnemyActor::MoveToTarget(Vec3 playerPos)
+{
+	Vec3 targetPos = playerPos;
+	float stepAmount = 0.1f;
+
+	// Move to the right
+	if (position.x < targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(-stepAmount, 0.0f, 0.0f)));
+	// Move to the left
+	else if (position.x > targetPos.x)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(stepAmount, 0.0f, 0.0f)));
+
+	// Move to the back
+	if (position.z < targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, -stepAmount)));
+	// Move to the front
+	else if (position.z > targetPos.z)
+		model_3D->SetModelMatrix(model_3D->GetModelMatrix() * MMath::translate(Vec3(0.0f, 0.0f, stepAmount)));
 }

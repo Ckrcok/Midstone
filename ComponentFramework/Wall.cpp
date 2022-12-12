@@ -22,7 +22,7 @@ bool Wall::OnCreate()
 {
 	objFile = new Actor(nullptr);
 	if (id == 'o') {
-		objFile->SetMesh(new Mesh(nullptr, "meshes/gun8.obj"));
+		objFile->SetMesh(new Mesh(nullptr, "meshes/gunPickup.obj"));
 	}
 	else if (id == 'k') {
 		objFile->SetMesh(new Mesh(nullptr, "meshes/securityCard.obj"));

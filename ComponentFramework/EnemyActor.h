@@ -17,7 +17,6 @@ class  EnemyActor : public Actor
 {
 private:
 	// Position & Rotation
-	Vec3 position;
 	float rotation;
 	Vec3 rotationAxis;
 	// Model
@@ -48,6 +47,7 @@ private:
 
 public:	
 	void MoveToTarget(float deltaTime);
+	Vec3 position;
 
 	EnemyActor(Vec3 spawnPosition_, float spawnRotation_, Vec3 spawnRotationAxis_, CameraActorFPS* player_, Component* parent_);
 	~EnemyActor();
@@ -59,6 +59,7 @@ public:
 	void Render();
 	void Update(float deltaTime);
 	void HandleEvents(const SDL_Event& sdlEvent);
+	void MoveToTarget(Vec3 playerPos);
 
 	void AttackTarget(Actor* target_, float attackInterval_)
 	{
@@ -85,6 +86,10 @@ public:
 	void setPositionEnemy(Vec3 newPos_) {
 		position = newPos_;//because safak made me do the right thing x2
 	}
+	Vec3 getPos() { return position; }
+	void setPos(Vec3 position_) { position = position_; }
+
+
 };
 
 #endif

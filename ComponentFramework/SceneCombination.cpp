@@ -5,12 +5,12 @@ SceneCombination::SceneCombination()
 {
 	// Debug information
 	Debug::Info("Created SceneCombination: ", __FILE__, __LINE__);
-	EnemyActor* enemyA = new EnemyActor(Vec3(-17.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
-	EnemyActor* enemyB = new EnemyActor(Vec3(-2.0f, 0.0f, -24.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
-	EnemyActor* enemyC = new EnemyActor(Vec3(8.0f, 0.0f, -20.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
-	EnemyActor* enemyD = new EnemyActor(Vec3(10.0f, 0.0f, -6.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
-	EnemyActor* enemyE = new EnemyActor(Vec3(15.0f, 0.0f, 16.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
-	EnemyActor* enemyF = new EnemyActor(Vec3(16.0f, 0.0f, -4.0f), 180.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyA = new EnemyActor(Vec3(-17.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyB = new EnemyActor(Vec3(-2.0f, 0.0f, -24.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyC = new EnemyActor(Vec3(8.0f, 0.0f, -20.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyD = new EnemyActor(Vec3(10.0f, 0.0f, -6.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyE = new EnemyActor(Vec3(15.0f, 0.0f, 16.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
+	EnemyActor* enemyF = new EnemyActor(Vec3(16.0f, 0.0f, -4.0f), 0.0f, Vec3(0.0f, 1.0f, 0.0f), cameraFPS, NULL);
 
 	Vec3 minValueTriggerA = (Vec3(-17.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
 	Vec3 minValueTriggerB = (Vec3(-2.0f, 0.0f, -24.0f) -	(Vec3(4.0f, 1.0f, 4.0f)));
@@ -424,7 +424,6 @@ void SceneCombination::Render() const
 	// Render the gun of the player
 	if (hasWeapon) {
 	playerGun->Render();
-
 	}
 
 
@@ -442,6 +441,7 @@ void SceneCombination::Render() const
 
 void SceneCombination::Update(const float deltaTime)
 {
+	
 	// Update the camera
 	cameraFPS->Update(deltaTime);
 	// Update the gun of the player
@@ -455,25 +455,39 @@ void SceneCombination::Update(const float deltaTime)
 	//PlayerDangerRoomCollision
 	for (Box* roomTriggerBox : roomTriggers) {
 		//Check if the player has triggered/collided with room box
+		resultPlayer = cameraFPS->GetCameraFPSPos();
+		minCornerPlayer = resultPlayer - Vec3(1.0f, 1.0f, 1.0f);
+		maxCornerPlayer = resultPlayer + Vec3(1.0f, 1.0f, 1.0f);
+		playerColliderBox->updateVertPos(resultPlayer, minCornerPlayer, maxCornerPlayer);
 
 		int playerTriggerCollision = Collision::distancePointBox(resultPlayer, *roomTriggerBox);
 
 		if (playerTriggerCollision == true) {
 			cout << "---Collided with enemy trigger area" << endl;
-			//get enemy closer to player																						//enemy speed
-			roomTriggerBox->enemyRoom->Update(deltaTime);
-
+			//get enemy closer to player		
+																				//enemy speed
+		/*	Vec3 enemyPositionOnRoomA = roomTriggerBox->enemyRoom->getPos();
+			Vec3 enemy2Player = resultPlayer - enemyPositionOnRoomA;
+			Vec3 normalized = VMath::normalize(enemy2Player);
+			roomTriggerBox->enemyRoom->setPos(roomTriggerBox->enemyRoom->getPos() += (normalized * 0.9f));
+			*/
+			roomTriggerBox->enemyRoom->MoveToTarget(resultPlayer);
+			//roomTriggerBox->enemyRoom->Update(deltaTime);
+			/*Vec3 enemyPositionOnRoom = roomTriggerBox->enemyRoom->getPositionEnemy();
+			Vec3 enemy2Player = resultPlayer - enemyPositionOnRoom;
+			Vec3 normalized = VMath::normalize(enemy2Player);
+			roomTriggerBox->enemyRoom->SetModelMatrix(roomTriggerBox->enemyRoom->GetModelMatrix() *= MMath::translate(roomTriggerBox->enemyRoom->GetPosition() += (normalized * 200.0f)));*/
 
 			Vec3 enemyPositionOnRoom = roomTriggerBox->enemyRoom->getPositionEnemy();
+
 			minCornerEnemy = enemyPositionOnRoom - Vec3(1.0f, 1.0f, 1.0f);
 			maxCornerEnemy = enemyPositionOnRoom + Vec3(1.0f, 1.0f, 1.0f);
 			enemyColliderBox->updateVertPos(enemyPositionOnRoom, minCornerEnemy, maxCornerEnemy);
-			resultPlayer = cameraFPS->GetCameraFPSPos();
 
 			int playerEnemyCollision = Collision::TestSphereSphere(*playerColliderBox, *enemyColliderBox);
 			if (playerEnemyCollision == true)
 			{
-				cout << "Collided with enemy" << endl;
+				cout << "+++Collided with enemy" << endl;
 				//Player cas collided with tenemy
 				if (playerHealth >= 10) {
 				playerHealth -= roomTriggerBox->enemyRoom->enemyDamage;
@@ -552,12 +566,16 @@ void SceneCombination::Update(const float deltaTime)
 
 		if (playerGun->spawnedBullets.size() > 0) {
 			for (Bullet* bulletShot : playerGun->spawnedBullets) {
-				Vec3 shotBulletPosition = bulletShot->GetPosition();
-				int bulletWallCollision = Collision::distancePointBox(shotBulletPosition, *blueBox);
-				//When a bullet collides with a enemy the enemy gets stunned
-				if (bulletWallCollision == true) {
-					playerGun->HandleDestroyBullet();
 
+				Vec3 shotBulletPos = bulletShot->getPos();
+				Vec3 minCornerBulletW = shotBulletPos - Vec3(1.0f, 1.0f, 1.0f);
+				Vec3 maxCornerBulletW = shotBulletPos + Vec3(1.0f, 1.0f, 1.0f);
+				Box* bulletColliderBoxw = new Box(shotBulletPos, minCornerBulletW, maxCornerBulletW, emptyActor);
+				bulletColliderBoxw->updateVertPos(shotBulletPos, minCornerBulletW, maxCornerBulletW);
+				int bulletEnemyCollision = Collision::TestSphereSphere(*bulletColliderBoxw, *blueBox);
+				//When a bullet collides with a enemy the enemy gets stunned
+				if (bulletEnemyCollision == true) {
+					playerGun->spawnedBullets.erase(std::remove(playerGun->spawnedBullets.begin(), playerGun->spawnedBullets.end(), bulletShot), playerGun->spawnedBullets.end());
 				}
 			}
 
@@ -568,26 +586,31 @@ void SceneCombination::Update(const float deltaTime)
 	//EnemyBulletColission
 	for (EnemyActor* enemyCheck : enemiesInRooms) {
 
-		Vec3 enemyPosition = enemyCheck->GetPosition();
+		Vec3 enemyPosition = enemyCheck->getPos();
 		minCornerEnemy = enemyPosition - Vec3(1.0f, 1.0f, 1.0f);
 		maxCornerEnemy = enemyPosition + Vec3(1.0f, 1.0f, 1.0f);
 		enemyColliderBox->updateVertPos(enemyPosition, minCornerEnemy, maxCornerEnemy);
-
-
 		if (playerGun->spawnedBullets.size() > 0) {
 			for (Bullet* bulletShot : playerGun->spawnedBullets) {
-				Vec3 shotBulletPosition = bulletShot->GetPosition();
-				int bulletEnemyCollision = Collision::distancePointBox(shotBulletPosition, *enemyColliderBox);
+				Vec3 shotBulletPosition = bulletShot->getPos();
+				Vec3 minCornerBullet = shotBulletPosition - Vec3(1.0f, 1.0f, 1.0f);
+				Vec3 maxCornerBullet = shotBulletPosition + Vec3(1.0f, 1.0f, 1.0f);
+				Box* bulletColliderBox = new Box(shotBulletPosition, minCornerBullet, maxCornerBullet, enemyCheck);
+				bulletColliderBox->updateVertPos(shotBulletPosition, minCornerBullet, maxCornerPlayer);
+
+				int bulletEnemyCollision = Collision::TestSphereSphere(*bulletColliderBox, *enemyColliderBox);
+				
 				//When a bullet collides with a enemy the enemy gets stunned
 				if (bulletEnemyCollision == true) {
-					enemyCheck->StunEnemy(5.0f);
+
+					enemiesInRooms.erase(std::remove(enemiesInRooms.begin(), enemiesInRooms.end(), enemyCheck), enemiesInRooms.end());
+					playerGun->spawnedBullets.erase(std::remove(playerGun->spawnedBullets.begin(), playerGun->spawnedBullets.end(), bulletShot), playerGun->spawnedBullets.end());
 				}
 			}
 
 		}
 	}
-	//BulletWallCollision
-	//EnemyBulletCollision
+
 
 }
 

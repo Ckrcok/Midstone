@@ -14,7 +14,7 @@ bool PlayerGun::OnCreate()
 {
 	// Create model
 	model_3D = new Actor(nullptr);
-	model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGun3.obj"));
+	model_3D->SetMesh(new Mesh(nullptr, "meshes/gun9.obj"));
 	//model_3D->SetMesh(new Mesh(nullptr, "meshes/PlayerGunOffset.obj"));
 	model_3D->GetMesh()->OnCreate();
 
@@ -79,9 +79,10 @@ void PlayerGun::Update(float deltaTime)
 								//* MMath::translate(cameraFPS->GetCameraFPSPos()));
 	
 	model_3D->SetModelMatrix(
-		MMath::translate((-(cameraFPS->GetCameraFPSOrientation()))) *
-		MMath::rotate(-cameraFPS->GetCameraFPSOrientation().y, Vec3(0.0f, 1.0f, 0.0f)));
-	
+		MMath::translate((cameraFPS->GetCameraFPSPos())) *
+
+		MMath::rotate(cameraFPS->GetCameraFPSOrientation().y, Vec3(0.0f, 1.0f, 0.0f)));
+
 	
 	// Update the bullets
 	for (Bullet* bullet : spawnedBullets)
@@ -105,7 +106,9 @@ void PlayerGun::HandleEvents(const SDL_Event& sdlEvent)
 void PlayerGun::SpawnBullet(Vec3 velocity_)
 {
 	Vec3 offset = Vec3(0.0f, 0.1f, -0.4f);											// Spawn bullet with offset from gun
-	Bullet* bullet = new Bullet(bulletLabel, position + offset, velocity_, this);	// Create bullet
+	
+	
+	Bullet* bullet = new Bullet(bulletLabel, (cameraFPS->GetCameraFPSPos()), velocity_, this);	// Create bullet
 	bulletLabel++;																	// Increase number for next bullet
 
 	bullet->OnCreate();					// Call OnCreate for bullet

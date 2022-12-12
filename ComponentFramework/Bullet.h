@@ -41,6 +41,8 @@ public:
 	void OnCollision();
 	int GetLabel() { return label; };
 	bool GetBulletDestroyIsCalled() { return bulletDestroyIsCalled; };
+	Vec3 getPos() { return position; }
+
 };
 
 #endif // !BULLET_H
